@@ -1,3 +1,11 @@
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
-export const App: React.FC = () => <h1>Hello world!!!</h1>
+import { PageTitle } from './components/helmet/PageTitle'
+
+export const App: React.FC = () => (
+  <BrowserRouter>
+    <PageTitle />
+    <h1>Hello world!!!</h1>
+  </BrowserRouter>
+)

@@ -33,9 +33,7 @@
   },
   "settings": {
     "import/resolver": {
-      // Allow `@/` to map to `src/`
-      "alias": {
-        "map": [["@", "./src"]],
+      "parcel": {
         "extensions": [".ts", ".tsx", ".js", ".jsx", ".json"]
       }
     },
