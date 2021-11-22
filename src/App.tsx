@@ -1,11 +1,24 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import React, { Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 
-import { PageTitle } from './components/helmet/PageTitle'
+import { PageTitle } from '~src/components/helmet/PageTitle'
+import { RequireAuth } from '~src/components/auth/RequireAuth'
 
 export const App: React.FC = () => (
-  <BrowserRouter>
-    <PageTitle />
-    <h1>Hello world!!!</h1>
-  </BrowserRouter>
+  <HelmetProvider>
+    <BrowserRouter>
+      <PageTitle />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/boards" element={
+            <RequireAuth>
+              <h1>Boards</h1>
+            </RequireAuth>
+          }/>
+          <Route path="/login" element={<h1>Login</h1>}/>
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  </HelmetProvider>
 )
