@@ -25,7 +25,7 @@ export const App: React.FC = () => (
             path="/login"
             element={
               <Auth>
-                <LoginPage/>
+                <LoginPage />
               </Auth>
             }
           />

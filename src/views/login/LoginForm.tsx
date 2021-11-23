@@ -39,9 +39,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ loading, onLogin, ...rest 
           {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
         </div>
         <div className="mb-2">
-          <label className="form-label required">
-            Password
-          </label>
+          <label className="form-label required">Password</label>
           <input
             type="password"
             placeholder="Enter password"
