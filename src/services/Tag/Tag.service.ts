@@ -1,4 +1,4 @@
 class TagService {
 }
 
-export default new TagService()
+export const tagService = new TagService()

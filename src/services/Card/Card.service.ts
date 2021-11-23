@@ -1,4 +1,4 @@
 class CardService {
 }
 
-export default new CardService()
+export const cardService = new CardService()

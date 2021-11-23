@@ -1,15 +1,22 @@
 import axios from 'axios'
+import { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh'
 
 import { endpoints } from '~src/utils/constants'
 import { SignIn, SignUp, Tokens } from '~src/store/types'
 
 class AuthService {
+  private readonly config: AxiosAuthRefreshRequestConfig;
+
+  public constructor() {
+    this.config = { skipAuthRefresh: true }
+  }
+
   public login(dto: SignIn): Promise<Tokens> {
-    return axios.post(endpoints.auth.login, dto).then(AuthService.normalize)
+    return axios.post(endpoints.auth.login, dto, this.config).then(AuthService.normalize)
   }
 
   public signUp(dto: SignUp): Promise<Tokens> {
-    return axios.post(endpoints.auth.signUp, dto).then(AuthService.normalize)
+    return axios.post(endpoints.auth.signUp, dto, this.config).then(AuthService.normalize)
   }
 
   private static normalize(response: any): Tokens {
@@ -17,4 +24,4 @@ class AuthService {
   }
 }
 
-export default new AuthService()
+export const authService = new AuthService()

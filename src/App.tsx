@@ -4,6 +4,8 @@ import { HelmetProvider } from 'react-helmet-async'
 
 import { PageTitle } from '~src/components/helmet/PageTitle'
 import { RequireAuth } from '~src/components/auth/RequireAuth'
+import { Auth } from '~src/components/auth/Auth'
+import LoginPage from '~src/views/login/LoginPage'
 
 export const App: React.FC = () => (
   <HelmetProvider>
@@ -19,7 +21,14 @@ export const App: React.FC = () => (
               </RequireAuth>
             }
           />
-          <Route path="/login" element={<h1>Login</h1>} />
+          <Route
+            path="/login"
+            element={
+              <Auth>
+                <LoginPage/>
+              </Auth>
+            }
+          />
         </Routes>
       </Suspense>
     </BrowserRouter>

@@ -1,23 +1,25 @@
-import Cookie from 'js-cookie'
-
-Cookie.defaults = {
-  sameSite: 'Lax',
-}
+import Cookies  from 'js-cookie'
 
 class CookiesService {
+  private readonly api
+
+  public constructor() {
+    this.api = Cookies.withAttributes({ sameSite: 'Lax' })
+  }
+
   public get<T>(key: string, defaultValue: T): T {
-    const item = Cookie.get(key)
+    const item = this.api.get(key)
 
     return item ? (JSON.parse(item) as T) : defaultValue
   }
 
   public set(key: string, value: any): void {
-    Cookie.set(key, JSON.stringify(value))
+    this.api.set(key, JSON.stringify(value))
   }
 
   public remove(key: string): void {
-    Cookie.remove(key)
+    this.api.remove(key)
   }
 }
 
-export default new CookiesService()
+export const cookiesService =  new CookiesService()

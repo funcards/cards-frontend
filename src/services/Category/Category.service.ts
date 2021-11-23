@@ -1,4 +1,4 @@
 class CategoryService {
 }
 
-export default new CategoryService()
+export const categoryService = new CategoryService()

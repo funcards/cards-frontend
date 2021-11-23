@@ -1,5 +1,5 @@
 export const isProduction = process.env.NODE_ENV === 'production'
-export const apiUrl: string = process.env.APP_API_URL ?? 'http://localhost:8081'
+export const apiUrl: string = process.env.APP_API_URL ?? 'http://localhost:8080'
 
 export const appName = Object.freeze({
   long: process.env.APP_LONG_NAME ?? 'FunCards',
