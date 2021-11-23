@@ -14,3 +14,5 @@ declare module '*.md' {
 }
 
 declare module 'js-cookie'
+
+declare module "assets/*"

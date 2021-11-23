@@ -1,11 +1,12 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 
 import { PageTitle } from '~src/components/helmet/PageTitle'
 import { RequireAuth } from '~src/components/auth/RequireAuth'
 import { Auth } from '~src/components/auth/Auth'
-import LoginPage from '~src/views/login/LoginPage'
+
+const LoginPage = lazy(() => import('~src/views/login/LoginPage'))
 
 export const App: React.FC = () => (
   <HelmetProvider>

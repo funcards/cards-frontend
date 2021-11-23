@@ -2,6 +2,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
+import './styles/index.scss'
+
 import { sagaMiddleware, store } from './store'
 import rootSaga from './store/rootSaga'
 import axiosConfig from './utils/axios.config'
