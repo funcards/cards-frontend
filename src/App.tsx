@@ -11,12 +11,15 @@ export const App: React.FC = () => (
       <PageTitle />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/boards" element={
-            <RequireAuth>
-              <h1>Boards</h1>
-            </RequireAuth>
-          }/>
-          <Route path="/login" element={<h1>Login</h1>}/>
+          <Route
+            path="/boards"
+            element={
+              <RequireAuth>
+                <h1>Boards</h1>
+              </RequireAuth>
+            }
+          />
+          <Route path="/login" element={<h1>Login</h1>} />
         </Routes>
       </Suspense>
     </BrowserRouter>

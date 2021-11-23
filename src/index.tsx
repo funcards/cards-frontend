@@ -4,8 +4,10 @@ import { Provider } from 'react-redux'
 
 import { sagaMiddleware, store } from './store'
 import rootSaga from './store/rootSaga'
+import axiosConfig from './utils/axios.config'
 import { App } from './App'
 
+axiosConfig()
 sagaMiddleware.run(rootSaga)
 
 render(
