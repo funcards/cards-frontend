@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { LoginForm } from './LoginForm'
 
-import { login } from '~src/store/auth/auth.slice'
-import { SignIn } from '~src/store/types'
-import { getAuth } from '~src/store/selectors'
-import { PageTitle } from '~src/components/helmet/PageTitle'
+import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { appName } from '~src/utils/constants'
+import { getAuth } from '~src/modules/auth/auth.selectors'
+import { SignIn } from '~src/modules/auth/auth.types'
+import { login } from '~src/modules/auth/auth.slice'
 
 const LoginPage: React.FC = () => {
   const { loading } = useSelector(getAuth)

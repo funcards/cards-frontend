@@ -3,8 +3,8 @@ import createAuthRefreshInterceptor, { AxiosAuthRefreshRequestConfig } from 'axi
 
 import { apiUrl, endpoints } from '~src/utils/constants'
 import { store } from '~src/store'
-import { getAuth } from '~src/store/selectors'
-import { clearAuth, setTokens } from '~src/store/auth/auth.slice'
+import { getAuth } from '~src/modules/auth/auth.selectors'
+import { clearAuth, setTokens } from '~src/modules/auth/auth.slice'
 
 export default function axiosConfig(): void {
   axios.defaults.baseURL = apiUrl

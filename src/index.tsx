@@ -4,13 +4,13 @@ import { Provider } from 'react-redux'
 
 import './styles/index.scss'
 
-import { sagaMiddleware, store } from './store'
-import rootSaga from './store/rootSaga'
 import axiosConfig from './utils/axios.config'
+import { sagaMiddleware, store } from './store'
+import saga from './saga'
 import { App } from './App'
 
 axiosConfig()
-sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(saga)
 
 render(
   <Provider store={store}>

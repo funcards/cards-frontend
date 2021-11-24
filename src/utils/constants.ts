@@ -19,6 +19,7 @@ export const endpoints = Object.freeze({
 export const routes = Object.freeze({
   root: '/',
   auth: Object.freeze({ login: '/login', registration: '/registration' }),
+  board: Object.freeze({ list: '/boards', one: (id = ':boardId') => `/boards/${id}` }),
 })
 
 export const validation = Object.freeze({

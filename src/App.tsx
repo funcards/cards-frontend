@@ -2,9 +2,9 @@ import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 
-import { PageTitle } from '~src/components/helmet/PageTitle'
-import { RequireAuth } from '~src/components/auth/RequireAuth'
-import { Auth } from '~src/components/auth/Auth'
+import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
+import { RequireAuth } from '~src/modules/auth/components/RequireAuth/RequireAuth'
+import { RequireNotAuth } from '~src/modules/auth/components/RequireNotAuth/RequireNotAuth'
 
 const LoginPage = lazy(() => import('~src/views/login/LoginPage'))
 
@@ -25,9 +25,9 @@ export const App: React.FC = () => (
           <Route
             path="/login"
             element={
-              <Auth>
+              <RequireNotAuth>
                 <LoginPage />
-              </Auth>
+              </RequireNotAuth>
             }
           />
         </Routes>

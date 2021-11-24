@@ -1,8 +1,8 @@
 import React, { ComponentPropsWithoutRef, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { SignIn } from '~src/store/types'
 import { validation } from '~src/utils/constants'
+import { SignIn } from '~src/modules/auth/auth.types'
 
 export interface LoginFormProps extends ComponentPropsWithoutRef<'form'> {
   loading: boolean
