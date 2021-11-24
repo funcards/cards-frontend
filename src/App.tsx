@@ -6,7 +6,7 @@ import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { RequireAuth } from '~src/modules/auth/components/RequireAuth/RequireAuth'
 import { RequireNotAuth } from '~src/modules/auth/components/RequireNotAuth/RequireNotAuth'
 
-const LoginPage = lazy(() => import('~src/views/login/LoginPage'))
+const LoginPage = lazy(() => import('~src/modules/auth/components/LoginPage/LoginPage'))
 
 export const App: React.FC = () => (
   <HelmetProvider>

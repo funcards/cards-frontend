@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { LoginForm } from './LoginForm'
+import { LoginForm } from '../LoginForm/LoginForm'
 
 import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { appName } from '~src/utils/constants'
