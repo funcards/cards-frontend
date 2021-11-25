@@ -3,10 +3,10 @@ import { PayloadAction } from '@reduxjs/toolkit'
 
 import { SignIn, Tokens } from './auth.types'
 
-import { clearAuth, loginSuccess, setTokens } from './auth.slice'
+import { clearAuth, signInSuccess, setTokens } from './auth.slice'
 import { addError } from '~src/modules/notification/notification.slice'
 
-import { login } from './auth.api'
+import { signIn, signUp } from './auth.api'
 
 function* fetchTokens(service: any, payload: SignIn) {
   const tokens: Tokens = yield call(service, payload)
@@ -16,7 +16,7 @@ function* fetchTokens(service: any, payload: SignIn) {
 function* authWorker(service: any, payload: SignIn) {
   try {
     yield call(fetchTokens, service, payload)
-    yield put(loginSuccess())
+    yield put(signInSuccess())
   } catch (error) {
     yield put(addError({ message: (error as Error).message }))
     yield put(clearAuth())
@@ -24,11 +24,15 @@ function* authWorker(service: any, payload: SignIn) {
   }
 }
 
-export function* loginWorker({ payload }: PayloadAction<SignIn>) {
-  yield call(authWorker, login, payload)
+export function* signInWorker({ payload }: PayloadAction<SignIn>) {
+  yield call(authWorker, signIn, payload)
 }
 
-export function* logoutWorker() {
+export function* signUpWorker({ payload }: PayloadAction<SignIn>) {
+  yield call(authWorker, signUp, payload)
+}
+
+export function* signOutWorker() {
   yield put(clearAuth())
   // TODO: clear another states
 }

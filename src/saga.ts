@@ -1,10 +1,14 @@
 import { all, takeLatest } from 'redux-saga/effects'
 
-import { login, logout } from '~src/modules/auth/auth.slice'
-import { loginWorker, logoutWorker } from '~src/modules/auth/auth.saga'
+import { signIn, signUp, signOut } from '~src/modules/auth/auth.slice'
+import { signInWorker, signUpWorker, signOutWorker } from '~src/modules/auth/auth.saga'
 
 function* saga() {
-  yield all([takeLatest(login.type, loginWorker), takeLatest(logout.type, logoutWorker)])
+  yield all([
+    takeLatest(signIn.type, signInWorker),
+    takeLatest(signUp.type, signUpWorker),
+    takeLatest(signOut.type, signOutWorker),
+  ])
 }
 
 export default saga

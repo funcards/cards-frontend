@@ -17,5 +17,5 @@ export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
     return children
   }
 
-  return <Navigate to={routes.auth.login} state={{ from: location }} />
+  return <Navigate to={routes.auth.signIn} state={{ from: location }} />
 }

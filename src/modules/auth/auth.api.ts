@@ -6,16 +6,14 @@ import { SignIn, SignUp, Tokens } from './auth.types'
 
 const config: AxiosAuthRefreshRequestConfig = { skipAuthRefresh: true }
 
-const normalize = (response: any): Tokens => {
+const toTokens = (response: any): Tokens => {
   return { accessToken: response.data.access_token, refreshToken: response.data.refresh_token }
 }
 
-const login = (dto: SignIn): Promise<Tokens> => {
-  return axios.post(endpoints.auth.login, dto, config).then(normalize)
+export const signIn = (dto: SignIn): Promise<Tokens> => {
+  return axios.post(endpoints.auth.signIn, dto, config).then(toTokens)
 }
 
-const signUp = (dto: SignUp): Promise<Tokens> => {
-  return axios.post(endpoints.auth.signUp, dto, config).then(normalize)
+export const signUp = (dto: SignUp): Promise<Tokens> => {
+  return axios.post(endpoints.auth.signUp, dto, config).then(toTokens)
 }
-
-export { login, signUp }

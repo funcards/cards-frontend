@@ -7,14 +7,14 @@ import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { appName } from '~src/utils/constants'
 import { getAuth } from '~src/modules/auth/auth.selectors'
 import { SignIn } from '~src/modules/auth/auth.types'
-import { login } from '~src/modules/auth/auth.slice'
+import { signIn } from '~src/modules/auth/auth.slice'
 
 const LoginPage: React.FC = () => {
   const { loading } = useSelector(getAuth)
   const dispatch = useDispatch()
 
   const onLogin = (data: SignIn) => {
-    dispatch(login(data))
+    dispatch(signIn(data))
   }
 
   return (

@@ -11,14 +11,14 @@ export const themes = ['sky', 'blue', 'indigo', 'red', 'pink', 'orange', 'yellow
 const api = '/api/v1'
 
 export const endpoints = Object.freeze({
-  auth: Object.freeze({ signUp: `${api}/sign-up`, login: `${api}/sign-in`, refreshToken: `${api}/refresh-token` }),
+  auth: Object.freeze({ signUp: `${api}/sign-up`, signIn: `${api}/sign-in`, refreshToken: `${api}/refresh-token` }),
   user: Object.freeze({ list: `${api}/users`, me: `${api}/users/me` }),
   board: Object.freeze({ list: `${api}/boards`, one: (id: string) => `${api}/boards/${id}` }),
 })
 
 export const routes = Object.freeze({
   root: '/',
-  auth: Object.freeze({ login: '/login', registration: '/registration' }),
+  auth: Object.freeze({ signIn: '/sign-in', signUp: '/sign-up' }),
   board: Object.freeze({ list: '/boards', one: (id = ':boardId') => `/boards/${id}` }),
 })
 
