@@ -3,3 +3,83 @@ html {
   line-height: var(--html-line-height);
   background-color: var(--color-html-bg);
 }
+
+body {
+  font-family: inherit;
+  line-height: inherit;
+}
+
+form {
+  width: 100%;
+}
+
+input,
+textarea {
+  width: 100%;
+  border-color: var(--color-input-border);
+  color: var(--color-input);
+  background-color: var(--color-input-bg);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-input-border-focus);
+  }
+
+  &::placeholder {
+    opacity: 1;
+    color: var(--color-input-placeholder);
+  }
+}
+
+button,
+[role='button'],
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: var(--ease-in);
+  transition-duration: 150ms;
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--color-btn);
+  background-color: var(--color-btn-bg);
+
+  &:hover {
+    background-color: var(--color-btn-bg-hover);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  [role='loading'] {
+    border-color: var(--color-btn);
+    border-bottom-color: var(--color-transparent);
+    border-width: var(--space-xxxxs);
+    border-radius: 50%;
+    animation: rotate infinite linear 1s;
+  }
+
+  &:disabled {
+    cursor: default;
+    color: var(--color-btn-disabled);
+    background-color: var(--color-btn-bg-disabled);
+
+    [role='loading'] {
+      border-color: var(--color-btn-disabled);
+      border-bottom-color: var(--color-transparent);
+    }
+  }
+}
+
+#app {
+  max-width: 100vw;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

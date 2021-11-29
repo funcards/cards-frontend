@@ -6,7 +6,7 @@ import { AuthState, SignIn, Tokens } from './auth.types'
 
 const keyTokens = 'tokens'
 const tokens = storage.get(keyTokens, undefined)
-const isAuthenticated = tokens !== undefined
+const isAuthenticated = tokens !== undefined && 'accessToken' in tokens && 'refreshToken' in tokens
 
 const initialState: AuthState = {
   isAuthenticated,

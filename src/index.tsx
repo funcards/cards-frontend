@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+import { HelmetProvider } from 'react-helmet-async'
 
 import './styles/index.scss'
 
@@ -14,9 +15,11 @@ sagaMiddleware.run(saga)
 
 render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <HelmetProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </HelmetProvider>
   </Provider>,
   document.getElementById('app')
 )

@@ -58,4 +58,164 @@
   --color-emerald-c800: #065F46;
 
   --color-html-bg: var(--color-gray-c100);
+  --color-heading: var(--color-gray-c700);
+  --color-error: var(--color-red-c500);
+  --color-divide: var(--color-gray-c300);
+  --color-link: var(--color-sky-c600);
+  --color-dot: var(--color-gray-c700);
+
+  --color-notification: var(--color-white-100);
+  --color-notification-info-bg: var(--color-cyan-c700);
+  --color-notification-success-bg: var(--color-emerald-c800);
+  --color-notification-warning-bg: var(--color-amber-c600);
+  --color-notification-error-bg: var(--color-red-c800);
+
+  --color-not-found-title: var(--color-blue-gray-c600);
+  --color-not-found-text: var(--color-blue-gray-c600);
+  --color-not-found-auth: var(--color-gray-c700);
+
+  --color-header-bg: var(--color-sky-c700);
+  --color-header-btn-bg: var(--color-white-030);
+  --color-header-btn-bg-hover: var(--color-white-020);
+
+  --color-input: var(--color-gray-c700);
+  --color-input-bg: var(--color-white-100);
+  --color-input-placeholder: var(--color-gray-c400);
+  --color-input-border: var(--color-gray-c300);
+  --color-input-border-focus: var(--color-sky-c600);
+
+  --color-btn: var(--color-white-100);
+  --color-btn-disabled: var(--color-gray-c700);
+  --color-btn-bg: var(--color-sky-c600);
+  --color-btn-bg-hover: var(--color-sky-c700);
+  --color-btn-bg-disabled: var(--color-gray-c300);
+  --color-btn-loader: var(--color-gray-c700);
+
+  --color-btn-close: var(--color-gray-c500);
+  --color-btn-close-hover: var(--color-black-100);
+
+  --color-modal-overlay-bg: var(--color-black-080);
+  --color-modal-body-bg: var(--color-white-100);
+  --color-modal-title: var(--color-blue-gray-c600);
+
+  --color-user-menu-bg: var(--color-white-100);
+  --color-user-menu-title: var(--color-blue-gray-c500);
+  --color-user-menu-email: var(--color-gray-c400);
+  --color-user-menu-item: var(--color-blue-gray-c600);
+  --color-user-menu-item-bg-hover: var(--color-gray-c100);
+
+  --color-boards-page-title: var(--color-blue-gray-c600);
+  --color-boards-page-icon: var(--color-blue-gray-c500);
+  --color-boards-page-item-name: var(--color-gray-c100);
+  --color-boards-page-new-item: var(--color-blue-gray-c600);
+  --color-boards-page-new-item-bg: var(--color-gray-c300);
+
+  --color-add-board-theme-active: var(--color-gray-c300);
+
+  --color-category-bg: var(--color-gray-c200);
+  --color-category-name: var(--color-black-100);
+  --color-category-menu-btn: var(--color-gray-c500);
+  --color-category-menu-btn-hover: var(--color-black-100);
+  --color-category-menu-btn-bg: var(--color-transparent);
+  --color-category-menu-btn-bg-hover: var(--color-gray-c300);
+
+  --color-card-bg: var(--color-gray-c100);
+  --color-card-bg-hover: var(--color-white-100);
+  --color-card-border: var(--color-gray-c400);
+  --color-card-name: var(--color-black-100);
+
+  --color-add-card-open-btn: var(--color-blue-gray-c500);
+  --color-add-card-open-btn-hover: var(--color-blue-gray-c600);
+  --color-add-card-open-btn-bg: var(--color-transparent);
+  --color-add-card-open-btn-bg-hover: var(--color-gray-c300);
+  --color-add-card-input-border: var(--color-gray-c400);
+  --color-add-card-input-border-focus: var(--color-gray-c400);
+
+  --color-board-menu-bg: var(--color-gray-c200);
+  --color-board-menu-title: var(--color-black-100);
+  --color-board-menu-item: var(--color-black-100);
+  --color-board-menu-item-bg: var(--color-transparent);
+  --color-board-menu-item-bg-hover: var(--color-gray-c300);
+
+  --color-bm-activity-title: var(--color-black-100);
+}
+
+[data-theme="sky"] {
+  --color-html-bg: var(--color-sky-c700);
+  --color-input-border-focus: var(--color-sky-c600);
+  --color-btn-bg: var(--color-sky-c600);
+  --color-btn-bg-hover: var(--color-sky-c700);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="blue"] {
+  --color-html-bg: var(--color-blue-c700);
+  --color-input-border-focus: var(--color-blue-c600);
+  --color-btn-bg: var(--color-blue-c600);
+  --color-btn-bg-hover: var(--color-blue-c700);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="indigo"] {
+  --color-html-bg: var(--color-indigo-c700);
+  --color-input-border-focus: var(--color-indigo-c600);
+  --color-btn-bg: var(--color-indigo-c600);
+  --color-btn-bg-hover: var(--color-indigo-c700);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="red"] {
+  --color-html-bg: var(--color-red-c700);
+  --color-input-border-focus: var(--color-red-c600);
+  --color-btn-bg: var(--color-red-c600);
+  --color-btn-bg-hover: var(--color-red-c700);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="pink"] {
+  --color-html-bg: var(--color-pink-c700);
+  --color-input-border-focus: var(--color-pink-c600);
+  --color-btn-bg: var(--color-pink-c600);
+  --color-btn-bg-hover: var(--color-pink-c700);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="orange"] {
+  --color-html-bg: var(--color-orange-c500);
+  --color-input-border-focus: var(--color-orange-c400);
+  --color-btn-bg: var(--color-orange-c400);
+  --color-btn-bg-hover: var(--color-orange-c500);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="yellow"] {
+  --color-html-bg: var(--color-yellow-c500);
+  --color-input-border-focus: var(--color-yellow-c400);
+  --color-btn-bg: var(--color-yellow-c400);
+  --color-btn-bg-hover: var(--color-yellow-c500);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="lime"] {
+  --color-html-bg: var(--color-lime-c700);
+  --color-input-border-focus: var(--color-lime-c600);
+  --color-btn-bg: var(--color-lime-c600);
+  --color-btn-bg-hover: var(--color-lime-c700);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="green"] {
+  --color-html-bg: var(--color-green-c700);
+  --color-input-border-focus: var(--color-green-c600);
+  --color-btn-bg: var(--color-green-c600);
+  --color-btn-bg-hover: var(--color-green-c700);
+  --color-header-bg: var(--color-black-020);
+}
+
+[data-theme="gray"] {
+  --color-html-bg: var(--color-gray-c500);
+  --color-input-border-focus: var(--color-gray-c400);
+  --color-btn-bg: var(--color-gray-c400);
+  --color-btn-bg-hover: var(--color-gray-c500);
+  --color-header-bg: var(--color-black-020);
 }

@@ -1,8 +1,8 @@
-@use "../../node_modules/modern-normalize/modern-normalize.css";
-@use "../../node_modules/animate.css/animate.css";
-
+@use "animate";
 @use "fonts";
 @use "colors";
+@use "spacing";
+@use "shared";
 @use "reset";
 @use "typography";
 @use "scaffolding";

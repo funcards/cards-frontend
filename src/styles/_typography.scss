@@ -7,3 +7,60 @@
 
   --text-unit: var(--text-base-size);
 }
+
+:root, * {
+  --text-xs: calc((var(--text-unit) / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
+  --text-md: calc(var(--text-sm) * var(--text-scale-ratio));
+  --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+  --text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+  --text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+  --text-xxxl: calc(var(--text-xxl) * var(--text-scale-ratio));
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-heading);
+  line-height: var(--heading-line-height);
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-top: calc(var(--space-sm) * var(--text-vspace-multiplier, 1));
+  margin-bottom: calc(var(--space-xxxs) * var(--text-vspace-multiplier, 1));
+}
+
+h1 {
+  font-size: var(--text-xxl);
+}
+
+h2 {
+  font-size: var(--text-xl);
+}
+
+h3 {
+  font-size: var(--text-lg);
+}
+
+h4 {
+  font-size: var(--text-md);
+}
+
+h5 {
+  font-size: var(--text-sm);
+}
+
+h6 {
+  font-size: var(--text-xs);
+}
+
+strong {
+  font-weight: 700;
+}
