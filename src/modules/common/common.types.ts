@@ -16,3 +16,21 @@ export interface PaginatedResponse<T> {
   count: number
   data: Record<string, T>
 }
+
+export enum Theme {
+  Sky = 'sky',
+  Blue = 'blue',
+  Indigo = 'indigo',
+  Red = 'red',
+  Pink = 'pink',
+  Orange = 'orange',
+  Yellow = 'yellow',
+  Lime = 'lime',
+  Green = 'green',
+  Gray = 'gray',
+}
+
+export enum DndType {
+  Category = 'CATEGORY',
+  Card = 'CARD',
+}

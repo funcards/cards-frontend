@@ -1,7 +1,9 @@
+import axios from 'axios'
 import { call, put } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 import { SignIn, Tokens } from './auth.types'
+import { ErrorResponse } from '~src/modules/common/common.types'
 
 import { clearAuth, signInSuccess, setTokens } from './auth.slice'
 import { addError } from '~src/modules/notification/notification.slice'
@@ -18,7 +20,12 @@ function* authWorker(service: any, payload: SignIn) {
     yield call(fetchTokens, service, payload)
     yield put(signInSuccess())
   } catch (error) {
-    yield put(addError({ message: (error as Error).message }))
+    if (axios.isAxiosError(error) && error.response) {
+      const data = error.response?.data as ErrorResponse
+      yield put(addError({ title: data.title, message: data.message }))
+    } else {
+      yield put(addError({ message: (error as Error).message }))
+    }
     yield put(clearAuth())
     // TODO: clear another states
   }

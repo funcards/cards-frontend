@@ -1,0 +1,26 @@
+@import "../../../../styles/breakpoints";
+
+.notifications {
+  position: fixed;
+  z-index: var(--zindex-notifications);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  &__container {
+    position: absolute;
+    left: var(--space-sm);
+    top: var(--space-sm);
+    right: var(--space-sm);
+    pointer-events: all;
+
+    & > :not([hidden]) ~ :not([hidden]) {
+      margin-top: var(--space-sm);
+    }
+
+    @include breakpoint(sm) {
+      left: auto;
+      width: 22rem;
+    }
+  }
+}

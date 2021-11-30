@@ -6,8 +6,6 @@ export const appName = Object.freeze({
   short: process.env.APP_SHORT_NAME ?? 'FC',
 })
 
-export const themes = ['sky', 'blue', 'indigo', 'red', 'pink', 'orange', 'yellow', 'lime', 'green', 'gray']
-
 const api = '/api/v1'
 
 export const endpoints = Object.freeze({
@@ -25,9 +23,4 @@ export const routes = Object.freeze({
 export const validation = Object.freeze({
   email: /\S+@\S+\.\S+/,
   password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w\s\-^$&*!@#]{8,64}$/,
-})
-
-export const dndTypes = Object.freeze({
-  category: 'CATEGORY',
-  card: 'CARD',
 })

@@ -1,7 +1,9 @@
 import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import { Loading } from '~src/modules/common/components/Loading/Loading'
 import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
+import { NotificationList } from '~src/modules/notification/components/NotificationList/NotificationList'
 import { RequireAuth } from '~src/modules/auth/components/RequireAuth/RequireAuth'
 import { RequireNotAuth } from '~src/modules/auth/components/RequireNotAuth/RequireNotAuth'
 import { routes } from '~src/utils/constants'
@@ -12,7 +14,8 @@ const SignUpPage = lazy(() => import('~src/modules/auth/components/SignUpPage/Si
 export const App: React.FC = () => (
   <BrowserRouter>
     <PageTitle />
-    <Suspense fallback={<div>Loading...</div>}>
+    <NotificationList />
+    <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<h1>HOME</h1>} />
         <Route
