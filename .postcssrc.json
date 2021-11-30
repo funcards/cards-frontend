@@ -5,6 +5,7 @@
       "globalModulePaths": ["./src/styles"]
     },
     "autoprefixer": {
+      "flexbox": "no-2009",
       "grid": true
     }
   }
