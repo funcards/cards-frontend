@@ -6,7 +6,7 @@ import { baseQuery } from '~src/utils/rtk.query'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: baseQuery(false),
+  baseQuery,
   endpoints: (build) => ({
     signIn: build.mutation<Tokens, SignIn>({
       query: (credentials) => ({ url: 'sign-in', method: 'POST', body: credentials }),
