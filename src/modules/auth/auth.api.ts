@@ -1,17 +1,16 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
-import { apiV1 } from '~src/utils/constants'
-import { prepareHeaders } from '~src/utils/helpers'
 import { SignIn, SignUp, Tokens } from './auth.types'
 import { addCached } from '~src/modules/notification/notification.slice'
+import { baseQuery } from '~src/utils/rtk.query'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: apiV1, prepareHeaders }),
+  baseQuery: baseQuery(false),
   endpoints: (build) => ({
     signIn: build.mutation<Tokens, SignIn>({
       query: (credentials) => ({ url: 'sign-in', method: 'POST', body: credentials }),
-      async onQueryStarted(credentials, { dispatch, queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (e) {
@@ -21,7 +20,7 @@ export const authApi = createApi({
     }),
     signUp: build.mutation<Tokens, SignUp>({
       query: (data) => ({ url: 'sign-up', method: 'POST', body: data }),
-      async onQueryStarted(credentials, { dispatch, queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (e) {

@@ -1,12 +1,24 @@
-// import axios from 'axios'
-//
-// import { endpoints } from '~src/utils/constants'
-// import { User } from './user.types'
-//
-// const toUser = (response: any): User => {
-//   return { user_id: response.data.user_id, name: response.data.name, email: response.data.email }
-// }
-//
-// export const me = (): Promise<User> => {
-//   return axios.get(endpoints.user.me).then(toUser)
-// }
+import { createApi } from '@reduxjs/toolkit/query/react'
+
+import { baseQueryWithReauth } from '~src/utils/rtk.query.reauth'
+import { User } from './user.types'
+import { addCached } from '~src/modules/notification/notification.slice'
+
+export const userApi = createApi({
+  reducerPath: 'userApi',
+  baseQuery: baseQueryWithReauth,
+  endpoints: (build) => ({
+    me: build.query<User, void>({
+      query: () => ({ url: 'users/me', method: 'GET' }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (e) {
+          dispatch(addCached(e.error.data))
+        }
+      },
+    })
+  }),
+})
+
+export const { useMeQuery } = userApi

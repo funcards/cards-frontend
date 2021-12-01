@@ -1,25 +1,25 @@
 import { configureStore } from '@reduxjs/toolkit'
-
-import { AuthState } from '~src/modules/auth/auth.types'
-import { NotificationState } from '~src/modules/notification/notification.types'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import { authApi } from '~src/modules/auth/auth.api'
-import authReducer from '~src/modules/auth/auth.slice'
-import notificationReducer from '~src/modules/notification/notification.slice'
+import { userApi } from '~src/modules/user/user.api'
+import auth from '~src/modules/auth/auth.slice'
+import notification from '~src/modules/notification/notification.slice'
 
 import { isProduction } from '~src/utils/constants'
-
-export interface RootState {
-  auth: AuthState
-  notification: NotificationState
-}
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-    auth: authReducer,
-    notification: notificationReducer,
+    [userApi.reducerPath]: userApi.reducer,
+    auth,
+    notification,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware, userApi.middleware),
   devTools: !isProduction,
 })
+
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()
+export type RootState = ReturnType<typeof store.getState>
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
