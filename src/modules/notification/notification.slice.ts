@@ -33,7 +33,7 @@ const notificationSlice = createSlice({
     addError: (state: NotificationState, { payload }: PayloadAction<Notification>) => {
       state.notifications.unshift(normalize({ type: NotifyType.Error, ...payload }))
     },
-    addCached: (state: NotificationState, { payload }: PayloadAction<ErrorResponse>) => {
+    addCaught: (state: NotificationState, { payload }: PayloadAction<ErrorResponse>) => {
       state.notifications.unshift(normalize({
         type: NotifyType.Error,
         title: payload.title,
@@ -54,7 +54,7 @@ const notificationSlice = createSlice({
   },
 })
 
-export const { addNotification, addSuccess, addWarning, addError, addCached, removeNotification, clearNotifications } =
+export const { addNotification, addSuccess, addWarning, addError, addCaught, removeNotification, clearNotifications } =
   notificationSlice.actions
 
 export default notificationSlice.reducer

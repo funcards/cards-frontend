@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { SignIn, SignUp, Tokens } from './auth.types'
-import { addCached } from '~src/modules/notification/notification.slice'
+import { addCaught } from '~src/modules/notification/notification.slice'
 import { baseQuery } from '~src/utils/rtk.query'
 
 export const authApi = createApi({
@@ -14,7 +14,7 @@ export const authApi = createApi({
         try {
           await queryFulfilled
         } catch (e) {
-          dispatch(addCached(e.error.data))
+          dispatch(addCaught(e.error.data))
         }
       },
     }),
@@ -24,7 +24,7 @@ export const authApi = createApi({
         try {
           await queryFulfilled
         } catch (e) {
-          dispatch(addCached(e.error.data))
+          dispatch(addCaught(e.error.data))
         }
       },
     }),

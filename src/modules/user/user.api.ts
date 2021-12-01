@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { baseQueryWithReauth } from '~src/utils/rtk.query.reauth'
 import { User } from './user.types'
-import { addCached } from '~src/modules/notification/notification.slice'
+import { addCaught } from '~src/modules/notification/notification.slice'
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -14,7 +14,7 @@ export const userApi = createApi({
         try {
           await queryFulfilled
         } catch (e) {
-          dispatch(addCached(e.error.data))
+          dispatch(addCaught(e.error.data))
         }
       },
     })
