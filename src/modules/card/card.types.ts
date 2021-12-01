@@ -1,9 +1,10 @@
 export interface Card {
-  cardId: string
-  boardId: string
-  categoryId: string
+  card_id: string
+  board_id: string
+  category_id: string
   name: string
   content: string
+  position: number
   tags: string[]
 }
 

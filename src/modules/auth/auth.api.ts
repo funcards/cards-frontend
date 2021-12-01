@@ -1,19 +1,35 @@
-import axios from 'axios'
-import { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { endpoints } from '~src/utils/constants'
+import { apiV1 } from '~src/utils/constants'
+import { prepareHeaders } from '~src/utils/helpers'
 import { SignIn, SignUp, Tokens } from './auth.types'
+import { addCached } from '~src/modules/notification/notification.slice'
 
-const config: AxiosAuthRefreshRequestConfig = { skipAuthRefresh: true }
+export const authApi = createApi({
+  reducerPath: 'authApi',
+  baseQuery: fetchBaseQuery({ baseUrl: apiV1, prepareHeaders }),
+  endpoints: (build) => ({
+    signIn: build.mutation<Tokens, SignIn>({
+      query: (credentials) => ({ url: 'sign-in', method: 'POST', body: credentials }),
+      async onQueryStarted(credentials, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (e) {
+          dispatch(addCached(e.error.data))
+        }
+      },
+    }),
+    signUp: build.mutation<Tokens, SignUp>({
+      query: (data) => ({ url: 'sign-up', method: 'POST', body: data }),
+      async onQueryStarted(credentials, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (e) {
+          dispatch(addCached(e.error.data))
+        }
+      },
+    }),
+  })
+})
 
-const toTokens = (response: any): Tokens => {
-  return { accessToken: response.data.access_token, refreshToken: response.data.refresh_token }
-}
-
-export const signIn = (dto: SignIn): Promise<Tokens> => {
-  return axios.post(endpoints.auth.signIn, dto, config).then(toTokens)
-}
-
-export const signUp = (dto: SignUp): Promise<Tokens> => {
-  return axios.post(endpoints.auth.signUp, dto, config).then(toTokens)
-}
+export const { useSignInMutation, useSignUpMutation } = authApi

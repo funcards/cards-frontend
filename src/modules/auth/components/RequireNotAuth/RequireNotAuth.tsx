@@ -11,9 +11,9 @@ export interface RequireNotAuthProps extends RouteProps {
 
 export const RequireNotAuth: React.FC<RequireNotAuthProps> = ({ children }) => {
   const { isAuthenticated } = useSelector(getAuth)
+  const location = useLocation()
 
   if (isAuthenticated) {
-    const location = useLocation()
     const from = location.state?.from?.pathname || routes.board.list
 
     return <Navigate to={from} replace={true} />

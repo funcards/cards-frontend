@@ -5,13 +5,8 @@ import { HelmetProvider } from 'react-helmet-async'
 
 import './styles/index.scss'
 
-import axiosConfig from './utils/axios.config'
-import { sagaMiddleware, store } from './store'
-import saga from './saga'
+import { store } from './store'
 import { App } from './App'
-
-axiosConfig()
-sagaMiddleware.run(saga)
 
 render(
   <Provider store={store}>

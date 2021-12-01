@@ -9,6 +9,7 @@
   },
   "extends": [
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:import/typescript",
     "plugin:import/errors",
     "plugin:import/warnings",

@@ -1,5 +1,4 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { AuthPage } from '../AuthPage/AuthPage'
@@ -7,24 +6,20 @@ import * as classes from '../AuthPage/AuthPage.module.scss'
 
 import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { appName, routes, validation } from '~src/utils/constants'
-import { getAuth } from '~src/modules/auth/auth.selectors'
 import { SignIn } from '~src/modules/auth/auth.types'
-import { signIn } from '~src/modules/auth/auth.slice'
+import { useSignInMutation } from '~src/modules/auth/auth.api'
 
 const SignInPage: React.FC = () => {
-  const { loading } = useSelector(getAuth)
-  const dispatch = useDispatch()
+  const [signIn, { isLoading }] = useSignInMutation()
 
-  const onSignIn = (data: Record<string, any>) => {
-    dispatch(signIn(data as SignIn))
-  }
+  const onSignIn = async (data: Record<string, any>) => await signIn(data as SignIn)
 
   return (
     <>
       <PageTitle title="Sign in" />
       <AuthPage
         title={`Sign in to ${appName.long}`}
-        loading={loading}
+        loading={isLoading}
         btnLabel="Sign in"
         onFormSubmit={onSignIn}
         formFields={{

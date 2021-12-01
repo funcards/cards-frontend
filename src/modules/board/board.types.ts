@@ -1,16 +1,16 @@
 import * as dayjs from 'dayjs';
 
 export interface Member {
-  userId: string
+  user_id: string
   roles: string[]
 }
 
 export interface Board {
-  boardId: string
+  board_id: string
   name: string
   color: string
   description: string
-  createdAt: dayjs.Dayjs
+  created_at: dayjs.Dayjs
   members: Record<string, Member>
 }
 

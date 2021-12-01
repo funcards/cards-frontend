@@ -10,12 +10,11 @@ export interface SignIn {
 }
 
 export interface Tokens {
-  accessToken: string
-  refreshToken: string
+  access_token: string
+  refresh_token: string
 }
 
 export interface AuthState {
   isAuthenticated: boolean
   tokens?: Tokens
-  loading: boolean
 }

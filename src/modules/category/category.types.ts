@@ -1,6 +1,6 @@
 export interface Category {
-  categoryId: string
-  boardId: string
+  category_id: string
+  board_id: string
   name: string
   position: number
 }

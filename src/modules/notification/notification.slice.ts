@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuid } from 'uuid'
 
 import { NotificationState, NotifyType, Notification } from './notification.types'
+import { ErrorResponse } from '~src/modules/common/common.types'
 
 const dismiss = 4000 // 4s
 
@@ -32,6 +33,14 @@ const notificationSlice = createSlice({
     addError: (state: NotificationState, { payload }: PayloadAction<Notification>) => {
       state.notifications.unshift(normalize({ type: NotifyType.Error, ...payload }))
     },
+    addCached: (state: NotificationState, { payload }: PayloadAction<ErrorResponse>) => {
+      state.notifications.unshift(normalize({
+        type: NotifyType.Error,
+        title: payload.title,
+        message: payload.message,
+      }))
+      // TODO: add validation errors
+    },
     removeNotification: (state: NotificationState, { payload }: PayloadAction<Notification | string>) => {
       const id = typeof payload === 'string' ? payload : payload.id
       const index = state.notifications.findIndex((item) => item.id === id)
@@ -45,7 +54,7 @@ const notificationSlice = createSlice({
   },
 })
 
-export const { addNotification, addSuccess, addWarning, addError, removeNotification, clearNotifications } =
+export const { addNotification, addSuccess, addWarning, addError, addCached, removeNotification, clearNotifications } =
   notificationSlice.actions
 
 export default notificationSlice.reducer

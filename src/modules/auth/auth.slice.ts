@@ -1,49 +1,41 @@
-import { createSlice, PayloadAction } from '~node_modules/@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import * as storage from '~src/storage/cookies.storage'
 
-import { AuthState, SignIn, Tokens } from './auth.types'
+import { AuthState, Tokens } from './auth.types'
+import { authApi } from './auth.api'
 
 const keyTokens = 'tokens'
 const tokens = storage.get(keyTokens, undefined)
-const isAuthenticated = tokens !== undefined && 'accessToken' in tokens && 'refreshToken' in tokens
+const isAuthenticated = tokens !== undefined && Object.keys(tokens).length > 0
 
 const initialState: AuthState = {
   isAuthenticated,
   tokens: isAuthenticated ? tokens : undefined,
-  loading: false,
+}
+
+const signInReducer = (state: AuthState, { payload }: PayloadAction<Tokens>) => {
+  state.isAuthenticated = true
+  state.tokens = payload
+  storage.set(keyTokens, payload)
 }
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signIn: (state: AuthState, { payload }: PayloadAction<SignIn>) => {
-      state.loading = true
-    },
-    signUp: (state: AuthState, { payload }: PayloadAction<SignIn>) => {
-      state.loading = true
-    },
-    signInSuccess: (state: AuthState) => {
-      state.isAuthenticated = true
-      state.loading = false
-    },
     signOut: (state: AuthState) => {
-      state.loading = true
-    },
-    setTokens: (state: AuthState, { payload }: PayloadAction<Tokens>) => {
-      state.tokens = payload
-      storage.set(keyTokens, payload)
-    },
-    clearAuth: (state: AuthState) => {
       state.isAuthenticated = false
       state.tokens = undefined
-      state.loading = false
       storage.remove(keyTokens)
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addMatcher(authApi.endpoints.signIn.matchFulfilled, signInReducer)
+      .addMatcher(authApi.endpoints.signUp.matchFulfilled, signInReducer)
+  },
 })
 
-export const { signIn, signUp, signInSuccess, signOut, setTokens, clearAuth } = authSlice.actions
-
+export const { signOut } = authSlice.actions
 export default authSlice.reducer

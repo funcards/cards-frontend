@@ -1,6 +1,6 @@
 export interface Tag {
-  tagId: string
-  boardId: string
+  tag_id: string
+  board_id: string
   name: string
   color: string
 }
