@@ -4,7 +4,7 @@
 }
 
 [data-reach-dialog-overlay] {
-  background: hsla(0, 0%, 0%, 0.33);
+  background: var(--color-modal-overlay-bg);
   position: fixed;
   top: 0;
   right: 0;
@@ -14,10 +14,6 @@
 }
 
 [data-reach-dialog-content] {
-  width: 50vw;
-  margin: 10vh auto;
-  background: white;
-  padding: 2rem;
   outline: none;
 }
 
