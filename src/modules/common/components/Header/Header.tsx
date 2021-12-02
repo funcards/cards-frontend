@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button'
 
 import * as classes from './Header.module.scss'
@@ -11,6 +11,7 @@ import { useAppDispatch, signOutFn, useTypedSelector } from '~src/store'
 import { getMe } from '~src/modules/user/user.selectors'
 
 export const Header: React.FC = () => {
+  const location = useLocation()
   const dispatch = useAppDispatch()
   const me = useTypedSelector(getMe)
   const { isLoading } = useMeQuery()
@@ -50,7 +51,12 @@ export const Header: React.FC = () => {
       </ul>
       <ul className={classes.header__group}>
         <li>
-          <button className={classes.headerBtn} onClick={() => {}}>
+          <Link
+            to={routes.board.add}
+            state={{ backgroundLocation: location }}
+            className={classes.headerBtn}
+            role="button"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className={classes.headerBtn__icon}
@@ -65,7 +71,7 @@ export const Header: React.FC = () => {
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-          </button>
+          </Link>
         </li>
         {!isLoading && me && (
           <Menu as="li">

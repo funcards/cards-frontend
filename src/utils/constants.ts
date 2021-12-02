@@ -10,7 +10,7 @@ export const appName = Object.freeze({
 export const routes = Object.freeze({
   root: '/',
   auth: Object.freeze({ signIn: '/sign-in', signUp: '/sign-up', forgotPassword: '/forgot' }),
-  board: Object.freeze({ list: '/boards', one: (id = ':boardId') => `/boards/${id}` }),
+  board: Object.freeze({ list: '/boards', add: '/boards/add', one: (id = ':boardId') => `/boards/${id}` }),
 })
 
 export const validation = Object.freeze({
