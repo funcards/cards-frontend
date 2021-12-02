@@ -14,7 +14,7 @@ export interface PaginatedResponse<T> {
   pageIndex: number
   pageSize: number
   count: number
-  data: Record<string, T>
+  data: T[]
 }
 
 export enum Theme {

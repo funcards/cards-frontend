@@ -1,4 +1,5 @@
-import * as dayjs from 'dayjs';
+import { EntityState } from '@reduxjs/toolkit'
+import * as dayjs from 'dayjs'
 
 export interface Member {
   user_id: string
@@ -11,11 +12,7 @@ export interface Board {
   color: string
   description: string
   created_at: dayjs.Dayjs
-  members: Record<string, Member>
+  members: Member[]
 }
 
-export interface BoardState {
-  list: Record<string, Board>
-  currentBoard?: Board
-  loading: boolean
-}
+export type BoardState = EntityState<Board>

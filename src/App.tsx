@@ -7,21 +7,16 @@ import { NotificationList } from '~src/modules/notification/components/Notificat
 import { RequireAuth } from '~src/modules/auth/components/RequireAuth/RequireAuth'
 import { RequireNotAuth } from '~src/modules/auth/components/RequireNotAuth/RequireNotAuth'
 import { routes } from '~src/utils/constants'
-import { useMeQuery } from '~src/modules/user/user.api'
-import { Loader } from '~src/modules/common/components/Loader/Loader'
 
 const SignInPage = lazy(() => import('~src/modules/auth/components/SignInPage/SignInPage'))
 const SignUpPage = lazy(() => import('~src/modules/auth/components/SignUpPage/SignUpPage'))
+const BoardListPage = lazy(() => import('~src/modules/board/components/BoardListPage/BoardListPage'))
+const BoardPage = lazy(() => import('~src/modules/board/components/BoardPage/BoardPage'))
 
-const Boards: React.FC = () => {
-  const { data: user, isLoading } = useMeQuery()
-
-  if (isLoading) {
-    return <Loader />
-  }
-
-  return <h1>{user?.email}</h1>
-}
+// dispatch(boardApi.util.resetApiState())
+// dispatch(userApi.util.resetApiState())
+// dispatch(authApi.util.resetApiState())
+// dispatch(removeAll())
 
 export const App: React.FC = () => (
   <BrowserRouter>
@@ -47,7 +42,8 @@ export const App: React.FC = () => (
           }
         />
         <Route path={routes.board.list} element={<RequireAuth />}>
-          <Route index element={<Boards />} />
+          <Route index element={<BoardListPage />} />
+          <Route path=":boardId" element={<BoardPage />} />
         </Route>
         <Route path="*" element={<h1>NOT FOUND</h1>} />
       </Routes>
