@@ -7,11 +7,11 @@ export const userAdapter = createEntityAdapter<User>({
   selectId: (user) => user.user_id,
 })
 
+const initialCurrentUser: { currentUser?: User } = {}
+
 const userSlice = createSlice({
   name: 'users',
-  initialState: userAdapter.getInitialState({
-    currentUser: undefined
-  }),
+  initialState: userAdapter.getInitialState(initialCurrentUser),
   reducers: {
     removeAll: (state: UserState) => {
       state.currentUser = undefined

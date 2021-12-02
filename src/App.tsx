@@ -7,16 +7,12 @@ import { NotificationList } from '~src/modules/notification/components/Notificat
 import { RequireAuth } from '~src/modules/auth/components/RequireAuth/RequireAuth'
 import { RequireNotAuth } from '~src/modules/auth/components/RequireNotAuth/RequireNotAuth'
 import { routes } from '~src/utils/constants'
+import NotFound from '~src/modules/common/components/NotFound/NotFound'
 
 const SignInPage = lazy(() => import('~src/modules/auth/components/SignInPage/SignInPage'))
 const SignUpPage = lazy(() => import('~src/modules/auth/components/SignUpPage/SignUpPage'))
 const BoardListPage = lazy(() => import('~src/modules/board/components/BoardListPage/BoardListPage'))
 const BoardPage = lazy(() => import('~src/modules/board/components/BoardPage/BoardPage'))
-
-// dispatch(boardApi.util.resetApiState())
-// dispatch(userApi.util.resetApiState())
-// dispatch(authApi.util.resetApiState())
-// dispatch(removeAll())
 
 export const App: React.FC = () => (
   <BrowserRouter>
@@ -45,7 +41,7 @@ export const App: React.FC = () => (
           <Route index element={<BoardListPage />} />
           <Route path=":boardId" element={<BoardPage />} />
         </Route>
-        <Route path="*" element={<h1>NOT FOUND</h1>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   </BrowserRouter>

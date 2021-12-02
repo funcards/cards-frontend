@@ -7,14 +7,6 @@ export const appName = Object.freeze({
   short: process.env.APP_SHORT_NAME ?? 'FC',
 })
 
-const api = '/api/v1'
-
-export const endpoints = Object.freeze({
-  auth: Object.freeze({ signUp: `${api}/sign-up`, signIn: `${api}/sign-in`, refreshToken: `${api}/refresh-token` }),
-  user: Object.freeze({ list: `${api}/users`, me: `${api}/users/me` }),
-  board: Object.freeze({ list: `${api}/boards`, one: (id: string) => `${api}/boards/${id}` }),
-})
-
 export const routes = Object.freeze({
   root: '/',
   auth: Object.freeze({ signIn: '/sign-in', signUp: '/sign-up', forgotPassword: '/forgot' }),

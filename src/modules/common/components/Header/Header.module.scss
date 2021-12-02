@@ -1,0 +1,212 @@
+@import "../../../../styles/breakpoints";
+
+.header {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--space-xxxs);
+  background-color: var(--color-header-bg);
+
+  &__group {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    gap: var(--space-xxxs);
+  }
+
+  &__user-group {
+    display: none;
+    padding-right: var(--space-xxxs);
+
+    & > :not([hidden]) ~ :not([hidden]) {
+      margin-left: calc(var(--space-xs) * -1);
+    }
+
+    @include breakpoint(md) {
+      display: flex;
+    }
+  }
+
+  &__divide {
+    display: none;
+    width: 1px;
+    height: 60%;
+    margin: 0 var(--space-xxxs);
+    background-color: var(--color-white-020);
+
+    @include breakpoint(md) {
+      display: block;
+    }
+  }
+
+  &__logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    letter-spacing: 0.2em;
+    color: var(--color-white-050);
+    text-shadow: 0.1rem 0.1rem 0.1rem var(--color-black-015);
+  }
+}
+
+.headerBtn {
+  background-color: var(--color-header-btn-bg);
+  border-radius: var(--radius-md);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xxs);
+  padding: var(--space-xxs);
+
+  &:hover {
+    background-color: var(--color-header-btn-bg-hover);
+  }
+
+  &_md {
+    display: none;
+
+    @include breakpoint(md) {
+      display: grid;
+    }
+  }
+
+  &_circle {
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    border-radius: 9999px;
+    background-color: var(--color-transparent);
+    padding: 0;
+    font-size: var(--text-xs);
+
+    &:hover {
+      padding: 0.05rem;
+      background-color: var(--color-transparent);
+      box-shadow: 0 0 0 0.05rem var(--color-white-030), 0 0 #0000;
+    }
+  }
+
+  &__avatar {
+    border-radius: 9999px;
+  }
+
+  &__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &__text {
+    font-size: var(--text-sm);
+
+    &_bold {
+      font-weight: 600;
+    }
+
+    &_md {
+      display: none;
+
+      @include breakpoint(md) {
+        display: block;
+      }
+    }
+  }
+}
+
+.userMenu {
+  width: 19rem;
+  margin-top: var(--space-xs);
+  padding: var(--space-xxxs) 0;
+  display: grid;
+  grid-auto-flow: row;
+  background-color: var(--color-user-menu-bg);
+  border-radius: var(--radius-md);
+  border-color: var(--color-divide);
+  border-width: 1px;
+  box-shadow: var(--shadow-md);
+
+  &:focus {
+    outline: none;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-user-menu-title);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    margin: 0 var(--space-sm);
+    padding: var(--space-sm) 0;
+    border-bottom-width: 1px;
+    border-color: var(--color-divide);
+  }
+
+  &__info {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-xs);
+    align-items: center;
+    margin: 0 var(--space-sm);
+    padding: var(--space-sm) 0;
+    border-bottom-width: 1px;
+    border-color: var(--color-divide);
+  }
+
+  &__avatar {
+    height: 2.5rem;
+    width: 2.5rem;
+    grid-row: span 2 / span 2;
+    border-radius: 9999px;
+  }
+
+  &__name {
+    font-family: sans-serif;
+    font-size: var(--text-sm);
+    color: var(--color-user-menu-item);
+  }
+
+  &__email {
+    font-family: sans-serif;
+    font-size: var(--text-xs);
+    color: var(--color-user-menu-email);
+  }
+
+  &__group {
+    padding: var(--space-xs) 0;
+    margin: 0 var(--space-sm);
+    display: grid;
+    grid-auto-flow: row;
+    border-bottom-width: 1px;
+    border-color: var(--color-divide);
+
+    &:last-child {
+      border-width: 0;
+      padding-bottom: var(--space-xxs);
+    }
+  }
+
+  &__item {
+    margin: 0 calc(var(--space-sm) * -1);
+    padding: var(--space-xxs) var(--space-sm);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border-radius: 0;
+    color: var(--color-user-menu-item);
+    background-color: var(--color-transparent);
+    box-shadow: none;
+
+    &:hover {
+      background-color: var(--color-user-menu-item-bg-hover);
+    }
+  }
+}

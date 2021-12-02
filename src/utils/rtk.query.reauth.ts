@@ -2,8 +2,8 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery, retry } fr
 
 import { baseQuery } from './rtk.query'
 
-import { RootState } from '~src/store'
-import { signIn, signOut } from '~src/modules/auth/auth.slice'
+import { RootState, signOutFn } from '~src/store'
+import { signIn } from '~src/modules/auth/auth.slice'
 import { Tokens } from '~src/modules/auth/auth.types'
 import { apiV1 } from '~src/utils/constants'
 
@@ -32,7 +32,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
       api.dispatch(signIn(refreshResult.data as Tokens))
       result = await baseQuery(args, api, extraOptions)
     } else {
-      api.dispatch(signOut())
+      await signOutFn(api.dispatch)
     }
   }
 

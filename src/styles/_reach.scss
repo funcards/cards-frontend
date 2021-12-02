@@ -1,0 +1,49 @@
+:root {
+  --reach-menu-button: 1;
+}
+
+[data-reach-menu] {
+  position: relative;
+}
+
+[data-reach-menu-popover] {
+  display: block;
+  position: absolute;
+}
+
+[data-reach-menu-popover][hidden] {
+  display: none;
+}
+
+[data-reach-menu-list],
+[data-reach-menu-items] {
+  display: block;
+  white-space: nowrap;
+  outline: none;
+  animation: slide-down 0.2s ease;
+}
+
+[data-reach-menu-item] {
+  display: block;
+  user-select: none;
+}
+
+[data-reach-menu-item] {
+  cursor: pointer;
+
+  /* a */
+  display: block;
+  color: inherit;
+  font: inherit;
+  text-decoration: initial;
+}
+
+/* pseudo pseudo selector */
+[data-reach-menu-item][data-selected] {
+  outline: none;
+}
+
+[data-reach-menu-item][aria-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

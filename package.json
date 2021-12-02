@@ -21,6 +21,8 @@
   "homepage": "https://github.com/funcards/cards-frontend#README",
   "dependencies": {
     "@reach/dialog": "^0.16.2",
+    "@reach/menu-button": "^0.16.2",
+    "@reach/portal": "^0.16.2",
     "@reduxjs/toolkit": "^1.6.2",
     "@types/react-helmet-async": "^1.0.3",
     "dayjs": "^1.10.7",
