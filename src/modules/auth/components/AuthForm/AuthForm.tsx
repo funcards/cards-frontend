@@ -1,8 +1,6 @@
 import React, { ComponentPropsWithoutRef, useMemo } from 'react'
 import { useForm, RegisterOptions } from 'react-hook-form'
 
-import * as classes from './AuthForm.module.scss'
-
 export interface FormField {
   type: string
   placeholder: string
@@ -33,20 +31,20 @@ export const AuthForm: React.FC<AuthFormProps> = ({
   const disabled = useMemo(() => loading || !isDirty || !isValid, [loading, isDirty, isValid])
 
   return (
-    <form onSubmit={handleSubmit(onFormSubmit)} className={`${className} ${classes.form}`} {...rest}>
+    <form onSubmit={handleSubmit(onFormSubmit)} className={`${className} form`} {...rest}>
       {Object.keys(formFields).map((key) => (
-        <div key={key} className={classes.form__row}>
+        <div key={key} className="form__row">
           <input
             type={formFields[key].type}
             placeholder={formFields[key].placeholder}
-            className={errors[key] ? `${classes.form__input} ${classes.form__input_error}` : classes.form__input}
+            className={errors[key] ? 'form__input form__input_error' : 'form__input'}
             {...register(key, formFields[key].registerOptions)}
           />
-          {errors[key] && <strong className={classes.form__error}>{errors[key].message}</strong>}
+          {errors[key] && <strong className="form__error">{errors[key].message}</strong>}
         </div>
       ))}
-      <div className={classes.form__row}>
-        <button type="submit" className={classes.form__btn} disabled={disabled}>
+      <div className="form__row">
+        <button type="submit" className="form__btn" disabled={disabled}>
           {loading && <span role="loading" />}
           {btnLabel}
         </button>

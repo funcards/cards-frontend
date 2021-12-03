@@ -5,8 +5,8 @@ import { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh'
 import { SignIn, SignUp } from './auth.types'
 import { failed, setCurrentUser, setTokens, success } from './auth.slice'
 
-import { fetcher, toErrorResponse } from '~src/utils/fetcher'
-import { addCaught } from '~src/modules/notification/notification.slice'
+import { fetcher } from '~src/utils/fetcher'
+import { caughtSaga } from '~src/modules/notification/notification.saga'
 
 const config: AxiosAuthRefreshRequestConfig = { skipAuthRefresh: true }
 
@@ -20,9 +20,7 @@ function* authWorker(url: string, payload: SignIn | SignUp) {
 
     yield put(success())
   } catch (e) {
-    const error = toErrorResponse(e)
-    yield put(addCaught(error))
-    yield put(failed(error))
+    yield call(caughtSaga, e, failed)
   }
 }
 

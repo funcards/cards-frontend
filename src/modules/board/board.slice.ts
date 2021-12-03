@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { Board, BoardState } from './board.types'
+import { Board, BoardState, DraftBoard } from './board.types'
 
 import { ErrorResponse } from '~src/modules/common/common.types'
 
@@ -14,44 +14,39 @@ const initialState: BoardState = boardAdapter.getInitialState({
   isError: false,
 })
 
+const init = (state: BoardState) => {
+  state.isLoading = true
+  state.isError = false
+  state.error = undefined
+}
+
+const end = (state: BoardState) => {
+  state.isLoading = false
+  state.isError = false
+  state.error = undefined
+}
+
 const boardSlice = createSlice({
   name: 'boards',
   initialState,
   reducers: {
-    success: (state: BoardState) => {
-      state.isLoading = false
-      state.isError = false
-      state.error = undefined
-    },
+    success: end,
     failed: (state: BoardState, { payload }: PayloadAction<ErrorResponse>) => {
       state.isLoading = false
       state.isError = true
       state.error = payload
     },
     clear: (state: BoardState) => {
-      state.isLoading = false
-      state.isError = false
-      state.error = undefined
+      end(state)
       boardAdapter.removeAll(state)
     },
-    loadBoards: (state: BoardState) => {
-      state.isLoading = true
-      state.isError = false
-      state.error = undefined
-    },
-    loadBoard: (state: BoardState, {}: PayloadAction<string>) => {
-      state.isLoading = true
-      state.isError = false
-      state.error = undefined
-    },
-    setBoards: (state: BoardState, { payload }: PayloadAction<Board[]>) => {
-      boardAdapter.setAll(state, payload)
-    },
-    upsertBoard: (state: BoardState, { payload }: PayloadAction<Board>) => {
-      boardAdapter.upsertOne(state, payload)
-    },
+    newBoard: (state: BoardState, {}: PayloadAction<DraftBoard>) => init(state),
+    loadBoards: init,
+    loadBoard: (state: BoardState, {}: PayloadAction<string>) => init(state),
+    setBoards: (state: BoardState, { payload }: PayloadAction<Board[]>) => boardAdapter.setAll(state, payload),
+    upsertBoard: (state: BoardState, { payload }: PayloadAction<Board>) => boardAdapter.upsertOne(state, payload),
   },
 })
 
-export const { success, failed, clear, loadBoards, loadBoard, setBoards, upsertBoard } = boardSlice.actions
+export const { success, failed, clear, newBoard, loadBoards, loadBoard, setBoards, upsertBoard } = boardSlice.actions
 export default boardSlice.reducer

@@ -1,10 +1,12 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 import { failed, setBoards, success, upsertBoard } from './board.slice'
 
-import { fetcher, toErrorResponse } from '~src/utils/fetcher'
-import { addCaught } from '~src/modules/notification/notification.slice'
+import { fetcher } from '~src/utils/fetcher'
+import { selectBoard } from '~src/modules/board/board.selectors'
+import { Board, DraftBoard } from '~src/modules/board/board.types'
+import { caughtSaga, successSaga } from '~src/modules/notification/notification.saga'
 
 export function* loadBoardsSaga() {
   try {
@@ -12,16 +14,19 @@ export function* loadBoardsSaga() {
     yield put(setBoards(data.data))
     yield put(success())
   } catch (e) {
-    const error = toErrorResponse(e)
-    yield put(addCaught(error))
-    yield put(failed(error))
+    yield call(caughtSaga, e, failed)
   }
 }
 
 export function* loadBoardSaga({ payload }: PayloadAction<string>) {
   try {
-    const { data } = yield call(fetcher.get, `/boards/${payload}`)
-    yield put(upsertBoard(data))
+    let board: Board | undefined = yield select(selectBoard, payload)
+
+    if (!board) {
+      const { data } = yield call(fetcher.get, `/boards/${payload}`)
+      yield put(upsertBoard(data))
+      board = data
+    }
 
     // TODO: load members
     // TODO: load categories
@@ -30,8 +35,17 @@ export function* loadBoardSaga({ payload }: PayloadAction<string>) {
 
     yield put(success())
   } catch (e) {
-    const error = toErrorResponse(e)
-    yield put(addCaught(error))
-    yield put(failed(error))
+    yield call(caughtSaga, e, failed)
+  }
+}
+
+export function* newBoardSaga({ payload }: PayloadAction<DraftBoard>) {
+  try {
+    const { headers } = yield call(fetcher.post, '/boards', payload)
+    const boardId = headers['location'].split('/').pop()
+    yield call(loadBoardSaga, { payload: boardId } as PayloadAction<string>)
+    yield call(successSaga, { payload: `Board "${payload.name}" added successfully.` } as PayloadAction<string>)
+  } catch (e) {
+    yield call(caughtSaga, e, failed)
   }
 }

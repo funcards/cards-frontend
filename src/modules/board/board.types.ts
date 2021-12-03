@@ -8,6 +8,12 @@ export interface Member {
   roles: string[]
 }
 
+export interface DraftBoard {
+  name: string
+  color: string
+  description: string
+}
+
 export interface Board {
   board_id: string
   name: string

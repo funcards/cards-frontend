@@ -33,7 +33,7 @@ const refresh = (failedRequest: any) => {
   }
 
   return fetcher
-    .post('/refresh-token', { token: tokens.refresh_token })
+    .post('/refresh-token', { token: tokens.refresh_token }, { skipAuthRefresh: true } as AxiosAuthRefreshRequestConfig)
     .then((response) => {
       store.dispatch(setTokens(response.data))
       failedRequest.response.config.headers['Authorization'] = 'Bearer ' + response.data.access_token

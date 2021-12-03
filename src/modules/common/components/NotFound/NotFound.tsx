@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import * as classes from './NotFound.module.scss'
@@ -14,10 +14,10 @@ const NotFound: React.FC = () => {
   const dispatch = useAppDispatch()
   const { currentUser } = useTypedSelector(selectAuthState)
 
-  const onSignOut = () => {
+  const onSignOut = useCallback(() => {
     dispatch(signOut())
     navigate(routes.auth.signIn)
-  }
+  }, [dispatch, navigate])
 
   return (
     <main className={classes.notFound}>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button'
 
@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
   const dispatch = useAppDispatch()
   const { currentUser } = useTypedSelector(selectAuthState)
 
-  const onSignOut = () => dispatch(signOut())
+  const onSignOut = useCallback(() => dispatch(signOut()), [dispatch])
 
   return (
     <header className={classes.header}>

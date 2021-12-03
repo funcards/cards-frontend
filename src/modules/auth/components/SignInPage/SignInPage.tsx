@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthPage } from '../AuthPage/AuthPage'
@@ -15,7 +15,7 @@ const SignInPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const { isLoading } = useTypedSelector(selectAuthState)
 
-  const onSignIn = (data: Record<string, any>) => dispatch(signIn(data as SignIn))
+  const onSignIn = useCallback((data) => dispatch(signIn(data as SignIn)), [dispatch])
 
   return (
     <>

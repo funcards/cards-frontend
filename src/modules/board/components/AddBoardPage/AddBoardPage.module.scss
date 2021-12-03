@@ -34,6 +34,11 @@
     color: var(--color-btn-close);
     background-color: var(--color-transparent);
     box-shadow: none;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       color: var(--color-btn-close-hover);
@@ -41,8 +46,34 @@
     }
   }
 
-  &__x-icon {
+  &__xIcon {
     width: 1.5rem;
     height: 1.5rem;
+  }
+
+  &__themes {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin: 0 calc(var(--space-xxxs) * -1);
+  }
+
+  &__theme {
+    flex-grow: 1;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    margin: var(--space-xs);
+    display: block;
+    cursor: pointer;
+    box-shadow: var(--shadow-xl);
+    background-color: var(--color-html-bg);
+
+    &:focus {
+      outline: none;
+    }
+
+    &_active {
+      box-shadow: 0 0 0 3px var(--color-add-board-theme-active), 0 0 #0000;
+    }
   }
 }

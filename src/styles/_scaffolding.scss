@@ -83,3 +83,63 @@ button,
   flex-direction: column;
   align-items: center;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+
+    & ~ :not([hidden]) {
+      padding-top: var(--space-md);
+    }
+  }
+
+  &__input {
+    font-size: var(--text-lg);
+    padding: var(--space-xxs);
+    border-radius: var(--radius-md);
+    border-width: 2px;
+
+    &_error {
+      border-color: var(--color-error);
+    }
+  }
+
+  &__error {
+    display: block;
+    color: var(--color-error);
+    padding-left: var(--space-xxxxs);
+    padding-top: var(--space-xxxxs);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  &__btn {
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-md);
+    font-size: var(--text-lg);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    justify-content: center;
+
+    &_end {
+      align-self: flex-end;
+    }
+
+    [role='loading'] {
+      width: calc(var(--text-lg) * 0.85);
+      height: calc(var(--text-lg) * 0.85);
+    }
+
+    &:disabled {
+      box-shadow: var(--shadow-xs);
+    }
+  }
+}
