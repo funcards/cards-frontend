@@ -1,42 +1,76 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import * as storage from '~src/storage/cookies.storage'
+import { AuthState, SignIn, SignUp, CurrentUser, Tokens } from './auth.types'
 
-import { AuthState, Tokens } from './auth.types'
-import { authApi } from './auth.api'
+import * as cookiesStorage from '~src/storage/cookies.storage'
+import * as localStorage from '~src/storage/local.storage'
+import { ErrorResponse } from '~src/modules/common/common.types'
 
 const keyTokens = 'tokens'
-const tokens = storage.get(keyTokens, undefined)
-const isAuthenticated = tokens !== undefined && Object.keys(tokens).length > 0
+const keyCurrentUser = 'current.user'
+const tokens = cookiesStorage.get<Tokens | undefined>(keyTokens, undefined)
+const currentUser = localStorage.get<CurrentUser | undefined>(keyCurrentUser, undefined)
+const isAuthenticated = tokens !== undefined && currentUser !== undefined
 
 const initialState: AuthState = {
   isAuthenticated,
-  tokens: isAuthenticated ? tokens : undefined,
+  isLoading: false,
+  isError: false,
+  tokens,
+  currentUser,
 }
 
-const signInReducer = (state: AuthState, { payload }: PayloadAction<Tokens>) => {
-  state.isAuthenticated = true
-  state.tokens = payload
-  storage.set(keyTokens, payload)
+const init = (state: AuthState, {}: PayloadAction<SignIn | SignUp>) => {
+  state.isAuthenticated = false
+  state.isLoading = true
+  state.isError = false
+  state.error = undefined
+  state.tokens = undefined
+  state.currentUser = undefined
 }
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signIn: signInReducer,
+    signIn: init,
+    signUp: init,
     signOut: (state: AuthState) => {
       state.isAuthenticated = false
+      state.isLoading = false
+      state.isError = false
+      state.error = undefined
       state.tokens = undefined
-      storage.remove(keyTokens)
+      state.currentUser = undefined
+      cookiesStorage.remove(keyTokens)
+      localStorage.remove(keyCurrentUser)
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addMatcher(authApi.endpoints.signIn.matchFulfilled, signInReducer)
-      .addMatcher(authApi.endpoints.signUp.matchFulfilled, signInReducer)
+    success: (state: AuthState) => {
+      state.isAuthenticated = true
+      state.isLoading = false
+      state.isError = false
+      state.error = undefined
+    },
+    failed: (state: AuthState, { payload }: PayloadAction<ErrorResponse>) => {
+      state.isAuthenticated = false
+      state.isLoading = false
+      state.isError = true
+      state.error = payload
+      state.tokens = undefined
+      state.currentUser = undefined
+      cookiesStorage.remove(keyTokens)
+      localStorage.remove(keyCurrentUser)
+    },
+    setTokens: (state: AuthState, { payload }: PayloadAction<Tokens>) => {
+      state.tokens = payload
+      cookiesStorage.set(keyTokens, payload)
+    },
+    setCurrentUser: (state: AuthState, { payload }: PayloadAction<CurrentUser>) => {
+      state.currentUser = payload
+      localStorage.set(keyCurrentUser, payload)
+    },
   },
 })
 
-export const { signIn, signOut } = authSlice.actions
+export const { signIn, signUp, signOut, success, failed, setTokens, setCurrentUser } = authSlice.actions
 export default authSlice.reducer

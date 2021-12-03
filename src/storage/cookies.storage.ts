@@ -3,9 +3,13 @@ import Cookies from 'js-cookie'
 const storage = Cookies.withAttributes({ sameSite: 'Lax' })
 
 const get = <T>(key: string, defaultValue: T): T => {
-  const item = storage.get(key)
+  try {
+    const item = storage.get(key)
 
-  return item ? (JSON.parse(item) as T) : defaultValue
+    return item ? (JSON.parse(item) as T) : defaultValue
+  } catch {
+    return defaultValue
+  }
 }
 
 const set = (key: string, value: any): void => {

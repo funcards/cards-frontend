@@ -5,5 +5,4 @@ export interface Category {
   position: number
 }
 
-export interface CategoryState {
-}
+export interface CategoryState {}

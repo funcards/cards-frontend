@@ -1,6 +1,8 @@
 import { EntityState } from '@reduxjs/toolkit'
 import * as dayjs from 'dayjs'
 
+import { ErrorState } from '~src/modules/common/common.types'
+
 export interface Member {
   user_id: string
   roles: string[]
@@ -15,4 +17,4 @@ export interface Board {
   members: Member[]
 }
 
-export type BoardState = EntityState<Board>
+export interface BoardState extends EntityState<Board>, ErrorState {}

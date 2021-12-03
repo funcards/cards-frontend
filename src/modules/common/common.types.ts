@@ -10,6 +10,12 @@ export interface ErrorResponse {
   errors?: ValidationErrors
 }
 
+export interface ErrorState {
+  isLoading: boolean
+  isError: boolean
+  error?: ErrorResponse
+}
+
 export interface PaginatedResponse<T> {
   pageIndex: number
   pageSize: number

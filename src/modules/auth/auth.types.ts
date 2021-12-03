@@ -1,3 +1,5 @@
+import { ErrorState } from '~src/modules/common/common.types'
+
 export interface SignUp {
   name: string
   email: string
@@ -14,7 +16,14 @@ export interface Tokens {
   refresh_token: string
 }
 
-export interface AuthState {
+export interface CurrentUser {
+  user_id: string
+  name: string
+  email: string
+}
+
+export interface AuthState extends ErrorState {
   isAuthenticated: boolean
   tokens?: Tokens
+  currentUser?: CurrentUser
 }

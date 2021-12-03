@@ -1,9 +1,13 @@
 const storage = window.localStorage
 
 const get = <T>(key: string, defaultValue: T): T => {
-  const item = storage.getItem(key)
+  try {
+    const item = storage.getItem(key)
 
-  return item ? (JSON.parse(item) as T) : defaultValue
+    return item ? (JSON.parse(item) as T) : defaultValue
+  } catch {
+    return defaultValue
+  }
 }
 
 const set = (key: string, value: any): void => {

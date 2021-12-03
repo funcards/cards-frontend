@@ -7,12 +7,15 @@ import * as classes from '../AuthPage/AuthPage.module.scss'
 import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { appName, routes, validation } from '~src/utils/constants'
 import { SignIn } from '~src/modules/auth/auth.types'
-import { useSignInMutation } from '~src/modules/auth/auth.api'
+import { useAppDispatch, useTypedSelector } from '~src/store'
+import { signIn } from '~src/modules/auth/auth.slice'
+import { selectAuthState } from '~src/modules/auth/auth.selectors'
 
 const SignInPage: React.FC = () => {
-  const [signIn, { isLoading }] = useSignInMutation()
+  const dispatch = useAppDispatch()
+  const { isLoading } = useTypedSelector(selectAuthState)
 
-  const onSignIn = async (data: Record<string, any>) => await signIn(data as SignIn)
+  const onSignIn = (data: Record<string, any>) => dispatch(signIn(data as SignIn))
 
   return (
     <>

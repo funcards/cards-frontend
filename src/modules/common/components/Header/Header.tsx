@@ -6,17 +6,16 @@ import * as classes from './Header.module.scss'
 
 import { appName, routes } from '~src/utils/constants'
 import { Gravatar } from '~src/modules/common/components/Gravatar/Gravatar'
-import { useMeQuery } from '~src/modules/user/user.api'
-import { useAppDispatch, signOutFn, useTypedSelector } from '~src/store'
-import { getMe } from '~src/modules/user/user.selectors'
+import { useAppDispatch, useTypedSelector } from '~src/store'
+import { signOut } from '~src/modules/auth/auth.slice'
+import { selectAuthState } from '~src/modules/auth/auth.selectors'
 
 export const Header: React.FC = () => {
   const location = useLocation()
   const dispatch = useAppDispatch()
-  const me = useTypedSelector(getMe)
-  const { isLoading } = useMeQuery()
+  const { currentUser } = useTypedSelector(selectAuthState)
 
-  const onSignOut = async () => await signOutFn(dispatch)
+  const onSignOut = () => dispatch(signOut())
 
   return (
     <header className={classes.header}>
@@ -73,17 +72,17 @@ export const Header: React.FC = () => {
             </svg>
           </Link>
         </li>
-        {!isLoading && me && (
+        {currentUser && (
           <Menu as="li">
             <MenuButton className={`${classes.headerBtn} ${classes.headerBtn_circle}`}>
-              <Gravatar alt={me.name} email={me.email} className={classes.headerBtn__avatar} />
+              <Gravatar alt={currentUser.name} email={currentUser.email} className={classes.headerBtn__avatar} />
             </MenuButton>
             <MenuList className={classes.userMenu}>
               <div className={classes.userMenu__header}>Account</div>
               <div className={classes.userMenu__info}>
-                <Gravatar className={classes.userMenu__avatar} email={me.email} alt={me.name} />
-                <div className={classes.userMenu__name}>{me.name}</div>
-                <div className={classes.userMenu__email}>{me.email}</div>
+                <Gravatar className={classes.userMenu__avatar} email={currentUser.email} alt={currentUser.name} />
+                <div className={classes.userMenu__name}>{currentUser.name}</div>
+                <div className={classes.userMenu__email}>{currentUser.email}</div>
               </div>
               <div className={classes.userMenu__group}>
                 <Link to="/profile" className={classes.userMenu__item}>

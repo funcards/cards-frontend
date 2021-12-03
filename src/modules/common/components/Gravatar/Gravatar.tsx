@@ -1,6 +1,5 @@
-import querystring from 'querystring'
-
 import React, { ComponentPropsWithoutRef } from 'react'
+import querystring from 'query-string'
 import encoder from 'md5'
 
 import { validation } from '~src/utils/constants'

@@ -8,5 +8,4 @@ export interface Card {
   tags: string[]
 }
 
-export interface CardState {
-}
+export interface CardState {}

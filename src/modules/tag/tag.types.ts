@@ -5,5 +5,4 @@ export interface Tag {
   color: string
 }
 
-export interface TagState {
-}
+export interface TagState {}

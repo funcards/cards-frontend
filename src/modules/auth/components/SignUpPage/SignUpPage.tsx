@@ -7,12 +7,15 @@ import * as classes from '../AuthPage/AuthPage.module.scss'
 import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { routes, validation } from '~src/utils/constants'
 import { SignUp } from '~src/modules/auth/auth.types'
-import { useSignUpMutation } from '~src/modules/auth/auth.api'
+import { useAppDispatch, useTypedSelector } from '~src/store'
+import { selectAuthState } from '~src/modules/auth/auth.selectors'
+import { signUp } from '~src/modules/auth/auth.slice'
 
 const SignUpPage: React.FC = () => {
-  const [signUp, { isLoading }] = useSignUpMutation()
+  const dispatch = useAppDispatch()
+  const { isLoading } = useTypedSelector(selectAuthState)
 
-  const onSignUp = async (data: Record<string, any>) => await signUp(data as SignUp)
+  const onSignUp = (data: Record<string, any>) => dispatch(signUp(data as SignUp))
 
   return (
     <>

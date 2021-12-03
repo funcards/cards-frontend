@@ -15,6 +15,6 @@ declare module '*.md' {
 
 declare module 'js-cookie'
 declare module 'md5'
-declare module "assets/*"
-declare module "*.module.css"
-declare module "*.module.scss"
+declare module 'assets/*'
+declare module '*.module.css'
+declare module '*.module.scss'

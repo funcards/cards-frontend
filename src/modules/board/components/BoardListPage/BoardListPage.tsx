@@ -1,28 +1,54 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
-import { routes } from '~src/utils/constants'
-import { useTypedSelector } from '~src/store'
-import { useGetBoardsQuery } from '~src/modules/board/board.api'
-import { getBoards } from '~src/modules/board/board.selectors'
+import * as classes from './BoardListPage.module.scss'
+
+import { useAppDispatch, useTypedSelector } from '~src/store'
+import { selectBoardList, selectBoardSate } from '~src/modules/board/board.selectors'
 import { Loading } from '~src/modules/common/components/Loading/Loading'
+import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
+import { loadBoards } from '~src/modules/board/board.slice'
+import { BoardListItem } from '~src/modules/board/components/BoardListItem/BoardListItem'
+import { routes } from '~src/utils/constants'
 
 const BoardListPage: React.FC = () => {
-  const { isLoading } = useGetBoardsQuery()
-  const boards = useTypedSelector(getBoards)
+  const location = useLocation()
+  const dispatch = useAppDispatch()
+  const boards = useTypedSelector(selectBoardList)
+  const { isLoading } = useTypedSelector(selectBoardSate)
 
-  if (isLoading) {
-    return <Loading />
-  }
+  useEffect(() => {
+    dispatch(loadBoards())
+  }, [dispatch])
 
   return (
     <>
-      {Object.values(boards).map((board) => (
-        <Link key={board?.board_id} to={routes.board.one(board?.board_id)}>
-          {board?.name}
-          <br />
-        </Link>
-      ))}
+      <PageTitle title="Boards" />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <main className={classes.boardListPage}>
+          <div className={classes.boardListPage__container}>
+            <h1 className={classes.boardListPage__title}>
+              {/*<UserIcon className="boards-page__icon" />*/}
+              Your Workspace boards
+            </h1>
+            <div className={classes.boardListPage__list}>
+              {boards.map((board) => (
+                <BoardListItem key={board.board_id} board={board} />
+              ))}
+              <Link
+                to={routes.board.add}
+                state={{ backgroundLocation: location }}
+                className={classes.boardListPage__newItem}
+                role="button"
+              >
+                Create new board
+              </Link>
+            </div>
+          </div>
+        </main>
+      )}
     </>
   )
 }
