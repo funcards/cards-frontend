@@ -55,10 +55,7 @@
     width: 1.3rem;
     height: 1.3rem;
     color: var(--color-boards-page-icon);
-
-    & > path {
-      stroke-width: 3;
-    }
+    stroke-width: 3;
   }
 
   &__list {

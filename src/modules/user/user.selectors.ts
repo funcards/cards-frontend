@@ -1,9 +1,6 @@
-import { createSelector } from '@reduxjs/toolkit'
-
 import { userAdapter } from './user.slice'
 
 import { RootState } from '~src/store'
 
-const selectSateUser = (state: RootState) => state.user
-
-export const getUsers = createSelector([selectSateUser], (state) => userAdapter.getSelectors().selectEntities(state))
+export const selectUserState = (state: RootState) => state.user
+export const selectUserList = (state: RootState) => userAdapter.getSelectors().selectAll(state.user)
