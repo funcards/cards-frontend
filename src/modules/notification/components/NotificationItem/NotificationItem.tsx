@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { TiTimes } from 'react-icons/ti'
 
 import * as classes from './NotificationItem.module.scss'
 
@@ -63,20 +64,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ notification
         {notification.title && (
           <div className={classes.notification__header}>
             <div className={classes.notification__title}>{notification.title}</div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={classes.notification__close}
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <TiTimes className={classes.notification__close} />
           </div>
         )}
         <div className={classes.notification__message}>{notification.message}</div>

@@ -1,6 +1,7 @@
 import React, { useMemo, useCallback, useRef, MutableRefObject } from 'react'
 import { Dialog } from '@reach/dialog'
 import { useForm, Controller } from 'react-hook-form'
+import { TiTimes } from 'react-icons/ti'
 
 import * as classes from './AddBoard.module.scss'
 
@@ -44,20 +45,7 @@ const AddBoard: React.FC = () => {
         <h2 className={classes.addBoard__title}>
           Create board
           <button className={classes.addBoard__close} onClick={onDismiss}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={classes.addBoard__xIcon}
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <TiTimes className={classes.addBoard__xIcon} />
           </button>
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="form">

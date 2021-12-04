@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button'
+import { TiHomeOutline, TiPlus, TiUserOutline, TiCogOutline, TiPowerOutline } from 'react-icons/ti'
 
 import * as classes from './Header.module.scss'
 
@@ -28,21 +29,7 @@ export const Header: React.FC = () => {
           <ul className={classes.header__group}>
             <li>
               <Link to={routes.board.list} className={classes.headerBtn} role="button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className={classes.headerBtn__icon}
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-                  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                  <rect x="10" y="12" width="4" height="4" />
-                </svg>
+                <TiHomeOutline className={classes.headerBtn__icon} />
                 <span
                   className={`${classes.headerBtn__text} ${classes.headerBtn__text_bold} ${classes.headerBtn__text_md}`}
                 >
@@ -54,20 +41,7 @@ export const Header: React.FC = () => {
           <ul className={classes.header__group}>
             <li>
               <button className={classes.headerBtn} onClick={onOpenNewBoard}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className={classes.headerBtn__icon}
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
+                <TiPlus className={classes.headerBtn__icon} />
               </button>
             </li>
             {currentUser && (
@@ -84,14 +58,17 @@ export const Header: React.FC = () => {
                   </div>
                   <div className={classes.userMenu__group}>
                     <Link to="/profile" className={classes.userMenu__item}>
+                      <TiUserOutline className={classes.userMenu__icon} />
                       Profile
                     </Link>
                     <Link to="/settings" className={classes.userMenu__item}>
+                      <TiCogOutline className={classes.userMenu__icon} />
                       Settings
                     </Link>
                   </div>
                   <div className={classes.userMenu__group}>
                     <MenuItem className={classes.userMenu__item} onSelect={onSignOut}>
+                      <TiPowerOutline className={classes.userMenu__icon} />
                       Log out
                     </MenuItem>
                   </div>

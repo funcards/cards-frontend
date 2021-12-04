@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
+import { TiBook } from 'react-icons/ti'
 
 import * as classes from './BoardListPage.module.scss'
 
@@ -31,20 +32,7 @@ const BoardListPage: React.FC = () => {
         <main className={classes.boardListPage}>
           <div className={classes.boardListPage__container}>
             <h1 className={classes.boardListPage__title}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className={classes.boardListPage__icon}
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <circle cx="12" cy="7" r="4" />
-                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-              </svg>
+              <TiBook className={classes.boardListPage__icon} />
               Your Workspace boards
             </h1>
             <div className={classes.boardListPage__list}>

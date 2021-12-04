@@ -204,9 +204,19 @@
     color: var(--color-user-menu-item);
     background-color: var(--color-transparent);
     box-shadow: none;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: var(--space-xs);
+    align-items: center;
 
     &:hover {
       background-color: var(--color-user-menu-item-bg-hover);
     }
+  }
+
+  &__icon {
+    width: 1.1rem;
+    height: 1.1rem;
   }
 }
