@@ -26,7 +26,7 @@ const BoardListPage: React.FC = () => {
   return (
     <>
       <PageTitle title="Boards" />
-      {isLoading ? (
+      {isLoading || !isLoading ? (
         <Loading />
       ) : (
         <main className={classes.boardListPage}>
