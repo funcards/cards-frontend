@@ -41,11 +41,7 @@ const boardSlice = createSlice({
       state.error = payload
       state.status = BoardStateStatus.Error
     },
-    clear: (state: BoardState) => {
-      end(state)
-      state.newBoardIsOpen = false
-      boardAdapter.removeAll(state)
-    },
+    clear: () => initialState,
     newBoard: (state: BoardState, {}: PayloadAction<DraftBoard>) => init(state, BoardStateStatus.NewBoard),
     openNewBoard: (state: BoardState) => {
       state.newBoardIsOpen = true

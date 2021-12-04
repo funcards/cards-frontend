@@ -26,14 +26,14 @@ const BoardListPage: React.FC = () => {
   return (
     <>
       <PageTitle title="Boards" />
-      {isLoading || !isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <main className={classes.boardListPage}>
           <div className={classes.boardListPage__container}>
             <h1 className={classes.boardListPage__title}>
               <TiBook className={classes.boardListPage__icon} />
-              Your Workspace boards
+              Your Workspace Boards
             </h1>
             <div className={classes.boardListPage__list}>
               {boards.map((board) => (

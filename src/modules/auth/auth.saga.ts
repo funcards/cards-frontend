@@ -7,6 +7,7 @@ import { failed, setCurrentUser, setTokens, success } from './auth.slice'
 
 import { fetcher } from '~src/utils/fetcher'
 import { caughtSaga } from '~src/modules/notification/notification.saga'
+import { clear as boardClear } from '~src/modules/board/board.slice'
 
 const config: AxiosAuthRefreshRequestConfig = { skipAuthRefresh: true }
 
@@ -30,4 +31,8 @@ export function* signInSaga({ payload }: PayloadAction<SignIn>) {
 
 export function* signUpSaga({ payload }: PayloadAction<SignUp>) {
   yield call(authWorker, '/sign-up', payload)
+}
+
+export function* signOutSaga() {
+  yield put(boardClear())
 }

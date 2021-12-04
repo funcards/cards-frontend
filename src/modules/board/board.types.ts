@@ -4,6 +4,8 @@ import { ErrorState } from '~src/modules/common/common.types'
 
 export interface Member {
   user_id: string
+  name: string
+  email: string
   roles: string[]
 }
 
@@ -19,7 +21,7 @@ export interface Board {
   color: string
   description: string
   created_at: string
-  members: Member[]
+  members: Record<string, Member>
 }
 
 export interface BoardState extends EntityState<Board>, ErrorState {
