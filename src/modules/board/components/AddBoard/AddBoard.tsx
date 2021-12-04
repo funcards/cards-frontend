@@ -1,25 +1,24 @@
 import React, { useMemo, useCallback, useRef, MutableRefObject } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Dialog } from '@reach/dialog'
 import { useForm, Controller } from 'react-hook-form'
 
-import * as classes from './AddBoardPage.module.scss'
+import * as classes from './AddBoard.module.scss'
 
-import { useTypedSelector } from '~src/store'
+import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardSate } from '~src/modules/board/board.selectors'
 import { Theme } from '~src/modules/common/common.types'
-import { DraftBoard } from '~src/modules/board/board.types'
+import { BoardStateStatus, DraftBoard } from '~src/modules/board/board.types'
+import { closeNewBoard, newBoard } from '~src/modules/board/board.slice'
+import { selectAuthState } from '~src/modules/auth/auth.selectors'
 
-const AddBoardPage: React.FC = () => {
-  const navigate = useNavigate()
-  const { isLoading } = useTypedSelector(selectBoardSate)
-
-  const onDismiss = useCallback(() => navigate(-1), [navigate])
+const AddBoard: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const { isAuthenticated } = useTypedSelector(selectAuthState)
+  const { newBoardIsOpen, status } = useTypedSelector(selectBoardSate)
 
   const {
     register,
     handleSubmit,
-    setFocus,
     control,
     formState: { errors, isDirty, isValid },
   } = useForm<DraftBoard>({ mode: 'onChange', defaultValues: { color: Theme.Sky } })
@@ -30,14 +29,17 @@ const AddBoardPage: React.FC = () => {
     maxLength: 150,
   })
 
+  const isLoading = useMemo(() => BoardStateStatus.NewBoard === status, [status])
   const disabled = useMemo(() => isLoading || !isDirty || !isValid, [isLoading, isDirty, isValid])
+  const onSubmit = useCallback((data) => dispatch(newBoard(data)), [dispatch])
+  const onDismiss = useCallback(() => dispatch(closeNewBoard()), [dispatch])
 
-  const onSubmit = useCallback((data) => {
-    console.log(data)
-  }, [])
+  if (!isAuthenticated) {
+    return <></>
+  }
 
   return (
-    <Dialog initialFocusRef={nameRef} aria-labelledby="add-board" className={classes.addBoard}>
+    <Dialog isOpen={newBoardIsOpen} initialFocusRef={nameRef} aria-labelledby="add-board" className={classes.addBoard}>
       <h2 className={classes.addBoard__title}>
         Create board
         <button className={classes.addBoard__close} onClick={onDismiss}>
@@ -117,4 +119,4 @@ const AddBoardPage: React.FC = () => {
   )
 }
 
-export default AddBoardPage
+export default AddBoard

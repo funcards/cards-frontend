@@ -1,7 +1,7 @@
 import { call, put, select } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
 
-import { failed, setBoards, success, upsertBoard } from './board.slice'
+import { closeNewBoard, failed, setBoards, success, upsertBoard } from './board.slice'
 
 import { fetcher } from '~src/utils/fetcher'
 import { selectBoard } from '~src/modules/board/board.selectors'
@@ -45,6 +45,7 @@ export function* newBoardSaga({ payload }: PayloadAction<DraftBoard>) {
     const boardId = headers['location'].split('/').pop()
     yield call(loadBoardSaga, { payload: boardId } as PayloadAction<string>)
     yield call(successSaga, { payload: `Board "${payload.name}" added successfully.` } as PayloadAction<string>)
+    yield put(closeNewBoard())
   } catch (e) {
     yield call(caughtSaga, e, failed)
   }

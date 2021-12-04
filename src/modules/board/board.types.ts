@@ -1,5 +1,4 @@
 import { EntityState } from '@reduxjs/toolkit'
-import * as dayjs from 'dayjs'
 
 import { ErrorState } from '~src/modules/common/common.types'
 
@@ -19,8 +18,18 @@ export interface Board {
   name: string
   color: string
   description: string
-  created_at: dayjs.Dayjs
+  created_at: string
   members: Member[]
 }
 
-export interface BoardState extends EntityState<Board>, ErrorState {}
+export interface BoardState extends EntityState<Board>, ErrorState {
+  newBoardIsOpen: boolean
+}
+
+export enum BoardStateStatus {
+  Success = 'SUCCESS',
+  Error = 'ERROR',
+  NewBoard = 'NEW_BOARD',
+  LoadOneBoard = 'LOAD_ONE_BOARD',
+  LoadBoardList = 'LOAD_BOARD_LIST',
+}

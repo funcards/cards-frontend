@@ -3,7 +3,6 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 import { routes } from '~src/utils/constants'
 import { selectAuthState } from '~src/modules/auth/auth.selectors'
-import { Header } from '~src/modules/common/components/Header/Header'
 import { useTypedSelector } from '~src/store'
 
 export const RequireAuth: React.FC = () => {
@@ -11,12 +10,7 @@ export const RequireAuth: React.FC = () => {
   const location = useLocation()
 
   if (isAuthenticated) {
-    return (
-      <>
-        <Header />
-        <Outlet />
-      </>
-    )
+    return <Outlet />
   }
 
   return <Navigate to={routes.auth.signIn} state={{ from: location }} />

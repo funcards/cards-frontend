@@ -8,23 +8,22 @@ import { RequireAuth } from '~src/modules/auth/components/RequireAuth/RequireAut
 import { RequireNotAuth } from '~src/modules/auth/components/RequireNotAuth/RequireNotAuth'
 import { routes } from '~src/utils/constants'
 import NotFound from '~src/modules/common/components/NotFound/NotFound'
+import { Header } from '~src/modules/common/components/Header/Header'
+import AddBoard from '~src/modules/board/components/AddBoard/AddBoard'
 
 const SignInPage = lazy(() => import('~src/modules/auth/components/SignInPage/SignInPage'))
 const SignUpPage = lazy(() => import('~src/modules/auth/components/SignUpPage/SignUpPage'))
 const BoardListPage = lazy(() => import('~src/modules/board/components/BoardListPage/BoardListPage'))
-const AddBoardPage = lazy(() => import('~src/modules/board/components/AddBoardPage/AddBoardPage'))
 const BoardPage = lazy(() => import('~src/modules/board/components/BoardPage/BoardPage'))
 
 export const App: React.FC = () => {
-  const location = useLocation()
-  const state = location.state as { backgroundLocation?: Location }
-
   return (
     <>
       <PageTitle />
       <NotificationList />
+      <AddBoard />
       <Suspense fallback={<Loading />}>
-        <Routes location={state?.backgroundLocation || location}>
+        <Routes>
           <Route path="/" element={<h1>HOME</h1>} />
           <Route
             path={routes.auth.signIn}
@@ -42,17 +41,14 @@ export const App: React.FC = () => {
               </RequireNotAuth>
             }
           />
-          <Route path={routes.board.list} element={<RequireAuth />}>
-            <Route index element={<BoardListPage />} />
-            <Route path=":boardId" element={<BoardPage />} />
+          <Route element={<Header />}>
+            <Route path={routes.board.list} element={<RequireAuth />}>
+              <Route index element={<BoardListPage />} />
+              <Route path=":boardId" element={<BoardPage />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
           </Route>
-          <Route path="*" element={<NotFound />} />
         </Routes>
-        {state?.backgroundLocation && (
-          <Routes>
-            <Route path={routes.board.add} element={<AddBoardPage />} />
-          </Routes>
-        )}
       </Suspense>
     </>
   )

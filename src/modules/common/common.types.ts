@@ -14,6 +14,7 @@ export interface ErrorState {
   isLoading: boolean
   isError: boolean
   error?: ErrorResponse
+  status?: string
 }
 
 export interface PaginatedResponse<T> {

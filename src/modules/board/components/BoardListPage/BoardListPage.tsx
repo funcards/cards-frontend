@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useCallback, useEffect, useMemo } from 'react'
 
 import * as classes from './BoardListPage.module.scss'
 
@@ -7,15 +6,17 @@ import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardList, selectBoardSate } from '~src/modules/board/board.selectors'
 import { Loading } from '~src/modules/common/components/Loading/Loading'
 import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
-import { loadBoards } from '~src/modules/board/board.slice'
+import { loadBoards, openNewBoard } from '~src/modules/board/board.slice'
 import { BoardListItem } from '~src/modules/board/components/BoardListItem/BoardListItem'
-import { routes } from '~src/utils/constants'
+import { BoardStateStatus } from '~src/modules/board/board.types'
 
 const BoardListPage: React.FC = () => {
-  const location = useLocation()
   const dispatch = useAppDispatch()
   const boards = useTypedSelector(selectBoardList)
-  const { isLoading } = useTypedSelector(selectBoardSate)
+  const { status } = useTypedSelector(selectBoardSate)
+  const isLoading = useMemo(() => BoardStateStatus.LoadBoardList === status, [status])
+
+  const onOpenNewBoard = useCallback(() => dispatch(openNewBoard()), [dispatch])
 
   useEffect(() => {
     dispatch(loadBoards())
@@ -50,14 +51,9 @@ const BoardListPage: React.FC = () => {
               {boards.map((board) => (
                 <BoardListItem key={board.board_id} board={board} />
               ))}
-              <Link
-                to={routes.board.add}
-                state={{ backgroundLocation: location }}
-                className={classes.boardListPage__newItem}
-                role="button"
-              >
+              <button className={classes.boardListPage__newItem} onClick={onOpenNewBoard}>
                 Create new board
-              </Link>
+              </button>
             </div>
           </div>
         </main>
