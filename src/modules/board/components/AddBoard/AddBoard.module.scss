@@ -5,19 +5,24 @@
   width: 100%;
   max-width: 32rem;
   margin: var(--space-sm) auto;
-  padding: var(--space-md);
-  border-radius: var(--radius-md);
-  background: var(--color-modal-body-bg);
-  box-shadow: var(--shadow-xl);
-  display: grid;
-  grid-auto-flow: row;
-  gap: var(--space-md);
-  overflow: hidden;
-  text-align: left;
-  vertical-align: middle;
+  padding: 0 var(--space-sm);
+  background-color: var(--color-transparent);
 
   @include breakpoint(sm) {
     margin: var(--space-xl) auto;
+  }
+
+  &__wrapper {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--color-modal-body-bg);
+    box-shadow: var(--shadow-xl);
+    display: grid;
+    grid-auto-flow: row;
+    gap: var(--space-md);
+    overflow: hidden;
+    text-align: left;
+    vertical-align: middle;
   }
 
   &__title {
