@@ -86,7 +86,7 @@ export const Header: React.FC = () => {
                     <Link to="/profile" className={classes.userMenu__item}>
                       Profile
                     </Link>
-                    <Link to="/profile" className={classes.userMenu__item}>
+                    <Link to="/settings" className={classes.userMenu__item}>
                       Settings
                     </Link>
                   </div>
