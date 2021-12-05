@@ -4,7 +4,7 @@ import { TiBook } from 'react-icons/ti'
 import * as classes from './BoardListPage.module.scss'
 
 import { useAppDispatch, useTypedSelector } from '~src/store'
-import { selectBoardList, selectBoardSate } from '~src/modules/board/board.selectors'
+import { selectBoardSate } from '~src/modules/board/board.selectors'
 import { Loading } from '~src/modules/common/components/Loading/Loading'
 import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { loadBoards, openNewBoard } from '~src/modules/board/board.slice'
@@ -13,8 +13,7 @@ import { BoardStateStatus } from '~src/modules/board/board.types'
 
 const BoardListPage: React.FC = () => {
   const dispatch = useAppDispatch()
-  const boards = useTypedSelector(selectBoardList)
-  const { status } = useTypedSelector(selectBoardSate)
+  const { status, ids, items } = useTypedSelector(selectBoardSate)
   const isLoading = useMemo(() => BoardStateStatus.LoadBoardList === status, [status])
 
   const onOpenNewBoard = useCallback(() => dispatch(openNewBoard()), [dispatch])
@@ -36,8 +35,8 @@ const BoardListPage: React.FC = () => {
               Your Workspace Boards
             </h1>
             <div className={classes.boardListPage__list}>
-              {boards.map((board) => (
-                <BoardListItem key={board.board_id} board={board} />
+              {ids.map((id) => (
+                <BoardListItem key={id} board={items[id]} />
               ))}
               <button className={classes.boardListPage__newItem} onClick={onOpenNewBoard}>
                 Create new board

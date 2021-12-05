@@ -1,0 +1,111 @@
+.addCategory {
+  overflow: hidden;
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: max-content;
+
+  &_open {
+    padding: var(--space-xxxs);
+    border-radius: var(--radius-md);
+    background-color: var(--color-category-bg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &__openBtn {
+    width: 100%;
+    gap: var(--space-xxxs);
+    padding: var(--space-xs);
+    font-size: var(--text-md);
+    background-color: var(--color-white-030);
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md);
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    justify-content: start;
+
+    &:hover {
+      background-color: var(--color-white-020);
+    }
+
+    &_open {
+      display: none;
+    }
+  }
+
+  &__plusIcon {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  &__input {
+    display: none;
+    width: 100%;
+    font-size: var(--text-sm);
+    padding: var(--space-xxs) var(--space-xs);
+    border-radius: var(--radius-md);
+    border-width: 2px;
+
+    &_open {
+      transition-property: all;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 100ms;
+      display: block;
+    }
+  }
+
+  &__footer {
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    justify-content: start;
+    gap: var(--space-xs);
+
+    &_open {
+      transition-property: all;
+      transition-timing-function: var(--ease-in-out);
+      transition-duration: 100ms;
+      height: auto;
+      padding-top: var(--space-xxxs);
+    }
+  }
+
+  &__addBtn {
+    gap: var(--space-sm);
+    padding: var(--space-xxs) var(--space-sm);
+    font-size: var(--text-sm);
+    box-shadow: var(--shadow-xs);
+    border-radius: var(--radius-md);
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    justify-content: center;
+
+    [role='loading'] {
+      width: calc(var(--text-sm) * 0.85);
+      height: calc(var(--text-sm) * 0.85);
+    }
+  }
+
+  &__closeBtn {
+    color: var(--color-btn-close);
+    background-color: var(--color-transparent);
+    box-shadow: none;
+
+    &:hover {
+      color: var(--color-btn-close-hover);
+      background-color: var(--color-transparent);
+    }
+  }
+
+  &__xIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

@@ -56,9 +56,10 @@ button,
 
   [role='loading'] {
     border-color: var(--color-btn);
-    border-bottom-color: var(--color-transparent);
     border-width: var(--space-xxxxs);
-    border-radius: 50%;
+    border-radius: 9999px;
+    border-bottom: none;
+    border-right: none;
     animation: rotate infinite linear 1s;
   }
 

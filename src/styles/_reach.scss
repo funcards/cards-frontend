@@ -11,6 +11,7 @@
   bottom: 0;
   left: 0;
   overflow: auto;
+  z-index: var(--zindex-modal);
 }
 
 [data-reach-dialog-content] {
@@ -24,6 +25,7 @@
 [data-reach-menu-popover] {
   display: block;
   position: absolute;
+  z-index: var(--zindex-user-menu);
 }
 
 [data-reach-menu-popover][hidden] {

@@ -1,0 +1,20 @@
+.card {
+  cursor: pointer;
+  width: 100%;
+  padding: var(--space-xxs);
+  border-bottom-width: 1px;
+  border-color: var(--color-card-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-card-bg);
+  box-shadow: var(--shadow-xs);
+
+  &:hover {
+    background-color: var(--color-card-bg-hover);
+  }
+
+  &__name {
+    color: var(--color-card-name);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+}
