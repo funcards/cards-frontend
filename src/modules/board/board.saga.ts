@@ -20,7 +20,8 @@ import {
 import { fetcher } from '~src/utils/fetcher'
 import { selectBoard, selectCards, selectCategories } from '~src/modules/board/board.selectors'
 import {
-  Board, Card,
+  Board,
+  Card,
   Category,
   ChangeCardsPosition,
   ChangeCategoriesPosition,
@@ -147,6 +148,8 @@ export function* changeCategoriesPositionSaga({ payload }: PayloadAction<ChangeC
 
   try {
     yield put(setCategoriesPosition(payload))
+    const data = payload.ids.map((id, index) => ({ category_id: id, position: index }))
+    yield call(fetcher.patch, `/boards/${payload.board_id}/categories`, data)
     yield put(success())
   } catch (e) {
     yield put(setCategoriesPosition({ ...payload, ids: oldIds }))
@@ -160,6 +163,14 @@ export function* changeCardsPositionSaga({ payload }: PayloadAction<ChangeCardsP
 
   try {
     yield put(setCardsPosition(payload))
+    const data = payload.ids.map((id, index) => {
+      if (payload.card_id === id) {
+        return { card_id: id, category_id: payload.category_id, position: index }
+      }
+
+      return { card_id: id, position: index }
+    })
+    yield call(fetcher.patch, `/boards/${payload.board_id}/cards`, data)
     yield put(success())
   } catch (e) {
     yield put(setCardsPosition({ ...payload, ids: oldIds }))
