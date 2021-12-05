@@ -14,6 +14,7 @@ export const selectBoard = createSelector([selectBoardSate, selectBoardId], (sta
 export const selectCategories = createSelector([selectBoard], (board) =>
   board?.categories ? board.categories : collection
 )
+export const selectCards = createSelector([selectBoard], (board) => (board?.cards ? board.cards : collection))
 export const selectCategoryCards = createSelector(
   [selectBoardSate, selectBoardIdAndCategoryId],
   (state, { boardId, categoryId }) => {

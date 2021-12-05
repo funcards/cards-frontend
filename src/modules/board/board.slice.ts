@@ -3,10 +3,13 @@ import dayjs from 'dayjs'
 
 import {
   Board,
+  BoardItems,
   BoardState,
   BoardStateStatus,
   Card,
   Category,
+  ChangeCardsPosition,
+  ChangeCategoriesPosition,
   DraftBoard,
   DraftCard,
   DraftCategory,
@@ -65,14 +68,14 @@ const boardSlice = createSlice({
         dayjs(state.items[b].created_at).diff(dayjs(state.items[a].created_at))
       )
     },
-    setTags: (state: BoardState, { payload }: PayloadAction<{ board_id: string; tags: Tag[] }>) => {
-      state.items[payload.board_id].tags = toRecord(payload.tags, 'tag_id')
+    setTags: (state: BoardState, { payload }: PayloadAction<BoardItems<Tag>>) => {
+      state.items[payload.board_id].tags = toRecord(payload.items, 'tag_id')
     },
     setTag: (state: BoardState, { payload }: PayloadAction<Tag>) => {
       state.items[payload.board_id].tags = { ...state.items[payload.board_id].tags, [payload.tag_id]: payload }
     },
-    setCategories: (state: BoardState, { payload }: PayloadAction<{ board_id: string; categories: Category[] }>) => {
-      const items = toRecord(payload.categories, 'category_id')
+    setCategories: (state: BoardState, { payload }: PayloadAction<BoardItems<Category>>) => {
+      const items = toRecord(payload.items, 'category_id')
       state.items[payload.board_id].categories = {
         ids: Object.keys(items).sort((a, b) => items[a].position - items[b].position),
         items,
@@ -86,8 +89,8 @@ const boardSlice = createSlice({
           state.items[payload.board_id].categories!.items[b].position
       )
     },
-    setCards: (state: BoardState, { payload }: PayloadAction<{ board_id: string; cards: Card[] }>) => {
-      const items = toRecord(payload.cards, 'card_id')
+    setCards: (state: BoardState, { payload }: PayloadAction<BoardItems<Card>>) => {
+      const items = toRecord(payload.items, 'card_id')
       state.items[payload.board_id].cards = {
         ids: Object.keys(items).sort((a, b) => items[a].position - items[b].position),
         items,
@@ -111,6 +114,23 @@ const boardSlice = createSlice({
     newCategory: (state: BoardState, {}: PayloadAction<DraftCategory>) => init(state, BoardStateStatus.NewCategory),
     newCard: (state: BoardState, {}: PayloadAction<DraftCard>) => init(state, BoardStateStatus.NewCard),
     newTag: (state: BoardState, {}: PayloadAction<DraftTag>) => init(state, BoardStateStatus.NewTag),
+    changeCategoriesPosition: (state: BoardState, {}: PayloadAction<ChangeCategoriesPosition>) =>
+      init(state, BoardStateStatus.ChangeCategoryPosition),
+    changeCardsPosition: (state: BoardState, {}: PayloadAction<ChangeCardsPosition>) =>
+      init(state, BoardStateStatus.ChangeCardPosition),
+    setCategoriesPosition: (state: BoardState, { payload }: PayloadAction<ChangeCategoriesPosition>) => {
+      state.items[payload.board_id].categories!.ids = payload.ids
+      for (let i = 0; i < payload.ids.length; i++) {
+        state.items[payload.board_id].categories!.items[payload.ids[i]].position = i
+      }
+    },
+    setCardsPosition: (state: BoardState, { payload }: PayloadAction<ChangeCardsPosition>) => {
+      state.items[payload.board_id].cards!.ids = payload.ids
+      state.items[payload.board_id].cards!.items[payload.card_id].category_id = payload.category_id
+      for (let i = 0; i < payload.ids.length; i++) {
+        state.items[payload.board_id].cards!.items[payload.ids[i]].position = i
+      }
+    },
   },
 })
 
@@ -134,5 +154,9 @@ export const {
   newCategory,
   newCard,
   newTag,
+  changeCategoriesPosition,
+  changeCardsPosition,
+  setCategoriesPosition,
+  setCardsPosition,
 } = boardSlice.actions
 export default boardSlice.reducer

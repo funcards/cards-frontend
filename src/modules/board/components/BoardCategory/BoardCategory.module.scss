@@ -41,7 +41,7 @@
     padding: var(--space-xs);
     color: var(--color-category-menu-btn);
     background-color: var(--color-category-menu-btn-bg);
-    box-shadow: none;
+    border-radius: var(--radius-md);
 
     &:hover {
       color: var(--color-category-menu-btn-hover);

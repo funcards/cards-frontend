@@ -9,6 +9,7 @@ import { DndType } from '~src/modules/common/common.types'
 import { BoardCard } from '~src/modules/board/components/BoardCard/BoardCard'
 import { useTypedSelector } from '~src/store'
 import { selectCategoryCards } from '~src/modules/board/board.selectors'
+import { AddCard } from '~src/modules/board/components/AddCard/AddCard'
 
 export interface BoardCategoryProps {
   category: Category
@@ -47,20 +48,24 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
             <Droppable droppableId={category.category_id} type={DndType.Card}>
               {(provided) => (
                 <div className={classes.category__body} ref={provided.innerRef} {...provided.droppableProps}>
-                  {cards.ids.length > 0 && (
-                    <div className="category__cards">
-                      {cards.ids.map((id, index) => (
-                        <BoardCard key={id} card={cards.items[id]} index={index} />
-                      ))}
-                      {provided.placeholder}
-                    </div>
-                  )}
+                  <div className={classes.category__cards}>
+                    {cards.ids.map((id, index) => (
+                      <BoardCard key={id} card={cards.items[id]} index={index} />
+                    ))}
+                    {provided.placeholder}
+                  </div>
                 </div>
               )}
             </Droppable>
-            {/*<div className="category__add-card">*/}
-            {/*  <AddCard categoryId={category.id} label={label} position={position} color={color} />*/}
-            {/*</div>*/}
+            <div className={classes.category__addCard}>
+              <AddCard
+                label={label}
+                boardId={category.board_id}
+                categoryId={category.category_id}
+                position={position}
+                boardColor={boardColor}
+              />
+            </div>
           </div>
         </div>
       )}

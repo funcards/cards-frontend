@@ -5,10 +5,21 @@ import { all, takeLatest } from 'redux-saga/effects'
 
 import notification from '~src/modules/notification/notification.slice'
 import auth, { signIn, signOut, signUp } from '~src/modules/auth/auth.slice'
-import board, { loadBoard, loadBoards, newBoard, newCard, newCategory, newTag } from '~src/modules/board/board.slice'
+import board, {
+  changeCardsPosition,
+  changeCategoriesPosition,
+  loadBoard,
+  loadBoards,
+  newBoard,
+  newCard,
+  newCategory,
+  newTag,
+} from '~src/modules/board/board.slice'
 import { isProduction } from '~src/utils/constants'
 import { signInSaga, signOutSaga, signUpSaga } from '~src/modules/auth/auth.saga'
 import {
+  changeCardsPositionSaga,
+  changeCategoriesPositionSaga,
   loadBoardSaga,
   loadBoardsSaga,
   newBoardSaga,
@@ -45,6 +56,8 @@ function* rootSaga() {
     takeLatest(newCategory.type, newCategorySaga),
     takeLatest(newTag.type, newTagSaga),
     takeLatest(newCard.type, newCardSaga),
+    takeLatest(changeCategoriesPosition.type, changeCategoriesPositionSaga),
+    takeLatest(changeCardsPosition.type, changeCardsPositionSaga),
   ])
 }
 

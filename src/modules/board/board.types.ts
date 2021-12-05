@@ -73,6 +73,23 @@ export interface Board {
   cards?: Collection<Card>
 }
 
+export interface BoardItems<T> {
+  board_id: string
+  items: T[]
+}
+
+export interface ChangeCategoriesPosition {
+  board_id: string
+  ids: string[]
+}
+
+export interface ChangeCardsPosition {
+  category_id: string
+  board_id: string
+  card_id: string
+  ids: string[]
+}
+
 export interface BoardState extends Collection<Board>, ErrorState {
   newBoardIsOpen: boolean
 }
@@ -86,4 +103,10 @@ export enum BoardStateStatus {
   NewCategory = 'NEW_CATEGORY',
   NewTag = 'NEW_TAG',
   NewCard = 'NEW_CARD',
+  ChangeCategoryPosition = 'CHANGE_CATEGORY_POSITION',
+  ChangeCardPosition = 'CHANGE_CARD_POSITION',
+  // EditBoard = 'EDIT_BOARD',
+  // EditCategory = 'EDIT_CATEGORY',
+  // EditTag = 'EDIT_TAG',
+  // EditCard = 'EDIT_CARD',
 }

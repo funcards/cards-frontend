@@ -13,11 +13,23 @@ import {
   setCards,
   setTag,
   setCard,
+  setCategoriesPosition,
+  setCardsPosition,
 } from './board.slice'
 
 import { fetcher } from '~src/utils/fetcher'
-import { selectBoard } from '~src/modules/board/board.selectors'
-import { Board, DraftBoard, DraftCard, DraftCategory, DraftTag } from '~src/modules/board/board.types'
+import { selectBoard, selectCards, selectCategories } from '~src/modules/board/board.selectors'
+import {
+  Board, Card,
+  Category,
+  ChangeCardsPosition,
+  ChangeCategoriesPosition,
+  Collection,
+  DraftBoard,
+  DraftCard,
+  DraftCategory,
+  DraftTag,
+} from '~src/modules/board/board.types'
 import { caughtSaga, successSaga } from '~src/modules/notification/notification.saga'
 
 export function* loadBoardsSaga() {
@@ -42,12 +54,12 @@ export function* loadBoardSaga({ payload }: PayloadAction<string>) {
 
     if (board?.tags === undefined) {
       const { data } = yield call(fetcher.get, `/boards/${payload}/tags`)
-      yield put(setTags({ board_id: payload, tags: data.data }))
+      yield put(setTags({ board_id: payload, items: data.data }))
     }
 
     if (board?.categories === undefined) {
       const { data } = yield call(fetcher.get, `/boards/${payload}/categories`)
-      yield put(setCategories({ board_id: payload, categories: data.data }))
+      yield put(setCategories({ board_id: payload, items: data.data }))
     }
 
     if (board?.cards === undefined) {
@@ -60,7 +72,7 @@ export function* loadBoardSaga({ payload }: PayloadAction<string>) {
         cards.push(...data.data)
       } while (cards.length < count)
 
-      yield put(setCards({ board_id: payload, cards }))
+      yield put(setCards({ board_id: payload, items: cards }))
     }
 
     yield put(success())
@@ -125,6 +137,32 @@ export function* newCardSaga({ payload }: PayloadAction<DraftCard>) {
     yield put(setCard(data))
     yield put(success())
   } catch (e) {
+    yield call(caughtSaga, e, failed)
+  }
+}
+
+export function* changeCategoriesPositionSaga({ payload }: PayloadAction<ChangeCategoriesPosition>) {
+  const categories: Collection<Category> = yield select(selectCategories, payload.board_id)
+  const oldIds = categories.ids.slice()
+
+  try {
+    yield put(setCategoriesPosition(payload))
+    yield put(success())
+  } catch (e) {
+    yield put(setCategoriesPosition({ ...payload, ids: oldIds }))
+    yield call(caughtSaga, e, failed)
+  }
+}
+
+export function* changeCardsPositionSaga({ payload }: PayloadAction<ChangeCardsPosition>) {
+  const cards: Collection<Card> = yield select(selectCards, payload.board_id)
+  const oldIds = cards.ids.slice()
+
+  try {
+    yield put(setCardsPosition(payload))
+    yield put(success())
+  } catch (e) {
+    yield put(setCardsPosition({ ...payload, ids: oldIds }))
     yield call(caughtSaga, e, failed)
   }
 }

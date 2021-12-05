@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 import { TiTimes, TiPlus } from 'react-icons/ti'
 
+import * as classes from './AddCard.module.scss'
+
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardSate } from '~src/modules/board/board.selectors'
 import { BoardStateStatus, DraftCard } from '~src/modules/board/board.types'
@@ -51,26 +53,33 @@ export const AddCard: React.FC<AddCardProps> = ({ label, boardId, categoryId, po
   const ref = useDetectClickOutside({ onTriggered: close })
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} ref={ref} className={isOpen ? 'add-card add-card_open' : 'add-card'}>
-      <button onClick={open} className={isOpen ? 'add-card__open-btn add-card__open-btn_open' : 'add-card__open-btn'}>
-        <TiPlus className="add-card__plus-icon" />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      ref={ref}
+      className={isOpen ? `${classes.addCard} ${classes.addCard_open}` : classes.addCard}
+    >
+      <button
+        onClick={open}
+        className={isOpen ? `${classes.addCard__openBtn} ${classes.addCard__openBtn_open}` : classes.addCard__openBtn}
+      >
+        <TiPlus className={classes.addCard__plusIcon} />
         {label}
       </button>
       <textarea
-        className={isOpen ? 'add-card__input add-card__input_open' : 'add-card__input'}
+        className={isOpen ? `${classes.addCard__input} ${classes.addCard__input_open}` : classes.addCard__input}
         placeholder="Enter a title for this card..."
         {...register('name', {
           required: 'required',
           maxLength: 255,
         })}
       />
-      <div className={isOpen ? 'add-card__footer add-card__footer_open' : 'add-card__footer'}>
-        <button type="submit" className="add-card__add-btn" disabled={disabled} data-theme={boardColor}>
+      <div className={isOpen ? `${classes.addCard__footer} ${classes.addCard__footer_open}` : classes.addCard__footer}>
+        <button type="submit" className={classes.addCard__addBtn} disabled={disabled} data-theme={boardColor}>
           {isLoading && <span role="loading" />}
           Add card
         </button>
-        <button className="add-card__close-btn" onClick={close}>
-          <TiTimes className="add-card__x-icon" />
+        <button className={classes.addCard__closeBtn} onClick={close}>
+          <TiTimes className={classes.addCard__xIcon} />
         </button>
       </div>
     </form>

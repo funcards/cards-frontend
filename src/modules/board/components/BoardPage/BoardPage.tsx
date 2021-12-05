@@ -7,16 +7,17 @@ import * as classes from './BoardPage.module.scss'
 
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { Loading } from '~src/modules/common/components/Loading/Loading'
-import { selectBoard, selectBoardSate, selectCategories } from '~src/modules/board/board.selectors'
+import { selectBoard, selectBoardSate, selectCards, selectCategories } from '~src/modules/board/board.selectors'
 import NotFound from '~src/modules/common/components/NotFound/NotFound'
 import { BoardStateStatus } from '~src/modules/board/board.types'
 import { DndType } from '~src/modules/common/common.types'
-import { loadBoard } from '~src/modules/board/board.slice'
+import { changeCardsPosition, changeCategoriesPosition, loadBoard } from '~src/modules/board/board.slice'
 import { PageTitle } from '~src/modules/common/components/PageTitle/PageTitle'
 import { BoardHeader } from '~src/modules/board/components/BoardHeader/BoardHeader'
 import { BoardMenu } from '~src/modules/board/components/BoardMenu/BoardMenu'
 import { BoardCategory } from '~src/modules/board/components/BoardCategory/BoardCategory'
 import { AddCategory } from '~src/modules/board/components/AddCategory/AddCategory'
+import { swap } from '~src/utils/helpers'
 
 const BoardPage: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -24,6 +25,7 @@ const BoardPage: React.FC = () => {
   const { boardId } = useParams<'boardId'>()
   const board = useTypedSelector((state) => selectBoard(state, boardId ?? ''))
   const categories = useTypedSelector((state) => selectCategories(state, boardId ?? ''))
+  const cards = useTypedSelector((state) => selectCards(state, boardId ?? ''))
   const isLoading = useMemo(() => BoardStateStatus.LoadOneBoard === status, [status])
   const title = useMemo(() => (board ? board.name : 'Board'), [board])
   const position = useMemo(() => {
@@ -48,12 +50,56 @@ const BoardPage: React.FC = () => {
     }
 
     if (type === DndType.Category) {
-      // dispatch(updateCategoryPosition({ source, destination }))
+      dispatch(
+        changeCategoriesPosition({
+          board_id: boardId!,
+          ids: swap(categories.ids, source.index, destination.index),
+        })
+      )
 
       return
     }
 
-    // dispatch(updateCardPosition({ source, destination }))
+    let d = 0
+    let from = -1
+    let to = -1
+
+    for (let i = 0, s = 0; i < cards.ids.length; i++) {
+      if (from === -1 && cards.items[cards.ids[i]].category_id === source.droppableId) {
+        if (s === source.index) {
+          from = i
+        }
+        s++
+      }
+
+      if (to === -1 && cards.items[cards.ids[i]].category_id === destination.droppableId) {
+        if (d === destination.index) {
+          to = i
+        }
+        d++
+      }
+
+      if (from > -1 && to > -1) {
+        break
+      }
+    }
+
+    if (-1 === from) {
+      return
+    }
+
+    if (-1 === to) {
+      to = d
+    }
+
+    dispatch(
+      changeCardsPosition({
+        category_id: destination.droppableId,
+        board_id: boardId!,
+        card_id: cards.ids[from],
+        ids: swap(cards.ids, from, to),
+      })
+    )
   }
 
   useEffect(() => {
