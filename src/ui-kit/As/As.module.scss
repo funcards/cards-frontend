@@ -1,0 +1,3 @@
+@use "../../styles/mixins/breakpoints";
+
+@include breakpoints.all('.as', var(--as-display, inline-block));

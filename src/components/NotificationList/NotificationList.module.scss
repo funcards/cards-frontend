@@ -1,0 +1,19 @@
+@use "../../styles/mixins/breakpoints";
+
+.notifications {
+  position: absolute;
+  z-index: var(--zindex-notifications);
+  left: var(--space-sm);
+  top: var(--space-sm);
+  right: var(--space-sm);
+  pointer-events: all;
+
+  & > :not([hidden]) ~ :not([hidden]) {
+    margin-top: var(--space-sm);
+  }
+
+  @include breakpoints.breakpoint(sm) {
+    left: auto;
+    width: 22rem;
+  }
+}

@@ -1,0 +1,16 @@
+@use "../../styles/mixins/breakpoints";
+
+.avatarGroup {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  margin: 0 var(--avatar-group-item-shift, var(--space-xs)) 0 0;
+
+  &__item {
+    width: var(--avatar-group-item-size, 1.917rem);
+    height: var(--avatar-group-item-size, 1.917rem);
+    margin: 0 calc(-1 * var(--avatar-group-item-shift, var(--space-xs))) 0 0;
+  }
+}
+
+@include breakpoints.all('.avatarGroup', var(--avatar-group-display, flex));

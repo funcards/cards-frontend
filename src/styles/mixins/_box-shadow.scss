@@ -1,0 +1,39 @@
+@mixin box-shadow($shadow, $fallback-shadow: false) {
+  @if $fallback-shadow {
+    box-shadow: var(#{$shadow}, var(#{$fallback-shadow}));
+  } @else {
+    box-shadow: var(#{$shadow});
+  }
+}
+
+@mixin box-shadow-xs($shadow) {
+  @include box-shadow($shadow, --shadow-xs)
+}
+
+@mixin box-shadow-sm($shadow) {
+  @include box-shadow($shadow, --shadow-sm)
+}
+
+@mixin box-shadow-md($shadow) {
+  @include box-shadow($shadow, --shadow-md)
+}
+
+@mixin box-shadow-lg($shadow) {
+  @include box-shadow($shadow, --shadow-lg)
+}
+
+@mixin box-shadow-xl($shadow) {
+  @include box-shadow($shadow, --shadow-xl)
+}
+
+@mixin box-shadow-xxl($shadow) {
+  @include box-shadow($shadow, --shadow-xxl)
+}
+
+@mixin box-shadow-inner($shadow) {
+  @include box-shadow($shadow, --shadow-inner)
+}
+
+@mixin box-shadow-none($shadow) {
+  @include box-shadow($shadow, --shadow-none)
+}

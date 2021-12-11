@@ -25,6 +25,7 @@
         "newlines-between": "always"
       }
     ],
+    "import/no-unresolved": "error",
     "no-console": 1, // Warning to reduce console logs used throughout app
     "react/prop-types": 0, // Not using prop-types because we have TypeScript
     "newline-before-return": 1,
@@ -33,9 +34,15 @@
     "no-unused-vars": 0
   },
   "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
       "parcel": {
         "extensions": [".ts", ".tsx", ".js", ".jsx", ".json"]
+      },
+      "typescript": {
+        "alwaysTryTypes": true
       }
     },
     "react": {

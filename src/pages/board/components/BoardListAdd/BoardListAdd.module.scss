@@ -1,0 +1,35 @@
+@use "../../../../styles/mixins/breakpoints";
+
+.boardListAdd {
+  height: 7rem;
+  font-weight: 500;
+  font-size: calc(var(--text-md) * 0.9);
+  color: var(--color-boards-page-new-item);
+  background-color: var(--color-boards-page-new-item-bg);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  justify-content: center;
+
+  &:only-child {
+    grid-column: span 2;
+
+    @include breakpoints.breakpoint(sm) {
+      grid-column: span 1;
+    }
+  }
+
+  &:hover {
+    text-decoration: underline;
+    background-color: var(--color-boards-page-new-item-bg);
+    opacity: 0.8;
+  }
+
+  @include breakpoints.breakpoint(md) {
+    font-size: var(--text-md);
+  }
+}

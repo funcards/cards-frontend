@@ -1,0 +1,53 @@
+@use "sass:map";
+
+$breakpoints: (
+  xs: 0,
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1536px
+) !default;
+
+@mixin breakpoint($breakpoint, $logic: false) {
+  @if $logic {
+    @media (#{$logic}) and (min-width: map.get($breakpoints, $breakpoint)) { @content; }
+  } @else {
+    @media (min-width: map.get($breakpoints, $breakpoint)) { @content; }
+  }
+}
+
+@mixin show($display, $breakpoint, $logic: false) {
+  display: none;
+
+  @include breakpoint($breakpoint, $logic) {
+    display: #{$display};
+  }
+}
+
+@mixin show-all($prefix, $display, $logic: false) {
+  @each $name, $value in $breakpoints {
+    #{$prefix}_show_#{$name} {
+      @include show($display, $name, $logic)
+    }
+  }
+}
+
+@mixin hide($breakpoint, $logic: false) {
+  @include breakpoint($breakpoint, $logic) {
+    display: none;
+  }
+}
+
+@mixin hide-all($prefix, $logic: false) {
+  @each $name, $value in $breakpoints {
+    #{$prefix}_hide_#{$name} {
+      @include hide($name, $logic)
+    }
+  }
+}
+
+@mixin all($prefix, $display, $logic: false) {
+  @include show-all($prefix, $display, $logic);
+  @include hide-all($prefix, $logic);
+}

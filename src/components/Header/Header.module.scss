@@ -1,0 +1,52 @@
+@use "../../styles/mixins/buttons";
+@use "../../styles/mixins/border-radius";
+@use "../../styles/mixins/breakpoints";
+
+.header {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--space-xxxs);
+  background-color: var(--color-header-bg);
+
+  &__logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    letter-spacing: 0.2em;
+    color: var(--color-white-050);
+    text-shadow: 0.1rem 0.1rem 0.1rem var(--color-black-015);
+  }
+
+  &__group {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    gap: var(--space-xxxs);
+  }
+
+  &__btn {
+    --btn-gap: var(--space-xxs);
+    --btn-padding-vertical: var(--space-xxs);
+    --btn-padding-horizontal: var(--space-xxs);
+    @include buttons.btn;
+    @include buttons.light;
+    @include border-radius.border-radius-md(--header-btn-border-radius);
+  }
+
+  &__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &__text {
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+}

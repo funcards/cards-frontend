@@ -1,0 +1,32 @@
+.authFooter {
+  padding-top: var(--space-md);
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-width: 1px;
+    border-color: var(--color-divide);
+    padding-top: var(--space-md);
+  }
+
+  &__link {
+    color: var(--color-link);
+    font-size: var(--text-sm);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__dot {
+    display: block;
+
+    &::after {
+      content: '\2022';
+      color: var(--color-dot);
+      font-weight: 700;
+      padding: 0 var(--space-xs);
+    }
+  }
+}

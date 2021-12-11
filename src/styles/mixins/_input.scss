@@ -1,0 +1,28 @@
+@use "animation";
+
+@mixin input {
+  @include animation.transition;
+  @include animation.ease-in;
+
+  width: var(--input-width, 100%);
+  border-color: var(--color-input-border, var(--color-input-default-border));
+  border-width: var(--input-border-width, 2px);
+  color: var(--color-input, var(--color-input-default));
+  background-color: var(--color-input-bg, var(--color-input-default-bg));
+  font-size: var(--input-font-size, var(--text-lg));
+  padding: var(--input-padding-vertical, var(--space-xxs)) var(--input-padding-horizontal, var(--space-xs));
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-input-border-focus, var(--color-input-default-border-focus));
+  }
+
+  &::placeholder {
+    opacity: 1;
+    color: var(--color-input-placeholder, var(--color-input-default-placeholder));
+  }
+}
+
+@mixin error {
+  border-color: var(--color-input-border-error, var(--color-input-default-border-error));
+}

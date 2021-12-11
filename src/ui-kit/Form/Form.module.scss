@@ -1,0 +1,9 @@
+@use "../../styles/mixins/breakpoints";
+
+.form {
+  width: 100%;
+  display: var(--form-display, flex);
+  flex-direction: column;
+}
+
+@include breakpoints.all('.form', var(--form-display, flex));

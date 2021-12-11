@@ -1,0 +1,37 @@
+@mixin transition-all {
+  transition-property: all;
+  transition-timing-function: var(--ease-in-out);
+  transition-duration: 150ms;
+}
+
+@mixin transition {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: var(--ease-in-out);
+  transition-duration: 150ms;
+}
+
+@mixin ease-in {
+  transition-timing-function: var(--ease-in);
+}
+
+@mixin ease-out {
+  transition-timing-function: var(--ease-out);
+}
+
+@mixin duration-75 {
+  transition-duration: 75ms;
+}
+
+@mixin duration-100 {
+  transition-duration: 100ms;
+}
+
+@mixin duration-200 {
+  transition-duration: 200ms;
+}
+
+@mixin duration-300 {
+  transition-duration: 300ms;
+}

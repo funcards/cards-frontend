@@ -1,0 +1,83 @@
+@use "animation";
+
+@mixin btn {
+  --as-display: var(--btn-display, grid);
+
+  @include animation.transition;
+  @include animation.ease-in;
+
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: var(--btn-display, grid);
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  justify-content: var(--btn-justify-content, center);
+  gap: var(--btn-gap, var(--space-xs));
+  padding: var(--btn-padding-vertical, var(--space-xs)) var(--btn-padding-horizontal, var(--space-md));
+  color: var(--color-btn, var(--color-transparent));
+  background-color: var(--color-btn-bg, var(--color-transparent));
+  font-size: var(--btn-font-size, var(--text-lg));
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: var(--color-btn-bg-hover, var(--color-white-020));
+  }
+
+  &:disabled {
+    cursor: default;
+    color: var(--color-btn-disabled, var(--color-transparent));
+    background-color: var(--color-btn-bg-disabled, var(--color-transparent));
+  }
+}
+
+@mixin primary {
+  --color-btn: var(--color-btn-primary, var(--color-btn-primary-default));
+  --color-btn-disabled: var(--color-btn-primary-disabled, var(--color-btn-primary-default-disabled));
+  --color-btn-bg: var(--color-btn-primary-bg, var(--color-btn-primary-default-bg));
+  --color-btn-bg-hover: var(--color-btn-primary-bg-hover, var(--color-btn-primary-default-bg-hover));
+  --color-btn-bg-disabled: var(--color-btn-primary-bg-disabled, var(--color-btn-primary-default-bg-disabled));
+}
+
+@mixin light {
+  --color-btn: var(--color-btn-light, var(--color-btn-light-default));
+  --color-btn-disabled: var(--color-btn-light-disabled, var(--color-btn-light-default-disabled));
+  --color-btn-bg: var(--color-btn-light-bg, var(--color-btn-light-default-bg));
+  --color-btn-bg-hover: var(--color-btn-light-bg-hover, var(--color-btn-light-default-bg-hover));
+  --color-btn-bg-disabled: var(--color-btn-light-bg-disabled, var(--color-btn-light-default-bg-disabled));
+}
+
+@mixin avatar {
+  --btn-display: block;
+  --btn-gap: 0;
+  --btn-padding-vertical: 0;
+  --btn-padding-horizontal: 0;
+  --color-btn-bg: var(--color-btn-avatar-bg, var(--color-white-020));
+
+  width: 100%;
+  height: 100%;
+
+  &:hover {
+    border: 0.12rem solid var(--color-btn-avatar-border, var(--color-btn-avatar-default-border));
+  }
+}
+
+@mixin close {
+  --color-btn: var(--color-btn-close);
+  --color-btn-bg-hover: var(--color-transparent);
+  --btn-padding-vertical: 0;
+  --btn-padding-horizontal: 0;
+
+  &:hover {
+    color: var(--color-btn-close-hover);
+  }
+
+  & > svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

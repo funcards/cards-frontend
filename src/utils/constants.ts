@@ -12,8 +12,3 @@ export const routes = Object.freeze({
   auth: Object.freeze({ signIn: '/sign-in', signUp: '/sign-up', forgotPassword: '/forgot' }),
   board: Object.freeze({ list: '/boards', one: (id = ':boardId') => `/boards/${id}` }),
 })
-
-export const validation = Object.freeze({
-  email: /\S+@\S+\.\S+/,
-  password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w\s\-^$&*!@#]{8,64}$/,
-})

@@ -1,0 +1,29 @@
+@use "../../../../styles/mixins/animation";
+
+.switchFormFooter {
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  justify-content: start;
+  gap: var(--space-xs);
+
+  &_open {
+    @include animation.transition-all;
+    @include animation.duration-100;
+    height: auto;
+    padding-top: var(--space-xxxs);
+  }
+
+  &__addBtn {
+    --btn-font-size: var(--text-sm);
+    --btn-gap: var(--space-sm);
+    --btn-padding-vertical: var(--space-xxs);
+    --btn-padding-horizontal: var(--space-sm);
+    --btn-box-shadow: var(--shadow-xs);
+    --spinner-size: calc(var(--text-sm) * 0.85);
+  }
+}

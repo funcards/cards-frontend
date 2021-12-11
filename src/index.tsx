@@ -7,17 +7,18 @@ import { HelmetProvider } from 'react-helmet-async'
 import './styles/index.scss'
 
 import { store } from './store'
-import { App } from './App'
+
+import { App } from '~src/components'
 
 render(
-  <Provider store={store}>
-    <HelmetProvider>
-      <React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <HelmetProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </React.StrictMode>
-    </HelmetProvider>
-  </Provider>,
-  document.getElementById('app')
+      </HelmetProvider>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
 )

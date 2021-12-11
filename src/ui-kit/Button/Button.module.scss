@@ -1,0 +1,42 @@
+@use "../../styles/mixins/buttons";
+@use "../../styles/mixins/border-radius";
+@use "../../styles/mixins/box-shadow";
+
+.button {
+  @include buttons.btn;
+  @include border-radius.border-radius-md(--btn-border-radius);
+  @include box-shadow.box-shadow-none(--btn-box-shadow);
+
+  &_light {
+    @include buttons.light;
+  }
+
+  &_primary {
+    @include buttons.primary;
+  }
+
+  &_avatar {
+    @include buttons.avatar;
+    @include border-radius.border-radius(--avatar-border-radius, --radius-circle)
+  }
+
+  &_close {
+    @include buttons.close;
+  }
+
+  &_left {
+    --btn-justify-content: left;
+  }
+
+  &_right {
+    --btn-justify-content: right;
+  }
+
+  &_start {
+    align-self: flex-start;
+  }
+
+  &_end {
+    align-self: flex-end;
+  }
+}

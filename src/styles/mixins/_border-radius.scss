@@ -1,0 +1,19 @@
+@mixin border-radius($radius, $fallback-radius: false) {
+  @if $fallback-radius {
+    border-radius: var(#{$radius}, var(#{$fallback-radius}));
+  } @else {
+    border-radius: var(#{$radius});
+  }
+}
+
+@mixin border-radius-sm($radius) {
+  @include border-radius($radius, --radius-sm)
+}
+
+@mixin border-radius-md($radius) {
+  @include border-radius($radius, --radius-md)
+}
+
+@mixin border-radius-lg($radius) {
+  @include border-radius($radius, --radius-lg)
+}

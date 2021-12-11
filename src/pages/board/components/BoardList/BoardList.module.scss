@@ -1,0 +1,21 @@
+@use "sass:map";
+@use "../../../../styles/mixins/breakpoints";
+
+.boardList {
+  width: 100%;
+  display: grid;
+  gap: var(--space-xs);
+
+  $i: 2;
+
+  @each $name, $value in breakpoints.$breakpoints {
+    @include breakpoints.breakpoint($name) {
+      @if md == $name {
+        gap: var(--space-sm);
+      } @else {
+        grid-template-columns: repeat($i, minmax(0, 1fr));
+        $i: $i + 1;
+      }
+    }
+  }
+}

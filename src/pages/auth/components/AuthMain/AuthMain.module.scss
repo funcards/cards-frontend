@@ -1,0 +1,38 @@
+@use "../../../../styles/mixins/breakpoints";
+
+.authMain {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-white-100);
+    padding: var(--space-lg) var(--space-md);
+    overflow-y: auto;
+
+    & > :not([hidden]) {
+      @include breakpoints.breakpoint(sm) {
+        width: calc(26rem - (2 * var(--space-lg)));
+        margin: 0 auto;
+      }
+
+      & ~ :not([hidden]) {
+        padding-top: var(--space-md);
+      }
+    }
+
+    @include breakpoints.breakpoint(sm, 'min-height: 550px') {
+      max-width: 26rem;
+      height: auto;
+      padding: var(--space-xl) var(--space-lg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@use "sass:map";
+@use "../../styles/mixins/buttons";
+@use "../../styles/mixins/breakpoints";
+
+.errorWrapper {
+  width: 100%;
+  height: 100%;
+
+  &__container {
+    padding: var(--space-xxl) var(--space-lg);
+    margin: 0 auto;
+    text-align: center;
+
+    @include breakpoints.breakpoint(md) {
+      max-width: map.get(breakpoints.$breakpoints, sm);
+    }
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-lg);
+    color: var(--color-error-wrapper-title);
+  }
+
+  &__message {
+    font-size: var(--text-md);
+    text-align: center;
+    color: var(--color-error-wrapper-text);
+  }
+
+  &__auth {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    gap: var(--space-xxs);
+    margin-top: var(--space-md);
+    font-size: var(--text-sm);
+    color: var(--color-error-wrapper-auth);
+  }
+
+  &__user {
+    font-weight: 600;
+  }
+
+  &__btn {
+    --color-btn: var(--color-error-wrapper-auth);
+    --btn-padding-vertical: 0;
+    --btn-padding-horizontal: 0;
+    @include buttons.btn;
+    text-decoration: underline;
+    font-size: inherit;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@use "../../../../styles/mixins/breakpoints";
+@use "../../../../styles/mixins/buttons";
+@use "../../../../styles/mixins/border-radius";
+
+.boardHeader {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--space-xs);
+  background-color: var(--color-transparent);
+
+  &__group {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    gap: var(--space-xxxs);
+  }
+
+  &__divide {
+    width: 1px;
+    height: 60%;
+    margin: 0 var(--space-xxxs);
+    background-color: var(--color-white-020);
+
+    @include breakpoints.show(block, md);
+  }
+
+  &__btn {
+    --btn-gap: var(--space-xxs);
+    --btn-padding-vertical: var(--space-xxs);
+    --btn-padding-horizontal: var(--space-xxs);
+    --btn-font-size: var(--text-sm);
+  }
+
+  &__icon {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  &_bold {
+    font-weight: 600;
+  }
+
+  &__avatar {
+    @include buttons.btn;
+    @include buttons.avatar;
+    @include border-radius.border-radius(--avatar-border-radius, --radius-circle);
+  }
+}

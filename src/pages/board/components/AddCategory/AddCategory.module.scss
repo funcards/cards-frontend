@@ -1,0 +1,52 @@
+@use "../../../../styles/mixins/buttons";
+@use "../../../../styles/mixins/border-radius";
+@use "../../../../styles/mixins/box-shadow";
+@use "../../../../styles/mixins/animation";
+
+.addCategory {
+  overflow: hidden;
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: max-content;
+
+  &_open {
+    padding: var(--space-xxxs);
+    border-radius: var(--radius-md);
+    background-color: var(--color-category-bg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &__openBtn {
+    --btn-gap: var(--space-xxxs);
+    --btn-padding-horizontal: var(--space-xs);
+    --btn-font-size: var(--text-md);
+    --color-btn: var(--color-white-100);
+    --color-btn-bg: var(--color-white-030);
+    --color-btn-bg-hover: var(--color-white-020);
+    --btn-justify-content: start;
+    @include buttons.btn;
+    @include border-radius.border-radius-md(--add-category-border-radius);
+    @include box-shadow.box-shadow-sm(--add-category-box-shadow);
+    width: 100%;
+
+    &_open {
+      display: none;
+    }
+  }
+
+  &__plusIcon {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  &__input {
+    --input-font-size: var(--text-sm);
+    display: none;
+
+    &_open {
+      @include animation.transition-all;
+      @include animation.duration-100;
+      display: block;
+    }
+  }
+}

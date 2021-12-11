@@ -1,0 +1,64 @@
+@use "../../../../styles/mixins/buttons";
+@use "../../../../styles/mixins/breakpoints";
+
+.addBoard {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  margin: var(--space-sm) auto;
+  padding: 0 var(--space-sm);
+  background-color: var(--color-transparent);
+
+  @include breakpoints.breakpoint(sm) {
+    margin: var(--space-xl) auto;
+  }
+
+  &__wrapper {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--color-modal-body-bg);
+    box-shadow: var(--shadow-xl);
+    display: grid;
+    grid-auto-flow: row;
+    gap: var(--space-md);
+    overflow: hidden;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    font-weight: 600;
+    font-size: var(--text-lg);
+    color: var(--color-modal-title);
+  }
+
+  &__themes {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin: 0 calc(var(--space-xxxs) * -1);
+  }
+
+  &__theme {
+    flex-grow: 1;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    margin: var(--space-xs);
+    display: block;
+    cursor: pointer;
+    box-shadow: var(--shadow-xl);
+    background-color: var(--color-html-bg);
+
+    &:focus {
+      outline: none;
+    }
+
+    &_active {
+      box-shadow: 0 0 0 3px var(--color-add-board-theme-active), 0 0 #0000;
+    }
+  }
+}

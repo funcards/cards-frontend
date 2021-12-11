@@ -1,9 +1,76 @@
-@use "animate";
 @use "fonts";
-@use "colors";
-@use "spacing";
-@use "shared";
+@use "root";
 @use "reset";
-@use "typography";
-@use "scaffolding";
-@use "reach";
+
+[data-reach-dialog-overlay] {
+  background: var(--color-modal-overlay-bg);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  z-index: var(--zindex-modal);
+}
+
+[data-reach-dialog-content] {
+  outline: none;
+}
+
+[data-reach-menu] {
+  position: relative;
+}
+
+[data-reach-menu-popover] {
+  display: block;
+  position: absolute;
+  z-index: var(--zindex-user-menu);
+}
+
+[data-reach-menu-popover][hidden] {
+  display: none;
+}
+
+[data-reach-menu-list],
+[data-reach-menu-items] {
+  display: block;
+  white-space: nowrap;
+  outline: none;
+  animation: slide-down 0.2s ease;
+}
+
+[data-reach-menu-item] {
+  display: block;
+  user-select: none;
+}
+
+[data-reach-menu-item] {
+  cursor: pointer;
+
+  /* a */
+  display: block;
+  color: inherit;
+  font: inherit;
+  text-decoration: initial;
+}
+
+/* pseudo pseudo selector */
+[data-reach-menu-item][data-selected] {
+  outline: none;
+}
+
+[data-reach-menu-item][aria-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[data-reach-tooltip] {
+  pointer-events: none;
+  position: absolute;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  padding: var(--space-xxxs) var(--space-xxs);
+  background-color: var(--color-black-080, var(--color-tooltip-default-bg));
+  color: var(--color-white-100, var(--color-tooltip-default));
+  border-radius: var(--radius-md);
+}
