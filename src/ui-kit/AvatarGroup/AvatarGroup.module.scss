@@ -7,8 +7,8 @@
   margin: 0 var(--avatar-group-item-shift, var(--space-xs)) 0 0;
 
   &__item {
-    width: var(--avatar-group-item-size, 1.917rem);
-    height: var(--avatar-group-item-size, 1.917rem);
+    width: var(--avatar-group-item-size, 2rem);
+    height: var(--avatar-group-item-size, 2rem);
     margin: 0 calc(-1 * var(--avatar-group-item-shift, var(--space-xs))) 0 0;
   }
 }

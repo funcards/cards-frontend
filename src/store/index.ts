@@ -9,6 +9,9 @@ import auth, { signIn, signOut, signUp } from './auth/auth.slice'
 import board, {
   changeCardsPosition,
   changeCategoriesPosition,
+  editBoard,
+  editCard,
+  editCategory,
   loadBoard,
   loadBoards,
   newBoard,
@@ -20,6 +23,9 @@ import { signInSaga, signOutSaga, signUpSaga } from './auth/auth.sagas'
 import {
   changeCardsPositionSaga,
   changeCategoriesPositionSaga,
+  editBoardSaga,
+  editCardSaga,
+  editCategorySaga,
   loadBoardSaga,
   loadBoardsSaga,
   newBoardSaga,
@@ -61,6 +67,9 @@ function* rootSaga() {
     takeLatest(newCard.type, newCardSaga),
     takeLatest(changeCategoriesPosition.type, changeCategoriesPositionSaga),
     takeLatest(changeCardsPosition.type, changeCardsPositionSaga),
+    takeLatest(editBoard.type, editBoardSaga),
+    takeLatest(editCategory.type, editCategorySaga),
+    takeLatest(editCard.type, editCardSaga),
   ])
 }
 

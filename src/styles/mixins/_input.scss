@@ -25,4 +25,8 @@
 
 @mixin error {
   border-color: var(--color-input-border-error, var(--color-input-default-border-error));
+
+  &:focus {
+    border-color: var(--color-input-border-error, var(--color-input-default-border-error));
+  }
 }

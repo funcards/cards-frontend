@@ -106,7 +106,7 @@ export enum BoardStateStatus {
   ChangeCategoryPosition = 'CHANGE_CATEGORY_POSITION',
   ChangeCardPosition = 'CHANGE_CARD_POSITION',
   EditBoard = 'EDIT_BOARD',
-  // EditCategory = 'EDIT_CATEGORY',
+  EditCategory = 'EDIT_CATEGORY',
+  EditCard = 'EDIT_CARD',
   // EditTag = 'EDIT_TAG',
-  // EditCard = 'EDIT_CARD',
 }

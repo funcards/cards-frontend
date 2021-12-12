@@ -1,2 +1,2 @@
-export * from './useDetectClickOutside'
-export * from './useClickOutsideForm'
+export * from './useDebounce'
+export * from './useSwitchElement'

@@ -5,8 +5,8 @@
   @include buttons.btn;
   @include buttons.avatar;
   @include border-radius.border-radius(--avatar-border-radius, --radius-circle);
-  width: 2rem;
-  height: 2rem;
+  width: 1.825em;
+  height: 1.825em;
 }
 
 .userMenuItems {

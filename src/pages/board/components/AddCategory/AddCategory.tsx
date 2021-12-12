@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { TiPlus } from 'react-icons/ti'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
 
 import * as classes from './AddCategory.module.scss'
 
@@ -10,7 +11,7 @@ import { selectBoardState } from '~src/store/board/board.selectors'
 import { BoardStateStatus, DraftCategory } from '~src/store/board/board.types'
 import { newCategory } from '~src/store/board/board.slice'
 import { TextField } from '~src/ui-kit'
-import { useClickOutsideForm } from '~src/utils/hooks'
+import { useSwitchElement } from '~src/utils/hooks'
 import { SwitchFormFooter } from '~src/pages/board/components'
 
 export interface AddCategoryProps {
@@ -29,20 +30,15 @@ export const AddCategory: React.FC<AddCategoryProps> = ({ boardId, boardColor, p
   const dispatch = useAppDispatch()
   const { status } = useTypedSelector(selectBoardState)
   const isLoading = useMemo(() => BoardStateStatus.NewCategory === status, [status])
+  const { ref, isOpened, onOpen, onClose, registerEvents, unregisterEvents } = useSwitchElement<HTMLFormElement>()
 
   const {
-    isOpened,
-    open: onOpen,
-    close: onClose,
-    ref,
     register,
     handleSubmit,
     setFocus,
     formState: { isDirty, isValid },
     reset,
-  } = useClickOutsideForm<DraftCategory>({
-    resetOnClose: true,
-    focusOnOpen: 'name',
+  } = useForm<DraftCategory>({
     mode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: { board_id: boardId, position },
@@ -58,6 +54,17 @@ export const AddCategory: React.FC<AddCategoryProps> = ({ boardId, boardColor, p
     },
     [dispatch, reset, setFocus]
   )
+
+  useEffect(() => {
+    unregisterEvents()
+
+    if (isOpened) {
+      registerEvents()
+      setFocus('name')
+    } else {
+      reset()
+    }
+  }, [isOpened, setFocus, reset, unregisterEvents, registerEvents])
 
   return (
     <form

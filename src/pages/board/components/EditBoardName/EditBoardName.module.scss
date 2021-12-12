@@ -1,0 +1,40 @@
+.editBoardName {
+  &__btn {
+    --btn-gap: var(--space-xxs);
+    --btn-padding-vertical: var(--space-xs);
+    --btn-padding-horizontal: var(--space-xs);
+    --btn-font-size: var(--text-md);
+    --color-spinner: var(--color-transparent);
+    line-height: 1em;
+    font-weight: 600;
+
+    &_opened {
+      display: none;
+    }
+  }
+
+  &__form {
+    display: none;
+
+    &_opened {
+      display: block;
+    }
+  }
+
+  &__input {
+    --input-padding-vertical: var(--space-xxxs);
+    --input-font-size: var(--text-md);
+    line-height: 1em;
+    min-width: 1px;
+    box-sizing: content-box;
+  }
+
+  &__helper {
+    position: absolute;
+    z-index: -100;
+    opacity: 0;
+    font-size: var(--text-md);
+    line-height: 1em;
+    white-space: pre;
+  }
+}

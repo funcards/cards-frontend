@@ -41,10 +41,10 @@ export const BoardMenu: React.FC<BoardMenuProps> = ({ boardColor, menuIsOpened, 
             </button>
           ))}
         </div>
-        <div className={`${classes.boardMenu__group} ${classes.bmActivity}`}>
-          <div className={classes.bmActivity__header}>
-            <TiBookmark className={classes.bmActivity__icon} />
-            <span className={classes.bmActivity__title}>Activity</span>
+        <div className={`${classes.activity} ${classes.boardMenu__group}`}>
+          <div className={classes.activity__header}>
+            <TiBookmark className={classes.activity__icon} />
+            <span className={classes.activity__title}>Activity</span>
           </div>
         </div>
       </div>

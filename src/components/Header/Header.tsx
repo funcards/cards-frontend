@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
         <ul className={classes.header__group}>
           <li>
             <Link to={routes.board.list} className={classes.header__btn}>
-              <TiHomeOutline className={classes.header__icon} />
+              <TiHomeOutline />
               <Text className={classes.header__text} show="md">
                 Boards
               </Text>
@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
         <ul className={classes.header__group}>
           <li>
             <button className={classes.header__btn} onClick={onOpenAddBoard}>
-              <TiPlus className={classes.header__icon} />
+              <TiPlus />
             </button>
           </li>
           {isAuthenticated && <UserMenu />}

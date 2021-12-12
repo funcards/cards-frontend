@@ -16,13 +16,12 @@
     grid-auto-flow: column;
     grid-auto-columns: max-content;
     align-items: center;
-    gap: var(--space-xxxs);
+    gap: var(--space-xs);
   }
 
   &__divide {
     width: 1px;
     height: 60%;
-    margin: 0 var(--space-xxxs);
     background-color: var(--color-white-020);
 
     @include breakpoints.show(block, md);
@@ -30,14 +29,10 @@
 
   &__btn {
     --btn-gap: var(--space-xxs);
-    --btn-padding-vertical: var(--space-xxs);
-    --btn-padding-horizontal: var(--space-xxs);
-    --btn-font-size: var(--text-sm);
-  }
-
-  &__icon {
-    width: 1.15rem;
-    height: 1.15rem;
+    --btn-padding-vertical: var(--space-xs);
+    --btn-padding-horizontal: var(--space-xs);
+    --btn-font-size: var(--text-md);
+    line-height: 1em;
   }
 
   &_bold {

@@ -126,6 +126,10 @@ const boardSlice = createSlice({
         }
       })
     },
+    editBoard: (state: BoardState, {}: PayloadAction<Partial<Board>>) => init(state, BoardStateStatus.EditBoard),
+    editCategory: (state: BoardState, {}: PayloadAction<Partial<Category>>) =>
+      init(state, BoardStateStatus.EditCategory),
+    editCard: (state: BoardState, {}: PayloadAction<Partial<Card>>) => init(state, BoardStateStatus.EditCard),
   },
 })
 
@@ -151,5 +155,8 @@ export const {
   changeCardsPosition,
   setCategoriesPosition,
   setCardsPosition,
+  editBoard,
+  editCategory,
+  editCard,
 } = boardSlice.actions
 export default boardSlice.reducer

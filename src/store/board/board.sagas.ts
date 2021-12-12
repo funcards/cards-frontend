@@ -31,7 +31,7 @@ import {
   DraftTag,
 } from './board.types'
 
-import { fetcher } from '~src/utils/helpers'
+import { fetcher, noUndefined } from '~src/utils/helpers'
 
 export function* loadBoardsSaga() {
   try {
@@ -176,6 +176,84 @@ export function* changeCardsPositionSaga({ payload }: PayloadAction<ChangeCardsP
     yield put(
       setCardsPosition({ board_id: payload.board_id, source: payload.destination, destination: payload.source })
     )
+    yield call(caughtSaga, e, failedBoard)
+  }
+}
+
+export function* editBoardSaga({ payload }: PayloadAction<Partial<Board>>) {
+  const { board_id, ...rest } = noUndefined(payload)
+
+  if (!board_id) {
+    return
+  }
+
+  const board: Board | undefined = yield select(selectBoard, board_id)
+
+  if (!board) {
+    return
+  }
+
+  try {
+    yield call(fetcher.patch, `/boards/${board_id}`, rest)
+    yield put(setBoard({ ...board, ...rest }))
+    yield put(successBoard())
+  } catch (e) {
+    yield call(caughtSaga, e, failedBoard)
+  }
+}
+
+export function* editCategorySaga({ payload }: PayloadAction<Partial<Category>>) {
+  const { board_id, category_id, ...rest } = noUndefined(payload)
+
+  if (!board_id || !category_id) {
+    return
+  }
+
+  const board: Board | undefined = yield select(selectBoard, board_id)
+
+  if (!board) {
+    return
+  }
+
+  const category = board.categories?.find((c) => c.category_id === category_id)
+
+  if (!category) {
+    return
+  }
+
+  try {
+    yield call(fetcher.patch, `/boards/${board_id}/categories/${category_id}`, rest)
+    yield put(setCategory({ ...category, ...rest }))
+    yield put(successBoard())
+  } catch (e) {
+    yield call(caughtSaga, e, failedBoard)
+  }
+}
+
+export function* editCardSaga({ payload }: PayloadAction<Partial<Card>>) {
+  const { board_id, card_id, ...rest } = noUndefined(payload)
+
+  if (!board_id || !card_id) {
+    return
+  }
+
+  const board: Board | undefined = yield select(selectBoard, board_id)
+
+  if (!board) {
+    return
+  }
+
+  const card = board.cards?.find((c) => c.card_id === card_id)
+
+  if (!card) {
+    return
+  }
+
+  try {
+    yield call(fetcher.patch, `/boards/${board_id}/cards/${card_id}`, rest)
+    yield put(setCard({ ...card, ...rest }))
+    yield put(successBoard())
+  } catch (e) {
     yield call(caughtSaga, e, failedBoard)
   }
 }

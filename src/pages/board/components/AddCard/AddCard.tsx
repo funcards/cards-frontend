@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { TiPlus } from 'react-icons/ti'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
 
 import * as classes from './AddCard.module.scss'
 
@@ -9,9 +10,9 @@ import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardState } from '~src/store/board/board.selectors'
 import { BoardStateStatus, DraftCard } from '~src/store/board/board.types'
 import { newCard } from '~src/store/board/board.slice'
-import { useClickOutsideForm } from '~src/utils/hooks'
 import { SwitchFormFooter } from '~src/pages/board/components'
 import { TextField } from '~src/ui-kit'
+import { useSwitchElement } from '~src/utils/hooks'
 
 export interface AddCardProps {
   label: string
@@ -29,20 +30,15 @@ export const AddCard: React.FC<AddCardProps> = ({ label, boardId, categoryId, po
   const dispatch = useAppDispatch()
   const { status } = useTypedSelector(selectBoardState)
   const isLoading = useMemo(() => BoardStateStatus.NewCard === status, [status])
+  const { ref, isOpened, onOpen, onClose, registerEvents, unregisterEvents } = useSwitchElement<HTMLFormElement>()
 
   const {
-    isOpened,
-    open,
-    close: onClose,
-    ref,
     register,
     handleSubmit,
     setFocus,
     formState: { isDirty, isValid },
     reset,
-  } = useClickOutsideForm<DraftCard>({
-    resetOnClose: true,
-    focusOnOpen: 'name',
+  } = useForm<DraftCard>({
     mode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: { board_id: boardId, category_id: categoryId, position },
@@ -59,6 +55,17 @@ export const AddCard: React.FC<AddCardProps> = ({ label, boardId, categoryId, po
     [dispatch, reset, setFocus]
   )
 
+  useEffect(() => {
+    unregisterEvents()
+
+    if (isOpened) {
+      registerEvents()
+      setFocus('name')
+    } else {
+      reset()
+    }
+  }, [isOpened, setFocus, reset, unregisterEvents, registerEvents])
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -66,7 +73,7 @@ export const AddCard: React.FC<AddCardProps> = ({ label, boardId, categoryId, po
       className={isOpened ? `${classes.addCard} ${classes.addCard_open}` : classes.addCard}
     >
       <button
-        onClick={open}
+        onClick={onOpen}
         className={isOpened ? `${classes.addCard__openBtn} ${classes.addCard__openBtn_open}` : classes.addCard__openBtn}
       >
         <TiPlus className={classes.addCard__plusIcon} />

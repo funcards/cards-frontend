@@ -17,8 +17,8 @@
     left: 50%;
     transform: translateX(-50%) translateY(-50%) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1);
     font-weight: 700;
-    font-size: var(--text-lg);
-    letter-spacing: 0.2em;
+    font-size: var(--text-xxl);
+    letter-spacing: 0.3em;
     color: var(--color-white-050);
     text-shadow: 0.1rem 0.1rem 0.1rem var(--color-black-015);
   }
@@ -35,18 +35,14 @@
     --btn-gap: var(--space-xxs);
     --btn-padding-vertical: var(--space-xxs);
     --btn-padding-horizontal: var(--space-xxs);
+    --btn-font-size: var(--text-xl);
     @include buttons.btn;
     @include buttons.light;
     @include border-radius.border-radius-md(--header-btn-border-radius);
   }
 
-  &__icon {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
   &__text {
-    font-size: var(--text-sm);
+    font-size: var(--text-md);
     font-weight: 600;
   }
 }
