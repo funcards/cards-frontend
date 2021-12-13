@@ -15,9 +15,8 @@
   }
 
   &__openBtn {
-    --btn-gap: var(--space-xxxs);
-    --btn-padding-vertical: var(--space-xxs);
-    --btn-padding-horizontal: var(--space-sm);
+    --btn-gap: var(--space-xxs);
+    --btn-padding-horizontal: var(--space-xxs);
     --btn-font-size: var(--text-md);
     --color-btn: var(--color-add-card-open-btn);
     --color-btn-bg: var(--color-add-card-open-btn-bg);

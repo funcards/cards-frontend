@@ -1,0 +1,33 @@
+.categoryName {
+  flex-grow: 1;
+  display: flex;
+  margin-right: var(--space-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &__name {
+    flex-grow: 1;
+    cursor: pointer;
+    margin: 0;
+    padding: 0 var(--space-xxxs);
+    color: var(--color-category-name);
+    font-weight: 600;
+    font-size: var(--text-sm);
+
+    &_opened {
+      display: none;
+    }
+  }
+
+  &__input {
+    --input-padding-horizontal: var(--space-xxs);
+    --input-font-size: var(--text-sm);
+    display: none;
+    line-height: 1em;
+
+    &_opened {
+      display: block;
+    }
+  }
+}

@@ -193,11 +193,14 @@ export function* editBoardSaga({ payload }: PayloadAction<Partial<Board>>) {
     return
   }
 
+  const oldBoard = JSON.parse(JSON.stringify(board))
+
   try {
-    yield call(fetcher.patch, `/boards/${board_id}`, rest)
     yield put(setBoard({ ...board, ...rest }))
+    yield call(fetcher.patch, `/boards/${board_id}`, rest)
     yield put(successBoard())
   } catch (e) {
+    yield put(setBoard(oldBoard))
     yield call(caughtSaga, e, failedBoard)
   }
 }
@@ -221,11 +224,14 @@ export function* editCategorySaga({ payload }: PayloadAction<Partial<Category>>)
     return
   }
 
+  const oldCategory = JSON.parse(JSON.stringify(category))
+
   try {
-    yield call(fetcher.patch, `/boards/${board_id}/categories/${category_id}`, rest)
     yield put(setCategory({ ...category, ...rest }))
+    yield call(fetcher.patch, `/boards/${board_id}/categories/${category_id}`, rest)
     yield put(successBoard())
   } catch (e) {
+    yield put(setCategory(oldCategory))
     yield call(caughtSaga, e, failedBoard)
   }
 }
@@ -249,11 +255,14 @@ export function* editCardSaga({ payload }: PayloadAction<Partial<Card>>) {
     return
   }
 
+  const oldCard = JSON.parse(JSON.stringify(card))
+
   try {
-    yield call(fetcher.patch, `/boards/${board_id}/cards/${card_id}`, rest)
     yield put(setCard({ ...card, ...rest }))
+    yield call(fetcher.patch, `/boards/${board_id}/cards/${card_id}`, rest)
     yield put(successBoard())
   } catch (e) {
+    yield put(setCard(oldCard))
     yield call(caughtSaga, e, failedBoard)
   }
 }

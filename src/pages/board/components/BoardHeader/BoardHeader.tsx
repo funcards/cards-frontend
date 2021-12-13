@@ -7,7 +7,7 @@ import * as classes from './BoardHeader.module.scss'
 
 import { Board } from '~src/store/board/board.types'
 import { Avatar, AvatarGroup, Button, Text } from '~src/ui-kit'
-import { EditBoardName } from '~src/pages/board/components'
+import { BoardName } from '~src/pages/board/components'
 
 export interface BoardHeaderProps {
   board: Board
@@ -21,7 +21,7 @@ export const BoardHeader: React.FC<BoardHeaderProps> = ({ board, menuIsOpened, o
   return (
     <div className={classes.boardHeader}>
       <div className={classes.boardHeader__group}>
-        <EditBoardName board={board} />
+        <BoardName boardId={board.board_id} boardName={board.name} />
         <div className={classes.boardHeader__divide} />
         <AvatarGroup>
           {members.map((m, i) => (

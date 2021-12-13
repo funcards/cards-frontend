@@ -8,7 +8,7 @@ import { useTypedSelector } from '~src/store'
 import { Category } from '~src/store/board/board.types'
 import { selectCategoryCards } from '~src/store/board/board.selectors'
 import { DndType } from '~src/store/types'
-import { AddCard, BoardCard } from '~src/pages/board/components'
+import { AddCard, BoardCard, CategoryName } from '~src/pages/board/components'
 
 export interface BoardCategoryProps {
   category: Category
@@ -35,7 +35,11 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
         >
           <div className={classes.category__container}>
             <div className={classes.category__header}>
-              <h2 className={classes.category__name}>{category.name}</h2>
+              <CategoryName
+                boardId={category.board_id}
+                categoryId={category.category_id}
+                categoryName={category.name}
+              />
               <button className={classes.category__menuBtn}>
                 <IoEllipsisHorizontalOutline className={classes.category__menuIcon} />
               </button>
