@@ -1,9 +1,11 @@
 @use "../../../../styles/mixins/breakpoints";
+@use "../../../../styles/mixins/border-radius";
+@use "../../../../styles/mixins/box-shadow";
 
 .viewCard {
   position: relative;
   width: 100%;
-  max-width: 32rem;
+  max-width: 768px;
   margin: var(--space-sm) auto;
   padding: 0 var(--space-sm);
   background-color: var(--color-transparent);
@@ -13,9 +15,45 @@
   }
 
   &__wrapper {
+    @include border-radius.border-radius-md(--modal-border-radius);
+    @include box-shadow.box-shadow-xl(--modal-box-shadow);
     padding: var(--space-sm);
-    border-radius: var(--radius-md);
     background-color: var(--color-modal-body-bg);
-    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__cover {}
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    font-weight: 600;
+    font-size: var(--text-lg);
+  }
+
+  &__category {
+    padding-top: var(--space-xs);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoints.breakpoint(sm) {
+      flex-direction: row;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
   }
 }

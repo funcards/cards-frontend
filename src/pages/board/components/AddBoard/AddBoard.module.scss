@@ -1,5 +1,7 @@
 @use "../../../../styles/mixins/buttons";
 @use "../../../../styles/mixins/breakpoints";
+@use "../../../../styles/mixins/border-radius";
+@use "../../../../styles/mixins/box-shadow";
 
 .addBoard {
   position: relative;
@@ -14,10 +16,10 @@
   }
 
   &__wrapper {
+    @include border-radius.border-radius-md(--modal-border-radius);
+    @include box-shadow.box-shadow-xl(--modal-box-shadow);
     padding: var(--space-md);
-    border-radius: var(--radius-md);
     background-color: var(--color-modal-body-bg);
-    box-shadow: var(--shadow-xl);
     display: grid;
     grid-auto-flow: row;
     gap: var(--space-md);
