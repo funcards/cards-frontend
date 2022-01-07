@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { TiHomeOutline, TiPlus } from 'react-icons/ti'
+import { IoNotificationsOutline } from 'react-icons/io5'
 
 import * as classes from './Header.module.scss'
 
@@ -37,6 +38,11 @@ export const Header: React.FC = () => {
           <li>
             <button className={classes.header__btn} onClick={onOpenAddBoard}>
               <TiPlus />
+            </button>
+          </li>
+          <li>
+            <button className={classes.header__btn} onClick={() => true}>
+              <IoNotificationsOutline />
             </button>
           </li>
           {isAuthenticated && <UserMenu />}

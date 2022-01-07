@@ -6,12 +6,8 @@
   @include animation.duration-200;
   overflow: hidden;
   width: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: var(--zindex-board-menu);
   display: flex;
+  visibility: hidden;
   flex-direction: column;
   background-color: var(--color-board-menu-bg);
   box-shadow: var(--shadow-sm);
@@ -22,6 +18,7 @@
   }
 
   &_open {
+    visibility: visible;
     width: 20rem;
     padding: var(--space-sm);
   }

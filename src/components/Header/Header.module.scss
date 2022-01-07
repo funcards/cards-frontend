@@ -36,6 +36,7 @@
     --btn-padding-vertical: var(--space-xxs);
     --btn-padding-horizontal: var(--space-xxs);
     --btn-font-size: var(--text-xl);
+    --color-btn-light-bg: var(--color-transparent);
     @include buttons.btn;
     @include buttons.light;
     @include border-radius.border-radius-md(--header-btn-border-radius);
