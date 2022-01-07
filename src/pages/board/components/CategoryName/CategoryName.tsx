@@ -35,7 +35,7 @@ export const CategoryName: React.FC<CategoryNameProps> = ({ boardId, categoryId,
 
       dispatch(editCategory({ board_id: boardId, category_id: categoryId, name }))
     },
-    [categoryId, categoryName, dispatch]
+    [boardId, categoryId, categoryName, dispatch]
   )
 
   const onChange = (e: any) => {
@@ -52,15 +52,17 @@ export const CategoryName: React.FC<CategoryNameProps> = ({ boardId, categoryId,
   }, [newCategoryName])
 
   useEffect(() => {
+    if (isOpened && inputRef.current) {
+      inputRef.current.focus()
+      inputRef.current.select()
+    }
+  }, [isOpened])
+
+  useEffect(() => {
     unregisterEvents()
 
     if (isOpened) {
       registerEvents()
-
-      if (inputRef.current) {
-        inputRef.current.focus()
-        inputRef.current.select()
-      }
     } else {
       if (!isValid) {
         setNewCategoryName(categoryName)

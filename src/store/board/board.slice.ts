@@ -23,6 +23,7 @@ import { swap } from '~src/utils/helpers'
 
 const initialState: BoardState = {
   boards: [],
+  loadedAll: false,
   isLoading: false,
   isError: false,
 }
@@ -56,6 +57,7 @@ const boardSlice = createSlice({
     loadBoards: (state: BoardState) => init(state, BoardStateStatus.LoadBoardList),
     loadBoard: (state: BoardState, {}: PayloadAction<string>) => init(state, BoardStateStatus.LoadOneBoard),
     setBoards: (state: BoardState, { payload }: PayloadAction<Board[]>) => {
+      state.loadedAll = true
       state.boards = payload.sort(sortFn).reverse()
     },
     setBoard: (state: BoardState, { payload }: PayloadAction<Board>) => {

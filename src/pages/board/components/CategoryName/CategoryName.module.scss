@@ -5,15 +5,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1em;
 
   &__name {
     flex-grow: 1;
     cursor: pointer;
     margin: 0;
-    padding: 0 var(--space-xxxs);
+    padding: calc(2px + var(--space-xxxs));
     color: var(--color-category-name);
-    font-weight: 600;
     font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1em;
 
     &_opened {
       display: none;
@@ -21,8 +23,10 @@
   }
 
   &__input {
-    --input-padding-horizontal: var(--space-xxs);
+    --input-padding-vertical: var(--space-xxxs);
+    --input-padding-horizontal: var(--space-xxxs);
     --input-font-size: var(--text-sm);
+    font-weight: 600;
     display: none;
     line-height: 1em;
 

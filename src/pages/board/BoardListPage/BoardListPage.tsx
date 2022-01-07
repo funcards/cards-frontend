@@ -12,14 +12,14 @@ import { BoardList } from '~src/pages/board/components'
 
 const BoardListPage: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { status, boards } = useTypedSelector(selectBoardState)
+  const { status, loadedAll, boards } = useTypedSelector(selectBoardState)
   const isLoading = useMemo(() => BoardStateStatus.LoadBoardList === status, [status])
 
   useEffect(() => {
-    if (0 === boards.length) {
+    if (!loadedAll) {
       dispatch(loadBoards())
     }
-  }, [boards.length, dispatch])
+  }, [loadedAll, dispatch])
 
   return (
     <>
