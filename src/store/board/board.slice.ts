@@ -24,6 +24,7 @@ import { swap } from '~src/utils/helpers'
 const initialState: BoardState = {
   boards: [],
   loadedAll: false,
+  tagsLabelOpened: false,
   isLoading: false,
   isError: false,
 }
@@ -132,6 +133,12 @@ const boardSlice = createSlice({
     editCategory: (state: BoardState, {}: PayloadAction<Partial<Category>>) =>
       init(state, BoardStateStatus.EditCategory),
     editCard: (state: BoardState, {}: PayloadAction<Partial<Card>>) => init(state, BoardStateStatus.EditCard),
+    tagsLabelOpen: (state: BoardState) => {
+      state.tagsLabelOpened = true
+    },
+    tagsLabelClose: (state: BoardState) => {
+      state.tagsLabelOpened = false
+    },
   },
 })
 
@@ -160,5 +167,7 @@ export const {
   editBoard,
   editCategory,
   editCard,
+  tagsLabelOpen,
+  tagsLabelClose,
 } = boardSlice.actions
 export default boardSlice.reducer

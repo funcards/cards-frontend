@@ -82,20 +82,22 @@ export const AddBoard: React.FC = () => {
               control={control}
               render={({ field }) => (
                 <div className={classes.addBoard__themes}>
-                  {Object.values(Theme).map((t) => (
-                    <div
-                      key={t}
-                      data-theme={t}
-                      className={
-                        t === field.value
-                          ? `${classes.addBoard__theme} ${classes.addBoard__theme_active}`
-                          : classes.addBoard__theme
-                      }
-                      onClick={() => field.onChange(t)}
-                    >
-                      &nbsp;
-                    </div>
-                  ))}
+                  {Object.values(Theme)
+                    .filter((t) => t !== Theme.NoColor)
+                    .map((t) => (
+                      <div
+                        key={t}
+                        data-theme={t}
+                        className={
+                          t === field.value
+                            ? `${classes.addBoard__theme} ${classes.addBoard__theme_active}`
+                            : classes.addBoard__theme
+                        }
+                        onClick={() => field.onChange(t)}
+                      >
+                        &nbsp;
+                      </div>
+                    ))}
                 </div>
               )}
             />

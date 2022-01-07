@@ -1,0 +1,21 @@
+@use "../../../../styles/mixins/breakpoints";
+
+.viewCard {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  margin: var(--space-sm) auto;
+  padding: 0 var(--space-sm);
+  background-color: var(--color-transparent);
+
+  @include breakpoints.breakpoint(sm) {
+    margin: var(--space-xl) auto;
+  }
+
+  &__wrapper {
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    background-color: var(--color-modal-body-bg);
+    box-shadow: var(--shadow-xl);
+  }
+}

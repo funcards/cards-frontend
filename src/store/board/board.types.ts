@@ -93,6 +93,7 @@ export interface ChangeCardsPosition {
 export interface BoardState extends CommonState {
   boards: Board[]
   loadedAll: boolean
+  tagsLabelOpened: boolean
 }
 
 export enum BoardStateStatus {

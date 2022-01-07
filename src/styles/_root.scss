@@ -54,7 +54,8 @@
   --html-line-height: 1.3;
   --heading-line-height: 1.2;
 
-  --text-xs: calc((var(--text-unit) / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-xxs: calc(((var(--text-unit) / var(--text-scale-ratio)) / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-xs: calc(var(--text-xxs) * var(--text-scale-ratio));
   --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
   --text-md: calc(var(--text-sm) * var(--text-scale-ratio));
   --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
@@ -302,3 +303,5 @@
   --color-header-bg: var(--color-black-020);
 }
 
+[data-theme="no-color"] {
+}

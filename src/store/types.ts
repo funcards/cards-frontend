@@ -35,6 +35,7 @@ export enum Theme {
   Lime = 'lime',
   Green = 'green',
   Gray = 'gray',
+  NoColor = 'no-color',
 }
 
 export enum DndType {

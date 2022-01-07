@@ -54,8 +54,16 @@ export function* loadBoardSaga({ payload }: PayloadAction<string>) {
     }
 
     if (board?.tags === undefined) {
-      const { data } = yield call(fetcher.get, `/boards/${payload}/tags`)
-      yield put(setTags({ board_id: payload, items: data.data }))
+      // const { data } = yield call(fetcher.get, `/boards/${payload}/tags`)
+      // yield put(setTags({ board_id: payload, items: data.data }))
+      // TODO: remove
+      const data = [
+        { tag_id: '1', board_id: payload, name: 'SF', color: 'sky' },
+        { tag_id: '2', board_id: payload, name: 'Fantasy', color: 'orange' },
+        { tag_id: '3', board_id: payload, name: 'Psihologie', color: 'red' },
+        { tag_id: '4', board_id: payload, name: 'Pupkin', color: 'no-color' },
+      ]
+      yield put(setTags({ board_id: payload, items: data }))
     }
 
     if (board?.categories === undefined) {
@@ -73,7 +81,9 @@ export function* loadBoardSaga({ payload }: PayloadAction<string>) {
         cards.push(...data.data)
       } while (cards.length < count)
 
-      yield put(setCards({ board_id: payload, items: cards }))
+      // TODO: remove
+      yield put(setCards({ board_id: payload, items: cards.map((c) => ({ ...c, tags: ['1', '2', '3', '4'] })) }))
+      // yield put(setCards({ board_id: payload, items: cards }))
     }
 
     yield put(successBoard())
