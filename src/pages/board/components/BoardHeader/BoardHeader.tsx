@@ -41,12 +41,16 @@ export const BoardHeader: React.FC<BoardHeaderProps> = ({ board, menuIsOpened, o
         </Button>
       </div>
       <div className={classes.boardHeader__group}>
-        {!menuIsOpened && (
-          <Button className={classes.boardHeader__btn} onClick={onOpenMenu} light={true}>
-            <IoEllipsisHorizontalOutline />
-            <Text show="md">Show menu</Text>
-          </Button>
-        )}
+        <Button
+          className={
+            menuIsOpened ? `${classes.boardHeader__btn} ${classes.boardHeader__btn_hide}` : classes.boardHeader__btn
+          }
+          onClick={onOpenMenu}
+          light={true}
+        >
+          <IoEllipsisHorizontalOutline />
+          <Text show="md">Show menu</Text>
+        </Button>
       </div>
     </div>
   )

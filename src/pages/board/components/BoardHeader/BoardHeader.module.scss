@@ -1,6 +1,7 @@
 @use "../../../../styles/mixins/breakpoints";
 @use "../../../../styles/mixins/buttons";
 @use "../../../../styles/mixins/border-radius";
+@use "../../../../styles/mixins/animation";
 
 .boardHeader {
   position: relative;
@@ -33,6 +34,16 @@
     --btn-padding-horizontal: var(--space-xs);
     --btn-font-size: var(--text-md);
     line-height: 1em;
+    visibility: visible;
+
+    @include animation.transition-all;
+
+    &_hide {
+      visibility: hidden;
+      width: 0;
+      height: 0;
+      padding: 0;
+    }
   }
 
   &_bold {
