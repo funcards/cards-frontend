@@ -128,30 +128,32 @@ const BoardPage: React.FC = () => {
                   <Helmet htmlAttributes={{ 'data-theme': board.color }} />
                   <div className={classes.boardPage__content}>
                     <BoardHeader board={board} menuIsOpened={boardMenuIsOpened} onOpenMenu={onOpenMenu} />
-                    <DragDropContext onDragEnd={onDragEnd}>
-                      <Droppable droppableId="categories" direction="horizontal" type={DndType.Category}>
-                        {(provided) => (
-                          <div
-                            className={classes.boardPage__categories}
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                          >
-                            {categories.map((category, index) => (
-                              <BoardCategory
-                                key={category.category_id}
-                                category={category}
-                                boardColor={board.color}
-                                index={index}
-                              />
-                            ))}
-                            {provided.placeholder}
-                            <div className={classes.boardPage__addCategory}>
-                              <AddCategory boardId={boardId!} boardColor={board.color} position={position} />
+                    <div className={classes.boardPage__wrapper}>
+                      <DragDropContext onDragEnd={onDragEnd}>
+                        <Droppable droppableId="categories" direction="horizontal" type={DndType.Category}>
+                          {(provided) => (
+                            <div
+                              className={classes.boardPage__categories}
+                              ref={provided.innerRef}
+                              {...provided.droppableProps}
+                            >
+                              {categories.map((category, index) => (
+                                <BoardCategory
+                                  key={category.category_id}
+                                  category={category}
+                                  boardColor={board.color}
+                                  index={index}
+                                />
+                              ))}
+                              {provided.placeholder}
+                              <div className={classes.boardPage__addCategory}>
+                                <AddCategory boardId={boardId!} boardColor={board.color} position={position} />
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </Droppable>
-                    </DragDropContext>
+                          )}
+                        </Droppable>
+                      </DragDropContext>
+                    </div>
                   </div>
                   <BoardMenu boardColor={board.color} menuIsOpened={boardMenuIsOpened} onCloseMenu={onCloseMenu} />
                 </main>
