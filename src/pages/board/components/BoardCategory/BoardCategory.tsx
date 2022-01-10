@@ -49,7 +49,7 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
                 <div className={classes.category__body} ref={provided.innerRef} {...provided.droppableProps}>
                   <div className={classes.category__cards}>
                     {cards.map((card, index) => (
-                      <BoardCard key={index} card={card} index={index} />
+                      <BoardCard key={card.card_id} card={card} index={index} />
                     ))}
                     {provided.placeholder}
                   </div>

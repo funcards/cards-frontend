@@ -53,8 +53,6 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
-    overflow-y: auto;
   }
 
   &__cards {
@@ -62,8 +60,10 @@
     display: grid;
     grid-auto-flow: row;
     grid-auto-rows: max-content;
-    gap: var(--space-xxs);
+    gap: var(--space-xs);
     padding: 0 var(--space-xs);
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   &__addCard {

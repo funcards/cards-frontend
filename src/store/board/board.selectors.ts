@@ -13,7 +13,6 @@ const selectBoardIdAndCategoryId = (state: RootState, ids: { boardId: string; ca
 const selectBoardIdAndTagsId = (state: RootState, ids: { boardId: string; tagsId: string[] }) => ids
 
 export const selectBoardState = (state: RootState) => state.board
-export const selectBoards = (state: RootState) => state.board.boards
 export const selectBoard = createSelector([selectBoardState, selectBoardId], (state, boardId) =>
   state.boards.find((b) => b.board_id === boardId)
 )

@@ -16,8 +16,9 @@
 
   &__openBtn {
     --btn-gap: var(--space-xxs);
+    --btn-padding-vertical: var(--space-xxs);
     --btn-padding-horizontal: var(--space-xxs);
-    --btn-font-size: var(--text-md);
+    --btn-font-size: var(--text-sm);
     --color-btn: var(--color-add-card-open-btn);
     --color-btn-bg: var(--color-add-card-open-btn-bg);
     --color-btn-bg-hover: var(--color-add-card-open-btn-bg-hover);

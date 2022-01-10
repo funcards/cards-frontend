@@ -15,20 +15,14 @@
     flex-direction: column;
   }
 
-  &__wrapper {
-    flex-grow: 1;
-    display: flex;
-    overflow-y: hidden;
-    overflow-x: auto;
-  }
-
   &__categories {
-    flex-grow: 1;
-    padding: var(--space-xxxs) var(--space-xs) var(--space-sm);
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
     gap: var(--space-xs);
+    padding: 0 var(--space-xs) var(--space-xs);
+    overflow-y: hidden;
+    overflow-x: auto;
   }
 
   &__addCategory {

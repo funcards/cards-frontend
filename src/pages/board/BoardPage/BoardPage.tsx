@@ -19,9 +19,9 @@ const BoardPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const { status, isError } = useTypedSelector(selectBoardState)
   const { boardId } = useParams<'boardId'>()
-  const board = useTypedSelector((state) => selectBoard(state, boardId ?? ''))
-  const categories = useTypedSelector((state) => selectCategories(state, boardId ?? ''))
-  const cards = useTypedSelector((state) => selectCards(state, boardId ?? ''))
+  const board = useTypedSelector((state) => selectBoard(state, boardId!))
+  const categories = useTypedSelector((state) => selectCategories(state, boardId!))
+  const cards = useTypedSelector((state) => selectCards(state, boardId!))
   const isLoading = useMemo(() => BoardStateStatus.LoadOneBoard === status, [status])
   const title = useMemo(() => (board ? board.name : 'Board'), [board])
   const position = useMemo(
@@ -32,80 +32,81 @@ const BoardPage: React.FC = () => {
   const onOpenMenu = useCallback(() => dispatch(openBoardMenu()), [dispatch])
   const onCloseMenu = useCallback(() => dispatch(closeBoardMenu()), [dispatch])
 
-  const onDragEnd = (result: DropResult) => {
-    const { destination, source, type } = result
+  const onDragEnd = useCallback(
+    (result: DropResult) => {
+      const { destination, source, type } = result
 
-    if (!destination) {
-      return
-    }
+      if (!destination) {
+        return
+      }
 
-    if (destination.droppableId === source.droppableId && destination.index === source.index) {
-      return
-    }
+      if (destination.droppableId === source.droppableId && destination.index === source.index) {
+        return
+      }
 
-    if (type === DndType.Category) {
+      if (type === DndType.Category) {
+        dispatch(
+          changeCategoriesPosition({
+            board_id: boardId!,
+            source: source.index,
+            destination: destination.index,
+          })
+        )
+
+        return
+      }
+
+      let d = 0
+      let from = -1
+      let to = -1
+
+      for (let i = 0, s = 0; i < cards.length; i++) {
+        if (from === -1 && cards[i].category_id === source.droppableId) {
+          if (s === source.index) {
+            from = i
+          }
+          s++
+        }
+
+        if (to === -1 && cards[i].category_id === destination.droppableId) {
+          if (d === destination.index) {
+            to = i
+          }
+          d++
+        }
+
+        if (from > -1 && to > -1) {
+          break
+        }
+      }
+
+      if (-1 === from) {
+        return
+      }
+
+      if (-1 === to) {
+        to = d
+      }
+
       dispatch(
-        changeCategoriesPosition({
+        changeCardsPosition({
           board_id: boardId!,
-          source: source.index,
-          destination: destination.index,
+          source: {
+            category_id: source.droppableId,
+            index: from,
+          },
+          destination: {
+            category_id: destination.droppableId,
+            index: to,
+          },
         })
       )
-
-      return
-    }
-
-    let d = 0
-    let from = -1
-    let to = -1
-
-    for (let i = 0, s = 0; i < cards.length; i++) {
-      if (from === -1 && cards[i].category_id === source.droppableId) {
-        if (s === source.index) {
-          from = i
-        }
-        s++
-      }
-
-      if (to === -1 && cards[i].category_id === destination.droppableId) {
-        if (d === destination.index) {
-          to = i
-        }
-        d++
-      }
-
-      if (from > -1 && to > -1) {
-        break
-      }
-    }
-
-    if (-1 === from) {
-      return
-    }
-
-    if (-1 === to) {
-      to = d
-    }
-
-    dispatch(
-      changeCardsPosition({
-        board_id: boardId!,
-        source: {
-          category_id: source.droppableId,
-          index: from,
-        },
-        destination: {
-          category_id: destination.droppableId,
-          index: to,
-        },
-      })
-    )
-  }
+    },
+    [boardId, cards, dispatch]
+  )
 
   useEffect(() => {
-    if (boardId) {
-      dispatch(loadBoard(boardId))
-    }
+    dispatch(loadBoard(boardId!))
   }, [dispatch, boardId])
 
   return (
@@ -130,19 +131,22 @@ const BoardPage: React.FC = () => {
                     <DragDropContext onDragEnd={onDragEnd}>
                       <Droppable droppableId="categories" direction="horizontal" type={DndType.Category}>
                         {(provided) => (
-                          <div className={classes.boardPage__wrapper}>
-                            <div
-                              className={classes.boardPage__categories}
-                              ref={provided.innerRef}
-                              {...provided.droppableProps}
-                            >
-                              {categories.map((category, index) => (
-                                <BoardCategory key={index} category={category} boardColor={board.color} index={index} />
-                              ))}
-                              {provided.placeholder}
-                              <div className={classes.boardPage__addCategory}>
-                                <AddCategory boardId={boardId!} boardColor={board.color} position={position} />
-                              </div>
+                          <div
+                            className={classes.boardPage__categories}
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                          >
+                            {categories.map((category, index) => (
+                              <BoardCategory
+                                key={category.category_id}
+                                category={category}
+                                boardColor={board.color}
+                                index={index}
+                              />
+                            ))}
+                            {provided.placeholder}
+                            <div className={classes.boardPage__addCategory}>
+                              <AddCategory boardId={boardId!} boardColor={board.color} position={position} />
                             </div>
                           </div>
                         )}
