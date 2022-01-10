@@ -1,21 +1,19 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import * as yup from 'yup'
-
-import * as classes from './BoardName.module.scss'
 
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardState } from '~src/store/board/board.selectors'
-import { Board, BoardStateStatus } from '~src/store/board/board.types'
+import { BoardStateStatus } from '~src/store/board/board.types'
 import { Button, TextField } from '~src/ui-kit'
 import { editBoard } from '~src/store/board/board.slice'
 import { useSwitchElement } from '~src/utils/hooks'
+import { boardNameSchema } from '~src/store/board/board.validation'
+
+import * as classes from './BoardName.module.scss'
 
 export interface BoardNameProps {
   boardId: string
   boardName: string
 }
-
-const schema = yup.string().trim().required().max(150, 'Name is too long')
 
 export const BoardName: React.FC<BoardNameProps> = ({ boardId, boardName }) => {
   const { status } = useTypedSelector(selectBoardState)
@@ -30,7 +28,7 @@ export const BoardName: React.FC<BoardNameProps> = ({ boardId, boardName }) => {
 
   const onSave = useCallback(
     (name: string) => {
-      if (!schema.isValidSync(name) || name === boardName) {
+      if (!boardNameSchema.isValidSync(name) || name === boardName) {
         return
       }
 
@@ -52,7 +50,7 @@ export const BoardName: React.FC<BoardNameProps> = ({ boardId, boardName }) => {
     setStyle({
       width: `${spanRef.current?.offsetWidth ?? 0}px`,
     })
-    setIsValid(schema.isValidSync(newBoardName))
+    setIsValid(boardNameSchema.isValidSync(newBoardName))
   }, [newBoardName])
 
   useEffect(() => {

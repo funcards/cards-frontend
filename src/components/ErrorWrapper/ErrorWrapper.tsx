@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import * as classes from './ErrorWrapper.module.scss'
-
 import { PageTitle } from '~src/components'
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectAuthState } from '~src/store/auth/auth.selector'
 import { signOut } from '~src/store/auth/auth.slice'
 import { routes } from '~src/utils/constants'
+
+import * as classes from './ErrorWrapper.module.scss'
 
 export type ErrorWrapperProps = {
   pageTitle?: string | undefined

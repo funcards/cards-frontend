@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo } from 'react'
 import { TiBook } from 'react-icons/ti'
 
-import * as classes from './BoardListPage.module.scss'
-
 import { BoardStateStatus } from '~src/store/board/board.types'
 import { selectBoardState } from '~src/store/board/board.selectors'
 import { loadBoards } from '~src/store/board/board.slice'
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { Loading, PageTitle } from '~src/components'
 import { BoardList } from '~src/pages/board/components'
+
+import * as classes from './BoardListPage.module.scss'
 
 const BoardListPage: React.FC = () => {
   const dispatch = useAppDispatch()

@@ -2,14 +2,14 @@ import { call, put } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh'
 
+import { fetcher } from '~src/utils/helpers'
+
 import { caughtSaga } from '../notification/notification.sagas'
 import { clearBoard } from '../board/board.slice'
 import { clearUi } from '../ui/ui.slice'
 
 import { SignIn, SignUp } from './auth.types'
 import { setCurrentUser, setTokens, successAuth, failedAuth } from './auth.slice'
-
-import { fetcher } from '~src/utils/helpers'
 
 const config: AxiosAuthRefreshRequestConfig = { skipAuthRefresh: true }
 

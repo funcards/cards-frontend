@@ -1,11 +1,11 @@
 import axios from 'axios'
 import createAuthRefreshInterceptor, { AxiosAuthRefreshRequestConfig } from 'axios-auth-refresh'
 
-import { apiV1 } from '../constants'
-
 import { store } from '~src/store'
 import { selectAuthState } from '~src/store/auth/auth.selector'
 import { setTokens, signOut } from '~src/store/auth/auth.slice'
+
+import { apiV1 } from '../constants'
 
 export interface FetcherConfig extends AxiosAuthRefreshRequestConfig {
   accessToken?: string

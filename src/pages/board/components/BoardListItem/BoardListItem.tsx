@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import * as classes from './BoardListItem.module.scss'
-
 import { Board } from '~src/store/board/board.types'
 import { routes } from '~src/utils/constants'
+
+import * as classes from './BoardListItem.module.scss'
 
 export interface BoardListItemProps {
   board: Board

@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button'
 import { TiUserOutline, TiCogOutline, TiPowerOutline } from 'react-icons/ti'
 
-import * as classes from './UserMenu.module.scss'
-
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectAuthState } from '~src/store/auth/auth.selector'
 import { signOut } from '~src/store/auth/auth.slice'
 import { Avatar } from '~src/ui-kit'
+
+import * as classes from './UserMenu.module.scss'
 
 export const UserMenu: React.FC = () => {
   const dispatch = useAppDispatch()

@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router-dom'
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
-
-import * as classes from './BoardPage.module.scss'
 
 import { BoardHeader, BoardCategory, AddCategory, BoardMenu } from '~src/pages/board/components'
 import { DndType } from '~src/store/types'
@@ -14,6 +12,8 @@ import { selectUiState } from '~src/store/ui/ui.selectors'
 import { closeBoardMenu, openBoardMenu } from '~src/store/ui/ui.slice'
 import { changeCardsPosition, changeCategoriesPosition, loadBoard } from '~src/store/board/board.slice'
 import { ErrorWrapper, Loading, PageTitle } from '~src/components'
+
+import * as classes from './BoardPage.module.scss'
 
 const BoardPage: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -137,12 +137,7 @@ const BoardPage: React.FC = () => {
                               {...provided.droppableProps}
                             >
                               {categories.map((category, index) => (
-                                <BoardCategory
-                                  key={category.category_id}
-                                  category={category}
-                                  boardColor={board.color}
-                                  index={index}
-                                />
+                                <BoardCategory key={index} category={category} boardColor={board.color} index={index} />
                               ))}
                               {provided.placeholder}
                               <div className={classes.boardPage__addCategory}>

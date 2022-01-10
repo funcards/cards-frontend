@@ -15,7 +15,6 @@
     @include animation.transition-all;
     @include animation.duration-100;
     height: auto;
-    padding-top: var(--space-xxxs);
   }
 
   &__addBtn {

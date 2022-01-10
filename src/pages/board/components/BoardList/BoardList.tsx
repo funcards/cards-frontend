@@ -1,9 +1,9 @@
 import React from 'react'
 
-import * as classes from './BoardList.module.scss'
-
 import { BoardListAdd, BoardListItem } from '~src/pages/board/components'
 import { Board } from '~src/store/board/board.types'
+
+import * as classes from './BoardList.module.scss'
 
 export type BoardListProps = {
   boards: Board[]

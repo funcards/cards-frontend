@@ -2,10 +2,10 @@ import React from 'react'
 import { Dialog } from '@reach/dialog'
 import { TiTimes } from 'react-icons/ti'
 
-import * as classes from './CardView.module.scss'
-
 import { Card } from '~src/store/board/board.types'
 import { Button } from '~src/ui-kit'
+
+import * as classes from './CardView.module.scss'
 
 export interface CardViewProps {
   card: Card
@@ -15,7 +15,7 @@ export interface CardViewProps {
 
 export const CardView: React.FC<CardViewProps> = ({ showCard, card, onClose }) => {
   return (
-    <Dialog isOpen={showCard} onDismiss={onClose} className={classes.viewCard} aria-labelledby={card.card_id}>
+    <Dialog isOpen={showCard} onDismiss={onClose} className={classes.viewCard} aria-labelledby="card-view">
       <div className={classes.viewCard__wrapper}>
         <div className={classes.viewCard__cover} />
         <div className={classes.viewCard__header}>

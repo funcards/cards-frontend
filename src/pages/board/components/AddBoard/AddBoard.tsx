@@ -1,12 +1,9 @@
 import React, { useCallback, useMemo, useRef } from 'react'
-import * as yup from 'yup'
 import { Navigate, useLocation } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm, Controller } from 'react-hook-form'
 import { Dialog } from '@reach/dialog'
 import { TiTimes } from 'react-icons/ti'
-
-import * as classes from './AddBoard.module.scss'
 
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectAuthState } from '~src/store/auth/auth.selector'
@@ -18,14 +15,9 @@ import { newBoard } from '~src/store/board/board.slice'
 import { closeAddBoard } from '~src/store/ui/ui.slice'
 import { Button, Form, FormRow, FormTextField } from '~src/ui-kit'
 import { routes } from '~src/utils/constants'
+import { newBoardSchema } from '~src/store/board/board.validation'
 
-const schema = yup
-  .object({
-    name: yup.string().trim().required().max(150, 'Name is too long'),
-    color: yup.string().required().oneOf(Object.values(Theme)),
-    description: yup.string().max(1000, 'Description is too long'),
-  })
-  .required()
+import * as classes from './AddBoard.module.scss'
 
 export const AddBoard: React.FC = () => {
   const location = useLocation()
@@ -39,7 +31,11 @@ export const AddBoard: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors, isDirty, isValid },
-  } = useForm<DraftBoard>({ mode: 'onChange', resolver: yupResolver(schema), defaultValues: { color: Theme.Sky } })
+  } = useForm<DraftBoard>({
+    mode: 'onChange',
+    resolver: yupResolver(newBoardSchema),
+    defaultValues: { color: Theme.Sky },
+  })
 
   const { ref, ...rest } = register('name')
   const nameRef: React.MutableRefObject<HTMLInputElement | null> = useRef<HTMLInputElement>(null)

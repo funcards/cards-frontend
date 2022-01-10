@@ -1,6 +1,9 @@
 import { call, put, select } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
 
+import { fetcher, noUndefined } from '~src/utils/helpers'
+import { isCard } from '~src/store/board/board.helpers'
+
 import { caughtSaga, successSaga } from '../notification/notification.sagas'
 import { closeAddBoard } from '../ui/ui.slice'
 
@@ -17,6 +20,7 @@ import {
   setCard,
   setCategoriesPosition,
   setCardsPosition,
+  appendDraftCard,
 } from './board.slice'
 import { selectBoard, selectCards, selectCategories } from './board.selectors'
 import {
@@ -30,8 +34,6 @@ import {
   DraftCategory,
   DraftTag,
 } from './board.types'
-
-import { fetcher, noUndefined } from '~src/utils/helpers'
 
 export function* loadBoardsSaga() {
   try {
@@ -84,6 +86,7 @@ export function* loadBoardSaga({ payload }: PayloadAction<string>) {
       // TODO: remove
       yield put(setCards({ board_id: payload, items: cards.map((c) => ({ ...c, tags: ['1', '2', '3', '4'] })) }))
       // yield put(setCards({ board_id: payload, items: cards }))
+      yield put(appendDraftCard(payload))
     }
 
     yield put(successBoard())
@@ -146,6 +149,7 @@ export function* newCardSaga({ payload }: PayloadAction<DraftCard>) {
     const { data } = yield call(fetcher.get, `/boards/${boardId}/cards/${cardId}`)
 
     yield put(setCard(data))
+    yield put(appendDraftCard(payload.board_id))
     yield put(successBoard())
   } catch (e) {
     yield call(caughtSaga, e, failedBoard)
@@ -170,6 +174,7 @@ export function* changeCategoriesPositionSaga({ payload }: PayloadAction<ChangeC
 
 export function* changeCardsPositionSaga({ payload }: PayloadAction<ChangeCardsPosition>) {
   yield put(setCardsPosition(payload))
+  yield put(appendDraftCard(payload.board_id))
 
   try {
     const cards: Card[] = yield select(selectCards, payload.board_id)
@@ -186,6 +191,7 @@ export function* changeCardsPositionSaga({ payload }: PayloadAction<ChangeCardsP
     yield put(
       setCardsPosition({ board_id: payload.board_id, source: payload.destination, destination: payload.source })
     )
+    yield put(appendDraftCard(payload.board_id))
     yield call(caughtSaga, e, failedBoard)
   }
 }
@@ -259,7 +265,7 @@ export function* editCardSaga({ payload }: PayloadAction<Partial<Card>>) {
     return
   }
 
-  const card = board.cards?.find((c) => c.card_id === card_id)
+  const card = board.cards?.find((c) => isCard(c) && c.card_id === card_id) as Card
 
   if (!card) {
     return
@@ -269,10 +275,12 @@ export function* editCardSaga({ payload }: PayloadAction<Partial<Card>>) {
 
   try {
     yield put(setCard({ ...card, ...rest }))
+    yield put(appendDraftCard(board_id))
     yield call(fetcher.patch, `/boards/${board_id}/cards/${card_id}`, rest)
     yield put(successBoard())
   } catch (e) {
     yield put(setCard(oldCard))
+    yield put(appendDraftCard(board_id))
     yield call(caughtSaga, e, failedBoard)
   }
 }

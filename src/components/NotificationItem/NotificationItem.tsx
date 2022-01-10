@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { TiTimes } from 'react-icons/ti'
 
-import * as classes from './NotificationItem.module.scss'
-
 import { NotifyType, Notification } from '~src/store/notification/notification.types'
 import { removeNotification } from '~src/store/notification/notification.slice'
+
+import * as classes from './NotificationItem.module.scss'
 
 export interface NotificationItemProps {
   notification: Notification

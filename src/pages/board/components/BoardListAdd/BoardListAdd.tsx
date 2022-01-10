@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react'
 
-import * as classes from './BoardListAdd.module.scss'
-
 import { useAppDispatch } from '~src/store'
 import { openAddBoard } from '~src/store/ui/ui.slice'
+
+import * as classes from './BoardListAdd.module.scss'
 
 export const BoardListAdd: React.FC = () => {
   const dispatch = useAppDispatch()

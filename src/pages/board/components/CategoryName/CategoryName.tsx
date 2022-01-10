@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as yup from 'yup'
 
-import * as classes from './CategoryName.module.scss'
-
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardState } from '~src/store/board/board.selectors'
 import { BoardStateStatus } from '~src/store/board/board.types'
 import { useSwitchElement } from '~src/utils/hooks'
 import { TextField } from '~src/ui-kit'
 import { editCategory } from '~src/store/board/board.slice'
+
+import * as classes from './CategoryName.module.scss'
 
 export interface CategoryNameProps {
   boardId: string

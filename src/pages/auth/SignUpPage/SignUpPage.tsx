@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { AuthFooter, AuthMain, AuthTitle } from '../components'
-
 import { emailSchema, passwordSchema } from '~src/store/auth/auth.validation'
 import { routes } from '~src/utils/constants'
 import { Button, Form, FormRow, FormTextField } from '~src/ui-kit'
@@ -14,6 +12,8 @@ import { selectAuthState } from '~src/store/auth/auth.selector'
 import { signUp } from '~src/store/auth/auth.slice'
 import { SignUp } from '~src/store/auth/auth.types'
 import { PageTitle } from '~src/components'
+
+import { AuthFooter, AuthMain, AuthTitle } from '../components'
 
 const schema = yup
   .object({

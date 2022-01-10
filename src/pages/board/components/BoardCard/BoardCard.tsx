@@ -1,16 +1,17 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 
-import { CardView } from '../CardView/CardView'
-
-import * as classes from './BoardCard.module.scss'
-
 import { Card } from '~src/store/board/board.types'
 import { Button, Text } from '~src/ui-kit'
 import { useAppDispatch, useTypedSelector } from '~src/store'
-import { selectBoardState, selectTags } from '~src/store/board/board.selectors'
-import { tagsLabelOpen, tagsLabelClose } from '~src/store/board/board.slice'
+import { selectTags } from '~src/store/board/board.selectors'
+import { toggleTagsLabel } from '~src/store/ui/ui.slice'
 import { Theme } from '~src/store/types'
+import { selectUiState } from '~src/store/ui/ui.selectors'
+
+import { CardView } from '../CardView/CardView'
+
+import * as classes from './BoardCard.module.scss'
 
 export interface BoardCardProps {
   card: Card
@@ -20,7 +21,7 @@ export interface BoardCardProps {
 export const BoardCard: React.FC<BoardCardProps> = ({ card, index }) => {
   const dispatch = useAppDispatch()
   const allTags = useTypedSelector((state) => selectTags(state, { boardId: card.board_id, tagsId: card.tags }))
-  const { tagsLabelOpened } = useTypedSelector(selectBoardState)
+  const { tagsLabelIsOpened } = useTypedSelector(selectUiState)
   const [showCardView, setShowCardView] = useState(false)
 
   const onOpenCardView = useCallback(() => setShowCardView(true), [])
@@ -31,9 +32,9 @@ export const BoardCard: React.FC<BoardCardProps> = ({ card, index }) => {
   const onToggleTagLabel = useCallback(
     (e) => {
       e.stopPropagation()
-      dispatch(tagsLabelOpened ? tagsLabelClose() : tagsLabelOpen())
+      dispatch(toggleTagsLabel())
     },
-    [dispatch, tagsLabelOpened]
+    [dispatch]
   )
 
   return (
@@ -60,7 +61,7 @@ export const BoardCard: React.FC<BoardCardProps> = ({ card, index }) => {
                 >
                   <Text
                     className={
-                      tagsLabelOpened ? `${classes.card__label} ${classes.card__label_open}` : classes.card__label
+                      tagsLabelIsOpened ? `${classes.card__label} ${classes.card__label_open}` : classes.card__label
                     }
                   >
                     {tag.name}

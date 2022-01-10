@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import { IoEllipsisHorizontalOutline } from 'react-icons/io5'
 import { RiUserAddLine } from 'react-icons/ri'
 
-import * as classes from './BoardHeader.module.scss'
-
 import { Board } from '~src/store/board/board.types'
 import { Avatar, AvatarGroup, Button, Text } from '~src/ui-kit'
 import { BoardName } from '~src/pages/board/components'
+
+import * as classes from './BoardHeader.module.scss'
 
 export interface BoardHeaderProps {
   board: Board

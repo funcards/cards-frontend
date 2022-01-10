@@ -1,12 +1,15 @@
 import { createSelector } from '@reduxjs/toolkit'
 
+import { isCard } from '~src/store/board/board.helpers'
+
 import { RootState } from '../index'
 
-import { Card, Category, Tag } from './board.types'
+import { GCard, Category, Tag, Card } from './board.types'
 
+const defaultGCards: GCard[] = []
+const defaultCards: Card[] = []
 const defaultCategories: Category[] = []
 const defaultTags: Tag[] = []
-const defaultCards: Card[] = []
 
 const selectBoardId = (state: RootState, boardId: string) => boardId
 const selectBoardIdAndCategoryId = (state: RootState, ids: { boardId: string; categoryId: string }) => ids
@@ -19,22 +22,17 @@ export const selectBoard = createSelector([selectBoardState, selectBoardId], (st
 )
 export const selectCategories = createSelector([selectBoard], (board) => board?.categories ?? defaultCategories)
 export const selectTags = createSelector([selectBoardState, selectBoardIdAndTagsId], (state, { boardId, tagsId }) => {
-  const board = state.boards.find((b) => b.board_id === boardId)
-  if (!board?.cards) {
-    return defaultTags
-  }
-
-  return board!.tags!.filter((t) => tagsId.indexOf(t.tag_id) > -1)
+  return (
+    state.boards.find((b) => b.board_id === boardId)?.tags?.filter((t) => tagsId.indexOf(t.tag_id) > -1) ?? defaultTags
+  )
 })
-export const selectCards = createSelector([selectBoard], (board) => board?.cards ?? defaultCards)
+export const selectCards = createSelector([selectBoard], (board) => board?.cards?.filter(isCard) ?? defaultCards)
 export const selectCategoryCards = createSelector(
   [selectBoardState, selectBoardIdAndCategoryId],
   (state, { boardId, categoryId }) => {
-    const board = state.boards.find((b) => b.board_id === boardId)
-    if (!board?.cards) {
-      return defaultCards
-    }
-
-    return board!.cards!.filter((c) => c.category_id === categoryId)
+    return (
+      state.boards.find((b) => b.board_id === boardId)?.cards?.filter((c) => c.category_id === categoryId) ??
+      defaultGCards
+    )
   }
 )

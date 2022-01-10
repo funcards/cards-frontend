@@ -6,9 +6,9 @@ import { HelmetProvider } from 'react-helmet-async'
 
 import './styles/index.scss'
 
-import { store } from './store'
-
 import { App } from '~src/components'
+
+import { store } from './store'
 
 render(
   <React.StrictMode>

@@ -1,8 +1,6 @@
 import React, { Suspense, lazy } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import * as classes from './App.module.scss'
-
 import { routes } from '~src/utils/constants'
 import {
   ErrorWrapper,
@@ -14,6 +12,8 @@ import {
   RequireNotAuth,
 } from '~src/components'
 import { AddBoard } from '~src/pages/board/components'
+
+import * as classes from './App.module.scss'
 
 const HomePage = lazy(() => import('~src/pages/home/HomePage/HomePage'))
 const SignInPage = lazy(() => import('~src/pages/auth/SignInPage/SignInPage'))

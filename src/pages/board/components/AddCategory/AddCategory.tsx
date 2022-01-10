@@ -4,8 +4,6 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
-import * as classes from './AddCategory.module.scss'
-
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardState } from '~src/store/board/board.selectors'
 import { BoardStateStatus, DraftCategory } from '~src/store/board/board.types'
@@ -13,6 +11,8 @@ import { newCategory } from '~src/store/board/board.slice'
 import { TextField } from '~src/ui-kit'
 import { useSwitchElement } from '~src/utils/hooks'
 import { SwitchFormFooter } from '~src/pages/board/components'
+
+import * as classes from './AddCategory.module.scss'
 
 export interface AddCategoryProps {
   boardId: string

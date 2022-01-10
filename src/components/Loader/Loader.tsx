@@ -1,9 +1,9 @@
 import React from 'react'
 import { TiPlus } from 'react-icons/ti'
 
-import * as classes from './Loader.module.scss'
-
 import { Theme } from '~src/store/types'
+
+import * as classes from './Loader.module.scss'
 
 export interface LoaderProps {
   theme?: Theme

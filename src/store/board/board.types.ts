@@ -17,6 +17,7 @@ export interface DraftCard {
   category_id: string
   name: string
   position: number
+  tags: string[]
 }
 
 export interface DraftTag {
@@ -49,6 +50,8 @@ export interface Category {
   position: number
 }
 
+export type GCard = Card | DraftCard
+
 export interface Member {
   user_id: string
   name: string
@@ -65,7 +68,7 @@ export interface Board {
   members: Member[]
   tags?: Tag[]
   categories?: Category[]
-  cards?: Card[]
+  cards?: GCard[]
 }
 
 export interface BoardItems<T> {
@@ -93,7 +96,6 @@ export interface ChangeCardsPosition {
 export interface BoardState extends CommonState {
   boards: Board[]
   loadedAll: boolean
-  tagsLabelOpened: boolean
 }
 
 export enum BoardStateStatus {
@@ -110,5 +112,5 @@ export enum BoardStateStatus {
   EditBoard = 'EDIT_BOARD',
   EditCategory = 'EDIT_CATEGORY',
   EditCard = 'EDIT_CARD',
-  // EditTag = 'EDIT_TAG',
+  EditTag = 'EDIT_TAG',
 }

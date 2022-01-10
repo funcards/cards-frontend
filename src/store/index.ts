@@ -3,6 +3,8 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import { all, takeLatest } from 'redux-saga/effects'
 
+import { isProduction } from '~src/utils/constants'
+
 import ui from './ui/ui.slice'
 import notification from './notification/notification.slice'
 import auth, { signIn, signOut, signUp } from './auth/auth.slice'
@@ -33,8 +35,6 @@ import {
   newCategorySaga,
   newTagSaga,
 } from './board/board.sagas'
-
-import { isProduction } from '~src/utils/constants'
 
 export const sagaMiddleware = createSagaMiddleware()
 

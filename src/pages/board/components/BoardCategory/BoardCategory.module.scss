@@ -45,7 +45,6 @@
 
   &__body {
     min-height: 0;
-    margin-top: var(--space-xs);
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -59,11 +58,10 @@
     grid-auto-flow: row;
     grid-auto-rows: max-content;
     gap: var(--space-xxs);
-    padding: 0 var(--space-xs);
+    padding: var(--space-xs);
   }
 
   &__addCard {
     flex: 0 0 auto;
-    padding: var(--space-xs);
   }
 }

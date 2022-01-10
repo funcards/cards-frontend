@@ -1,9 +1,9 @@
 import React from 'react'
 import { TiTimes } from 'react-icons/ti'
 
-import * as classes from './SwitchFormFooter.module.scss'
-
 import { Button } from '~src/ui-kit'
+
+import * as classes from './SwitchFormFooter.module.scss'
 
 export type SwitchFormFooterProps = {
   isOpened: boolean

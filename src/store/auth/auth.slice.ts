@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+import { Cookies, LocalStorage } from '~src/services'
+
 import { ErrorResponse } from '../types'
 
 import { AuthState, CurrentUser, SignIn, SignUp, Tokens } from './auth.types'
-
-import { Cookies, LocalStorage } from '~src/services'
 
 const keyTokens = 'tokens'
 const keyCurrentUser = 'current.user'
