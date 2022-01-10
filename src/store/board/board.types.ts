@@ -50,8 +50,6 @@ export interface Category {
   position: number
 }
 
-export type GCard = Card | DraftCard
-
 export interface Member {
   user_id: string
   name: string
@@ -68,7 +66,7 @@ export interface Board {
   members: Member[]
   tags?: Tag[]
   categories?: Category[]
-  cards?: GCard[]
+  cards?: Card[]
 }
 
 export interface BoardItems<T> {

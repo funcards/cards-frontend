@@ -19,7 +19,7 @@ import {
   DraftTag,
   Tag,
 } from './board.types'
-import { isCard, safeBoardApplyFn, sortFn } from './board.helpers'
+import { safeBoardApplyFn, sortFn } from './board.helpers'
 
 const initialState: BoardState = {
   boards: [],
@@ -89,54 +89,14 @@ const boardSlice = createSlice({
     },
     setCards: (state: BoardState, { payload }: PayloadAction<BoardItems<Card>>) => {
       safeBoardApplyFn(state, payload.board_id, (board) => {
-        board.cards = payload.items.filter(isCard).sort(sortFn)
+        board.cards = payload.items.sort(sortFn)
       })
     },
     setCard: (state: BoardState, { payload }: PayloadAction<Card>) => {
       safeBoardApplyFn(state, payload.board_id, (board) => {
-        const cards = board.cards?.filter((c) => isCard(c) && c.card_id !== payload.card_id)
+        const cards = board.cards?.filter((c) => c.card_id !== payload.card_id)
         cards?.push(payload)
         board.cards = cards?.sort(sortFn)
-      })
-    },
-    appendDraftCard: (state: BoardState, { payload }: PayloadAction<string>) => {
-      safeBoardApplyFn(state, payload, (board) => {
-        if (!board.cards) {
-          board.cards = []
-        }
-
-        board.cards = board.cards!.filter(isCard)
-
-        const positions: Record<string, number> = {}
-
-        for (const c of board.cards!) {
-          positions[c.category_id] = Math.max(c.position, positions[c.category_id] ?? 0)
-        }
-
-        for (const c of board.categories ?? []) {
-          board.cards!.push({
-            board_id: board.board_id,
-            category_id: c.category_id,
-            name: '',
-            position: (positions[c.category_id] ?? -1) + 1,
-            tags: [],
-          })
-        }
-      })
-    },
-    prependDraftCard: (state: BoardState, { payload }: PayloadAction<{ board_id: string; category_id: string }>) => {
-      safeBoardApplyFn(state, payload.board_id, (board) => {
-        const position = Math.min(
-          ...(board.cards
-            ?.filter((c) => isCard(c) && c.category_id === payload.category_id)
-            ?.map((c) => c.position) ?? [0, 0])
-        )
-        const index = board.cards?.findIndex((c) => !isCard(c) && c.category_id === payload.category_id) ?? -1
-        if (index > -1) {
-          const item = board.cards!.splice(index, 1)
-          item[0].position = position - 1
-          board.cards!.splice(0, 0, item[0])
-        }
       })
     },
     newBoard: (state: BoardState, {}: PayloadAction<DraftBoard>) => init(state, BoardStateStatus.NewBoard),
@@ -160,12 +120,10 @@ const boardSlice = createSlice({
     setCardsPosition: (state: BoardState, { payload }: PayloadAction<ChangeCardsPosition>) => {
       safeBoardApplyFn(state, payload.board_id, (board) => {
         if (board.cards) {
-          board.cards = swap(board.cards.filter(isCard), payload.source.index, payload.destination.index).map(
-            (c, i) => ({
-              ...c,
-              position: i,
-            })
-          )
+          board.cards = swap(board.cards, payload.source.index, payload.destination.index).map((c, i) => ({
+            ...c,
+            position: i,
+          }))
           board.cards[payload.destination.index].category_id = payload.destination.category_id
         }
       })
@@ -191,8 +149,6 @@ export const {
   setCategory,
   setCards,
   setCard,
-  appendDraftCard,
-  prependDraftCard,
   newBoard,
   newCategory,
   newCard,

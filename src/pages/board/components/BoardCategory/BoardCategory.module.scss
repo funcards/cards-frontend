@@ -14,6 +14,11 @@
     flex-direction: column;
     border-radius: var(--radius-md);
     background-color: var(--color-category-bg);
+    padding: var(--space-xs) 0;
+
+    & > :not([hidden]) ~ :not([hidden]) {
+      padding-top: var(--space-xs);
+    }
   }
 
   &__header {
@@ -21,7 +26,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    padding: var(--space-xs) var(--space-xs) 0;
+    padding: 0 var(--space-xs);
   }
 
   &__menuBtn {
@@ -58,10 +63,11 @@
     grid-auto-flow: row;
     grid-auto-rows: max-content;
     gap: var(--space-xxs);
-    padding: var(--space-xs);
+    padding: 0 var(--space-xs);
   }
 
   &__addCard {
     flex: 0 0 auto;
+    padding: 0 var(--space-xs);
   }
 }

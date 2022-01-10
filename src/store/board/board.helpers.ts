@@ -1,19 +1,15 @@
 import dayjs from 'dayjs'
 
-import { Board, BoardState, Card, Category, GCard } from './board.types'
+import { Board, BoardState, Card, Category } from './board.types'
 
 export type SortFunc = {
   (a: Board, b: Board): number
   (a: Category, b: Category): number
-  (a: GCard, b: GCard): number
+  (a: Card, b: Card): number
 }
 
-export const isBoard = (o: Board | Category | GCard): o is Board => {
+export const isBoard = (o: Board | Category | Card): o is Board => {
   return (o as Board).created_at !== undefined && (o as Board).members !== undefined
-}
-
-export const isCard = (gc: GCard): gc is Card => {
-  return (gc as Card).card_id !== undefined
 }
 
 export const sortFn: SortFunc = (a, b) => {

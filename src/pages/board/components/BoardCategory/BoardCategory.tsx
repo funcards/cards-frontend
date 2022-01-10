@@ -7,7 +7,6 @@ import { Category } from '~src/store/board/board.types'
 import { selectCategoryCards } from '~src/store/board/board.selectors'
 import { DndType } from '~src/store/types'
 import { AddCard, BoardCard, CategoryName } from '~src/pages/board/components'
-import { isCard } from '~src/store/board/board.helpers'
 
 import * as classes from './BoardCategory.module.scss'
 
@@ -21,7 +20,8 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
   const cards = useTypedSelector((state) =>
     selectCategoryCards(state, { boardId: category.board_id, categoryId: category.category_id })
   )
-  const label = useMemo(() => (cards.length > 1 ? 'Add another card' : 'Add a card'), [cards])
+  const label = useMemo(() => (cards.length > 0 ? 'Add another card' : 'Add a card'), [cards])
+  const position = useMemo(() => (cards.length > 0 ? cards[cards.length - 1].position + 1 : 0), [cards])
 
   return (
     <Draggable draggableId={category.category_id} index={index}>
@@ -49,23 +49,22 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
                 <div className={classes.category__body} ref={provided.innerRef} {...provided.droppableProps}>
                   <div className={classes.category__cards}>
                     {cards.map((card, index) => (
-                      <Fragment key={index}>
-                        {isCard(card) ? (
-                          <BoardCard card={card} index={index} />
-                        ) : (
-                          <>
-                            {provided.placeholder}
-                            <div className={classes.category__addCard}>
-                              <AddCard label={label} boardColor={boardColor} draft={card} />
-                            </div>
-                          </>
-                        )}
-                      </Fragment>
+                      <BoardCard key={index} card={card} index={index} />
                     ))}
+                    {provided.placeholder}
                   </div>
                 </div>
               )}
             </Droppable>
+            <div className={classes.category__addCard}>
+              <AddCard
+                label={label}
+                boardId={category.board_id}
+                categoryId={category.category_id}
+                position={position}
+                boardColor={boardColor}
+              />
+            </div>
           </div>
         </div>
       )}
