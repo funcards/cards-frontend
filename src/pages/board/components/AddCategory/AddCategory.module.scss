@@ -10,7 +10,8 @@
   grid-auto-rows: max-content;
 
   &_open {
-    padding: var(--space-xxxs);
+    gap: var(--space-xs);
+    padding: var(--space-xs);
     border-radius: var(--radius-md);
     background-color: var(--color-category-bg);
     box-shadow: var(--shadow-sm);
