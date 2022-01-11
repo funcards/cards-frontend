@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardState } from '~src/store/board/board.selectors'
-import { BoardStateStatus, DraftCard } from '~src/store/board/board.types'
+import { BoardStateStatus } from '~src/store/board/board.types'
 import { newCard } from '~src/store/board/board.slice'
 import { SwitchFormFooter } from '~src/pages/board/components'
 import { TextField } from '~src/ui-kit'
@@ -20,39 +20,54 @@ export interface AddCardProps {
   categoryId: string
   position: number
   boardColor: string
+  openState?: boolean | undefined
+  onClose?: () => void
 }
 
 const schema = yup.object({
   name: yup.string().trim().required().max(255),
 })
 
-export const AddCard: React.FC<AddCardProps> = ({ label, boardId, categoryId, position, boardColor }) => {
+export const AddCard: React.FC<AddCardProps> = ({
+  label,
+  boardId,
+  categoryId,
+  position,
+  boardColor,
+  openState,
+  onClose,
+}) => {
   const dispatch = useAppDispatch()
   const { status } = useTypedSelector(selectBoardState)
   const isLoading = useMemo(() => BoardStateStatus.NewCard === status, [status])
-  const { ref, isOpened, onOpen, onClose, registerEvents, unregisterEvents } = useSwitchElement<HTMLFormElement>()
-
+  const {
+    ref,
+    isOpened,
+    onOpen,
+    onClose: onCloseFn,
+    registerEvents,
+    unregisterEvents,
+  } = useSwitchElement<HTMLFormElement>(openState, onClose)
   const {
     register,
     handleSubmit,
     setFocus,
     formState: { isDirty, isValid },
     reset,
-  } = useForm<DraftCard>({
+  } = useForm({
     mode: 'onChange',
     resolver: yupResolver(schema),
-    defaultValues: { board_id: boardId, category_id: categoryId, position },
   })
 
   const isDisabled = useMemo(() => isLoading || !isDirty || !isValid, [isLoading, isDirty, isValid])
 
   const onSubmit = useCallback(
-    (data: DraftCard) => {
-      dispatch(newCard(data))
+    (data) => {
+      dispatch(newCard({ board_id: boardId, category_id: categoryId, position, tags: [], name: data.name }))
       reset()
       setFocus('name')
     },
-    [dispatch, reset, setFocus]
+    [dispatch, reset, setFocus, boardId, categoryId, position]
   )
 
   useEffect(() => {
@@ -91,7 +106,7 @@ export const AddCard: React.FC<AddCardProps> = ({ label, boardId, categoryId, po
         isDisabled={isDisabled}
         boardColor={boardColor}
         label="Add card"
-        onClose={onClose}
+        onClose={onCloseFn}
       />
     </form>
   )

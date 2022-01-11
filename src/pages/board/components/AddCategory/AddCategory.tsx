@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 
 import { useAppDispatch, useTypedSelector } from '~src/store'
 import { selectBoardState } from '~src/store/board/board.selectors'
-import { BoardStateStatus, DraftCategory } from '~src/store/board/board.types'
+import { BoardStateStatus } from '~src/store/board/board.types'
 import { newCategory } from '~src/store/board/board.slice'
 import { TextField } from '~src/ui-kit'
 import { useSwitchElement } from '~src/utils/hooks'
@@ -38,21 +38,20 @@ export const AddCategory: React.FC<AddCategoryProps> = ({ boardId, boardColor, p
     setFocus,
     formState: { isDirty, isValid },
     reset,
-  } = useForm<DraftCategory>({
+  } = useForm({
     mode: 'onChange',
     resolver: yupResolver(schema),
-    defaultValues: { board_id: boardId, position },
   })
 
   const isDisabled = useMemo(() => isLoading || !isDirty || !isValid, [isLoading, isDirty, isValid])
 
   const onSubmit = useCallback(
-    (data: DraftCategory) => {
-      dispatch(newCategory(data))
+    (data) => {
+      dispatch(newCategory({ board_id: boardId, position, name: data.name }))
       reset()
       setFocus('name')
     },
-    [dispatch, reset, setFocus]
+    [dispatch, reset, setFocus, boardId, position]
   )
 
   useEffect(() => {

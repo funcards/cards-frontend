@@ -1,20 +1,28 @@
 import React, { useCallback, useRef, useState } from 'react'
 
-export const useSwitchElement = <E>(initialState?: boolean | undefined) => {
+export const useSwitchElement = <E>(initialState?: boolean | undefined, closeFn?: () => void) => {
   const [isOpened, setIsOpened] = useState(!!initialState)
   const ref: React.MutableRefObject<E | null> = useRef(null)
 
-  const keyListener = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      setIsOpened(false)
-    }
-  }, [])
+  const keyListener = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpened(false)
+        closeFn && closeFn()
+      }
+    },
+    [closeFn]
+  )
 
-  const clickListener = useCallback((e: MouseEvent) => {
-    if (ref && ref.current && !(ref.current as any).contains(e.target)) {
-      setIsOpened(false)
-    }
-  }, [])
+  const clickListener = useCallback(
+    (e: MouseEvent) => {
+      if (ref && ref.current && !(ref.current as any).contains(e.target)) {
+        setIsOpened(false)
+        closeFn && closeFn()
+      }
+    },
+    [closeFn]
+  )
 
   const onOpen = useCallback(() => {
     setIsOpened(true)
@@ -22,7 +30,8 @@ export const useSwitchElement = <E>(initialState?: boolean | undefined) => {
 
   const onClose = useCallback(() => {
     setIsOpened(false)
-  }, [])
+    closeFn && closeFn()
+  }, [closeFn])
 
   const registerEvents = useCallback(() => {
     document.addEventListener('click', clickListener)

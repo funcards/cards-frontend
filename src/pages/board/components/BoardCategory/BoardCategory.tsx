@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { IoEllipsisHorizontalOutline } from 'react-icons/io5'
 
@@ -20,8 +20,17 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
   const cards = useTypedSelector((state) =>
     selectCategoryCards(state, { boardId: category.board_id, categoryId: category.category_id })
   )
-  const label = useMemo(() => (cards.length > 0 ? 'Add another card' : 'Add a card'), [cards])
-  const position = useMemo(() => (cards.length > 0 ? cards[cards.length - 1].position + 1 : 0), [cards])
+
+  const [appendCard, setAppendCard] = useState(true)
+  const onAppendCard = useCallback(() => setAppendCard(true), [])
+  const onPrependCard = useCallback(() => setAppendCard(false), [])
+
+  const label = useMemo(() => (cards.length > 0 ? 'Add another card' : 'Add a card'), [cards.length])
+  const position = useMemo(() => {
+    const p = cards.map((c) => c.position)
+
+    return p.length === 0 ? 0 : appendCard ? Math.max(...p) + 1 : Math.min(...p) - 1
+  }, [appendCard, cards])
 
   return (
     <Draggable draggableId={category.category_id} index={index}>
@@ -40,10 +49,23 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
                 categoryId={category.category_id}
                 categoryName={category.name}
               />
-              <button className={classes.category__menuBtn}>
+              <button className={classes.category__menuBtn} onClick={onPrependCard}>
                 <IoEllipsisHorizontalOutline className={classes.category__menuIcon} />
               </button>
             </div>
+            {!appendCard && (
+              <div className={classes.category__addCard}>
+                <AddCard
+                  label={label}
+                  boardId={category.board_id}
+                  categoryId={category.category_id}
+                  position={position}
+                  boardColor={boardColor}
+                  openState={true}
+                  onClose={onAppendCard}
+                />
+              </div>
+            )}
             <Droppable droppableId={category.category_id} type={DndType.Card}>
               {(provided) => (
                 <div className={classes.category__body} ref={provided.innerRef} {...provided.droppableProps}>
@@ -56,15 +78,17 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
                 </div>
               )}
             </Droppable>
-            <div className={classes.category__addCard}>
-              <AddCard
-                label={label}
-                boardId={category.board_id}
-                categoryId={category.category_id}
-                position={position}
-                boardColor={boardColor}
-              />
-            </div>
+            {appendCard && (
+              <div className={classes.category__addCard}>
+                <AddCard
+                  label={label}
+                  boardId={category.board_id}
+                  categoryId={category.category_id}
+                  position={position}
+                  boardColor={boardColor}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}

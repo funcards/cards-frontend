@@ -17,18 +17,14 @@ export const selectBoard = createSelector([selectBoardState, selectBoardId], (st
   state.boards.find((b) => b.board_id === boardId)
 )
 export const selectCategories = createSelector([selectBoard], (board) => board?.categories ?? defaultCategories)
-export const selectTags = createSelector([selectBoardState, selectBoardIdAndTagsId], (state, { boardId, tagsId }) => {
-  return (
+export const selectTags = createSelector(
+  [selectBoardState, selectBoardIdAndTagsId],
+  (state, { boardId, tagsId }) =>
     state.boards.find((b) => b.board_id === boardId)?.tags?.filter((t) => tagsId.indexOf(t.tag_id) > -1) ?? defaultTags
-  )
-})
+)
 export const selectCards = createSelector([selectBoard], (board) => board?.cards ?? defaultCards)
 export const selectCategoryCards = createSelector(
   [selectBoardState, selectBoardIdAndCategoryId],
-  (state, { boardId, categoryId }) => {
-    return (
-      state.boards.find((b) => b.board_id === boardId)?.cards?.filter((c) => c.category_id === categoryId) ??
-      defaultCards
-    )
-  }
+  (state, { boardId, categoryId }) =>
+    state.boards.find((b) => b.board_id === boardId)?.cards?.filter((c) => c.category_id === categoryId) ?? defaultCards
 )
