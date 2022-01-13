@@ -77,7 +77,7 @@
   }
 
   & > svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: var(--btn-close-size, 1.5rem);
+    height: var(--btn-close-size, 1.5rem);
   }
 }

@@ -1,4 +1,9 @@
 :root, * {
+  // width
+  --width-menu: 19rem;
+  --width-category: 17rem;
+  --width-board-sidebar: 20rem;
+
   // reach
   --reach-dialog: 1;
   --reach-menu-button: 1;
@@ -6,7 +11,7 @@
 
   // z-index
   --zindex-category-menu: 5;
-  --zindex-user-menu: 40;
+  --zindex-menu: 40;
   --zindex-modal: 50;
   --zindex-notifications: 100;
 
@@ -181,11 +186,12 @@
   --color-modal-body-bg: var(--color-white-100);
   --color-modal-title: var(--color-blue-gray-c600);
 
-  --color-user-menu-bg: var(--color-white-100);
-  --color-user-menu-title: var(--color-blue-gray-c500);
+  --color-menu-bg: var(--color-white-100);
+  --color-menu-title: var(--color-blue-gray-c500);
+  --color-menu-item: var(--color-blue-gray-c600);
+  --color-menu-item-bg-hover: var(--color-gray-c100);
+
   --color-user-menu-email: var(--color-gray-c400);
-  --color-user-menu-item: var(--color-blue-gray-c600);
-  --color-user-menu-item-bg-hover: var(--color-gray-c100);
 
   --color-boards-page-title: var(--color-blue-gray-c600);
   --color-boards-page-icon: var(--color-blue-gray-c500);

@@ -16,7 +16,7 @@ export const useSwitchElement = <E>(initialState?: boolean | undefined, closeFn?
 
   const clickListener = useCallback(
     (e: MouseEvent) => {
-      if (ref && ref.current && !(ref.current as any).contains(e.target)) {
+      if (ref.current && !(ref.current as any).contains(e.target)) {
         setIsOpened(false)
         closeFn && closeFn()
       }
@@ -34,12 +34,12 @@ export const useSwitchElement = <E>(initialState?: boolean | undefined, closeFn?
   }, [closeFn])
 
   const registerEvents = useCallback(() => {
-    document.addEventListener('click', clickListener)
+    document.addEventListener('mouseup', clickListener)
     document.addEventListener('keyup', keyListener)
   }, [clickListener, keyListener])
 
   const unregisterEvents = useCallback(() => {
-    document.removeEventListener('click', clickListener)
+    document.removeEventListener('mouseup', clickListener)
     document.removeEventListener('keyup', keyListener)
   }, [clickListener, keyListener])
 

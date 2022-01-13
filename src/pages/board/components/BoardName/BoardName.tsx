@@ -61,10 +61,12 @@ export const BoardName: React.FC<BoardNameProps> = ({ boardId, boardName }) => {
   }, [isOpened])
 
   useEffect(() => {
-    unregisterEvents()
-
     if (isOpened) {
       registerEvents()
+
+      return () => {
+        unregisterEvents()
+      }
     } else {
       if (!isValid) {
         setNewBoardName(boardName)

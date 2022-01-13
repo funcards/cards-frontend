@@ -21,8 +21,8 @@ export const UserMenu: React.FC = () => {
 
   return (
     <Menu as="li">
-      <MenuButton className={classes.userMenu}>
-        <Avatar alt={currentUser.name} src={currentUser.email} />
+      <MenuButton className={classes.userMenu} aria-label={currentUser.name}>
+        <Avatar alt={currentUser.name} src={currentUser.email} aria-hidden />
       </MenuButton>
       <MenuList className={classes.userMenuItems}>
         <div className={classes.userMenuItems__header}>Account</div>

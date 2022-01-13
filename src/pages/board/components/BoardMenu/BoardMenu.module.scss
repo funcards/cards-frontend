@@ -19,7 +19,7 @@
 
   &_open {
     visibility: visible;
-    width: 20rem;
+    width: var(--width-board-sidebar);
     padding: var(--space-sm);
   }
 

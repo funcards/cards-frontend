@@ -70,7 +70,7 @@ export const CategoryName: React.FC<CategoryNameProps> = ({ boardId, categoryId,
         onSave(newCategoryName)
       }
     }
-  }, [categoryName, isOpened, isValid, onSave, registerEvents, unregisterEvents])  // eslint-disable-line
+  }, [categoryName, isOpened, isValid, onSave, registerEvents, unregisterEvents]) // eslint-disable-line
 
   return (
     <form ref={ref} className={classes.categoryName} onSubmit={onSubmit}>

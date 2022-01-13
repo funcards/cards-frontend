@@ -10,12 +10,12 @@
 }
 
 .userMenuItems {
-  width: 19rem;
+  width: var(--width-menu);
   margin-top: var(--space-xs);
   padding: var(--space-xxxs) 0;
   display: grid;
   grid-auto-flow: row;
-  background-color: var(--color-user-menu-bg);
+  background-color: var(--color-menu-bg);
   border-radius: var(--radius-md);
   border-color: var(--color-divide);
   border-width: 1px;
@@ -29,7 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-user-menu-title);
+    color: var(--color-menu-title);
     font-size: var(--text-sm);
     font-weight: 500;
     margin: 0 var(--space-sm);
@@ -60,7 +60,7 @@
   &__name {
     font-family: sans-serif;
     font-size: var(--text-sm);
-    color: var(--color-user-menu-item);
+    color: var(--color-menu-item);
   }
 
   &__email {
@@ -89,7 +89,7 @@
     font-size: var(--text-sm);
     font-weight: 500;
     border-radius: 0;
-    color: var(--color-user-menu-item);
+    color: var(--color-menu-item);
     background-color: var(--color-transparent);
     display: grid;
     grid-auto-flow: column;
@@ -98,7 +98,7 @@
     align-items: center;
 
     &:hover {
-      background-color: var(--color-user-menu-item-bg-hover);
+      background-color: var(--color-menu-item-bg-hover);
     }
   }
 

@@ -20,7 +20,7 @@ export interface AddCardProps {
   categoryId: string
   position: number
   boardColor: string
-  openState?: boolean | undefined
+  prependAddCard?: boolean | undefined
   onClose?: () => void
 }
 
@@ -34,12 +34,13 @@ export const AddCard: React.FC<AddCardProps> = ({
   categoryId,
   position,
   boardColor,
-  openState,
+  prependAddCard,
   onClose,
 }) => {
   const dispatch = useAppDispatch()
+
   const { status } = useTypedSelector(selectBoardState)
-  const isLoading = useMemo(() => BoardStateStatus.NewCard === status, [status])
+
   const {
     ref,
     isOpened,
@@ -47,7 +48,8 @@ export const AddCard: React.FC<AddCardProps> = ({
     onClose: onCloseFn,
     registerEvents,
     unregisterEvents,
-  } = useSwitchElement<HTMLFormElement>(openState, onClose)
+  } = useSwitchElement<HTMLFormElement>(prependAddCard, onClose)
+
   const {
     register,
     handleSubmit,
@@ -59,6 +61,7 @@ export const AddCard: React.FC<AddCardProps> = ({
     resolver: yupResolver(schema),
   })
 
+  const isLoading = useMemo(() => BoardStateStatus.NewCard === status, [status])
   const isDisabled = useMemo(() => isLoading || !isDirty || !isValid, [isLoading, isDirty, isValid])
 
   const onSubmit = useCallback(
@@ -71,11 +74,13 @@ export const AddCard: React.FC<AddCardProps> = ({
   )
 
   useEffect(() => {
-    unregisterEvents()
-
     if (isOpened) {
       registerEvents()
       setFocus('name')
+
+      return () => {
+        unregisterEvents()
+      }
     } else {
       reset()
     }

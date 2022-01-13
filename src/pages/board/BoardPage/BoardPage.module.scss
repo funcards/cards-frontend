@@ -31,6 +31,6 @@
   }
 
   &__addCategory {
-    width: 16rem;
+    width: var(--width-category);
   }
 }

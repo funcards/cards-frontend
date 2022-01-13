@@ -2,6 +2,17 @@
 @use "root";
 @use "reset";
 
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 [data-reach-dialog-overlay] {
   background: var(--color-modal-overlay-bg);
   position: fixed;
@@ -24,7 +35,7 @@
 [data-reach-menu-popover] {
   display: block;
   position: absolute;
-  z-index: var(--zindex-user-menu);
+  z-index: var(--zindex-menu);
 }
 
 [data-reach-menu-popover][hidden] {
@@ -40,11 +51,6 @@
 }
 
 [data-reach-menu-item] {
-  display: block;
-  user-select: none;
-}
-
-[data-reach-menu-item] {
   cursor: pointer;
 
   /* a */
@@ -52,6 +58,7 @@
   color: inherit;
   font: inherit;
   text-decoration: initial;
+  user-select: none;
 }
 
 /* pseudo pseudo selector */
