@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-import { Loader } from '~src/components'
+import { Loader } from '..';
 
-import * as classes from './Loading.module.scss'
+import styles from './Loading.module.scss';
 
 export const Loading: React.FC = () => (
-  <main className={classes.loading}>
+  <main className={styles.loading}>
     <Loader />
   </main>
-)
+);

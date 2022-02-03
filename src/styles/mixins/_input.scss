@@ -11,6 +11,8 @@
   background-color: var(--color-input-bg, var(--color-input-default-bg));
   font-size: var(--input-font-size, var(--text-lg));
   padding: var(--input-padding-vertical, var(--space-xxs)) var(--input-padding-horizontal, var(--space-xs));
+  border-radius: var(--input-border-radius, var(--radius-md));
+  box-shadow: var(--input-box-shadow, var(--shadow-none));
 
   &:focus {
     outline: none;

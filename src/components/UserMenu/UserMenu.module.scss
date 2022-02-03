@@ -1,15 +1,17 @@
 @use "../../styles/mixins/buttons";
-@use "../../styles/mixins/border-radius";
 
 .userMenu {
+  --btn-border-radius: var(--radius-circle);
   @include buttons.btn;
   @include buttons.avatar;
-  @include border-radius.border-radius(--avatar-border-radius, --radius-circle);
   width: 1.825em;
   height: 1.825em;
 }
 
 .userMenuItems {
+  animation: slide-down 0.2s ease;
+  position: absolute;
+  z-index: var(--zindex-menu);
   width: var(--width-menu);
   margin-top: var(--space-xs);
   padding: var(--space-xxxs) 0;
@@ -20,6 +22,7 @@
   border-color: var(--color-divide);
   border-width: 1px;
   box-shadow: var(--shadow-md);
+  overflow: hidden;
 
   &:focus {
     outline: none;
@@ -96,6 +99,7 @@
     grid-auto-columns: max-content;
     gap: var(--space-xs);
     align-items: center;
+    cursor: pointer;
 
     &:hover {
       background-color: var(--color-menu-item-bg-hover);

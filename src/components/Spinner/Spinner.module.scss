@@ -1,0 +1,22 @@
+@use "../../styles/mixins/breakpoints";
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: var(--spinner-display, block);
+  animation: spinner .6s linear infinite;
+  background-color: var(--color-spinner-bg, var(--color-transparent));
+  border-color: var(--color-spinner-border, var(--color-spinner-default-border));
+  border-top-color: var(--color-spinner, var(--color-spinner-default));
+  border-bottom-color: var(--color-spinner, var(--color-spinner-default));
+  border-width: var(--spinner-width, var(--space-xxxxs));
+  border-radius: var(--spinner-border-radius, var(--radius-circle));
+  width: var(--spinner-size, var(--spinner-size-default));
+  height: var(--spinner-size, var(--spinner-size-default));
+}
+
+@include breakpoints.all('.spinner', var(--spinner-display, block));

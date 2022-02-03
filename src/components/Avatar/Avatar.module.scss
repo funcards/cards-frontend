@@ -1,0 +1,15 @@
+@use "../../styles/mixins/breakpoints";
+
+.avatar {
+  display: var(--avatar-display, flex);
+  width: 100%;
+  height: 100%;
+  flex: 1 1 100%;
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: var(--avatar-border-radius, var(--radius-circle));
+}
+
+@include breakpoints.all('.avatar', var(--avatar-display, flex));

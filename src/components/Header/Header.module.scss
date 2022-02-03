@@ -1,6 +1,4 @@
 @use "../../styles/mixins/buttons";
-@use "../../styles/mixins/border-radius";
-@use "../../styles/mixins/breakpoints";
 
 .header {
   position: relative;
@@ -10,6 +8,7 @@
   justify-content: space-between;
   padding: var(--space-xxxs);
   background-color: var(--color-header-bg);
+  min-height: 2em;
 
   &__logo {
     position: absolute;
@@ -39,7 +38,6 @@
     --color-btn-light-bg: var(--color-transparent);
     @include buttons.btn;
     @include buttons.light;
-    @include border-radius.border-radius-md(--header-btn-border-radius);
   }
 
   &__text {

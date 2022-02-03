@@ -1,0 +1,12 @@
+@use "../../styles/mixins/breakpoints";
+
+.formRow {
+  display: var(--form-row-display, flex);
+  flex-direction: column;
+
+  & ~ :not([hidden]) {
+    padding-top: var(--space-md);
+  }
+}
+
+@include breakpoints.all('.formRow', var(--form-row-display, flex));

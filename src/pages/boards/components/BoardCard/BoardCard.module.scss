@@ -1,0 +1,68 @@
+@use "../../../../styles/mixins/animation";
+
+.card {
+  border-radius: var(--radius-md);
+  border-color: var(--color-card-border);
+  border-bottom-width: 1px;
+  cursor: pointer;
+  width: 100%;
+  padding: var(--space-xs);
+  background-color: var(--color-card-bg);
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    background-color: var(--color-card-bg-hover);
+  }
+
+  &__tags {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: var(--space-xxs);
+  }
+
+  &__tag {
+    @include animation.transition-all;
+    @include animation.duration-200;
+    --btn-padding-vertical: var(--space-xxxxs);
+    --btn-padding-horizontal: var(--space-xxs);
+    --btn-font-size: var(--text-xs);
+    --btn-justify-content: start;
+    min-width: 2.2rem;
+    min-height: 0.5rem;
+    max-height: calc(1.1em + 2 * var(--space-xxxxs));
+    font-weight: 600;
+    line-height: 1.1em;
+
+    & ~ :not([hidden]) {
+      margin-left: var(--space-xxxs);
+    }
+
+    &_open {
+      min-width: 2.6rem;
+    }
+  }
+
+  &__label {
+    @include animation.transition-all;
+    @include animation.duration-200;
+    transition-timing-function: linear;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+
+    &_open {
+      width: 100%;
+      height: 100%;
+      visibility: visible;
+    }
+  }
+
+  &__name {
+    color: var(--color-card-name);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+}

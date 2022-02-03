@@ -1,0 +1,57 @@
+@use "../../../../styles/mixins/breakpoints";
+@use "../../../../styles/mixins/buttons";
+@use "../../../../styles/mixins/animation";
+
+.boardHeader {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--space-xs);
+  background-color: var(--color-transparent);
+
+  &__group {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  &__divide {
+    width: 1px;
+    height: 60%;
+    background-color: var(--color-white-020);
+
+    @include breakpoints.show(block, md);
+  }
+
+  &__btn {
+    --btn-gap: var(--space-xxs);
+    --btn-padding-vertical: var(--space-xs);
+    --btn-padding-horizontal: var(--space-xs);
+    --btn-font-size: var(--text-md);
+    line-height: 1em;
+    visibility: visible;
+
+    @include animation.transition-all;
+
+    &_hide {
+      visibility: hidden;
+      width: 0;
+      height: 0;
+      padding: 0;
+    }
+  }
+
+  &_bold {
+    font-weight: 600;
+  }
+
+  &__avatar {
+    --btn-border-radius: var(--radius-circle);
+    @include buttons.btn;
+    @include buttons.avatar;
+  }
+}

@@ -1,0 +1,12 @@
+@use "../../styles/mixins/breakpoints";
+
+.formError {
+  display: var(--form-error-display, block);
+  color: var(--color-input-error, var(--color-input-default-error));
+  padding-left: var(--form-error-padding-left, var(--space-xxxxs));
+  padding-top: var(--form-error-padding-top, var(--space-xxxxs));
+  font-size: var(--form-error-font-size, var(--text-sm));
+  font-weight: var(--form-error-font-weight, 600);
+}
+
+@include breakpoints.all('.formError', var(--form-error-display, block));

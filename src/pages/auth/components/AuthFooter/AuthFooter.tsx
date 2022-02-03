@@ -1,35 +1,35 @@
-import React, { useMemo } from 'react'
+import React, { useMemo } from 'react';
 
-import * as classes from './AuthFooter.module.scss'
+import styles from './AuthFooter.module.scss';
 
 export type AuthFooterProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export const AuthFooter: React.FC<AuthFooterProps> = ({ children }) => {
   const elements = useMemo(() => {
-    const count = React.Children.count(children)
+    const count = React.Children.count(children);
 
     return React.Children.map(children, (child, index) => {
       if (!React.isValidElement(child)) {
-        return child
+        return child;
       }
 
-      const cloned = React.cloneElement(child, { ...child.props, key: index, className: classes.authFooter__link })
+      const cloned = React.cloneElement(child, { ...child.props, key: index, className: styles.authFooter__link });
 
       if (index > 0 && index < count) {
-        const dot = React.createElement('span', { key: count + index, className: classes.authFooter__dot })
+        const dot = React.createElement('span', { key: count + index, className: styles.authFooter__dot });
 
-        return React.createElement(React.Fragment, {}, [dot, cloned])
+        return React.createElement(React.Fragment, {}, [dot, cloned]);
       }
 
-      return cloned
-    })
-  }, [children])
+      return cloned;
+    });
+  }, [children]);
 
   return (
-    <div className={classes.authFooter}>
-      <div className={classes.authFooter__container}>{elements}</div>
+    <div className={styles.authFooter}>
+      <div className={styles.authFooter__container}>{elements}</div>
     </div>
-  )
-}
+  );
+};

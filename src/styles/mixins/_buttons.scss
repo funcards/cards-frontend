@@ -1,12 +1,9 @@
 @use "animation";
 
 @mixin btn {
-  --as-display: var(--btn-display, grid);
-
   @include animation.transition;
   @include animation.ease-in;
 
-  position: relative;
   overflow: hidden;
   cursor: pointer;
   display: var(--btn-display, grid);
@@ -19,6 +16,8 @@
   color: var(--color-btn, var(--color-transparent));
   background-color: var(--color-btn-bg, var(--color-transparent));
   font-size: var(--btn-font-size, var(--text-lg));
+  border-radius: var(--btn-border-radius, var(--radius-md));
+  box-shadow: var(--btn-box-shadow, var(--shadow-none));
 
   &:focus {
     outline: none;

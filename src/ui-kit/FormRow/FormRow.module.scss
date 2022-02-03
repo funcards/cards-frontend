@@ -1,8 +1,0 @@
-.formRow {
-  display: flex;
-  flex-direction: column;
-
-  & ~ :not([hidden]) {
-    padding-top: var(--space-md);
-  }
-}

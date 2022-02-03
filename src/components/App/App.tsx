@@ -1,28 +1,21 @@
-import React, { Suspense, lazy } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React, { Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import { routes } from '~src/utils/constants'
-import {
-  ErrorWrapper,
-  Header,
-  Loading,
-  NotificationList,
-  PageTitle,
-  RequireAuth,
-  RequireNotAuth,
-} from '~src/components'
-import { AddBoard } from '~src/pages/board/components'
+import { routes } from '@/config';
+import { AddBoard } from '@/pages/boards/components';
 
-import * as classes from './App.module.scss'
+import { ErrorWrapper, Header, Loading, NotificationList, PageTitle, RequireAuth, RequireNotAuth } from '..';
 
-const HomePage = lazy(() => import('~src/pages/home/HomePage/HomePage'))
-const SignInPage = lazy(() => import('~src/pages/auth/SignInPage/SignInPage'))
-const SignUpPage = lazy(() => import('~src/pages/auth/SignUpPage/SignUpPage'))
-const BoardListPage = lazy(() => import('~src/pages/board/BoardListPage/BoardListPage'))
-const BoardPage = lazy(() => import('~src/pages/board/BoardPage/BoardPage'))
+import styles from './App.module.scss';
+
+const HomePage = lazy(() => import('../../pages/home/HomePage'));
+const SignInPage = lazy(() => import('../../pages/auth/SignInPage'));
+const SignUpPage = lazy(() => import('../../pages/auth/SignUpPage'));
+const BoardListPage = lazy(() => import('../../pages/boards/BoardListPage'));
+const BoardPage = lazy(() => import('../../pages/boards/BoardPage'));
 
 export const App: React.FC = () => (
-  <div className={classes.app}>
+  <div className={styles.app}>
     <PageTitle />
     <NotificationList />
     <AddBoard />
@@ -58,4 +51,4 @@ export const App: React.FC = () => (
       </Routes>
     </Suspense>
   </div>
-)
+);

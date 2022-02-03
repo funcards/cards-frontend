@@ -1,0 +1,41 @@
+@use "../../styles/mixins/buttons";
+@use "../../styles/mixins/breakpoints";
+
+.button {
+  @include buttons.btn;
+
+  &_light {
+    @include buttons.light;
+  }
+
+  &_primary {
+    @include buttons.primary;
+  }
+
+  &_avatar {
+    --btn-border-radius: var(--avatar-border-radius, var(--radius-circle));
+    @include buttons.avatar;
+  }
+
+  &_close {
+    @include buttons.close;
+  }
+
+  &_left {
+    --btn-justify-content: left;
+  }
+
+  &_right {
+    --btn-justify-content: right;
+  }
+
+  &_start {
+    align-self: flex-start;
+  }
+
+  &_end {
+    align-self: flex-end;
+  }
+}
+
+@include breakpoints.all('.button', var(--btn-display, grid));

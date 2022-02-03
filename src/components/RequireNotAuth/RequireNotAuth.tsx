@@ -1,27 +1,27 @@
-import React from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import React from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-import { routes } from '~src/utils/constants'
-import { useTypedSelector } from '~src/store'
-import { selectAuthState } from '~src/store/auth/auth.selector'
+import { useAppSelector } from '@/hooks';
+import { selectAuth } from '@/store';
+import { routes } from '@/config';
 
 export type RequireNotAuthProps = {
-  children?: React.ReactNode | undefined
-}
+  children?: React.ReactNode | undefined;
+};
 
 export const RequireNotAuth: React.FC<RequireNotAuthProps> = ({ children }) => {
-  const { isAuthenticated } = useTypedSelector(selectAuthState)
-  const location = useLocation()
+  const { isAuthenticated } = useAppSelector(selectAuth);
+  const location = useLocation();
 
   if (isAuthenticated) {
-    const from = location.state?.from?.pathname || routes.board.list
+    const from = (location.state as { from?: { pathname: string } })?.from?.pathname || routes.board.list;
 
-    return <Navigate to={from} replace={true} />
+    return <Navigate to={from} replace={true} />;
   }
 
   if (children) {
-    return <>{children}</>
+    return <>{children}</>;
   }
 
-  return <Outlet />
-}
+  return <Outlet />;
+};

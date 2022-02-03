@@ -1,55 +1,52 @@
-import React, { useCallback } from 'react'
-import { Link, Outlet } from 'react-router-dom'
-import { TiHomeOutline, TiPlus } from 'react-icons/ti'
-import { IoNotificationsOutline } from 'react-icons/io5'
+import React, { useCallback } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import { TiHomeOutline, TiPlus } from 'react-icons/ti';
+import { IoNotificationsOutline } from 'react-icons/io5';
 
-import { appName, routes } from '~src/utils/constants'
-import { Text } from '~src/ui-kit'
-import { UserMenu } from '~src/components'
-import { useAppDispatch, useTypedSelector } from '~src/store'
-import { selectAuthState } from '~src/store/auth/auth.selector'
-import { openAddBoard } from '~src/store/ui/ui.slice'
+import { appShortName, routes } from '@/config';
+import { Text, UserMenu } from '@/components';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { openAddBoard, selectAuth } from '@/store';
 
-import * as classes from './Header.module.scss'
+import styles from './Header.module.scss';
 
 export const Header: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const { isAuthenticated } = useTypedSelector(selectAuthState)
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector(selectAuth);
 
-  const onOpenAddBoard = useCallback(() => dispatch(openAddBoard()), [dispatch])
+  const onOpenAddBoard = useCallback(() => dispatch(openAddBoard()), [dispatch]);
 
   return (
     <>
-      <header className={classes.header}>
-        <Link to={routes.root} className={classes.header__logo}>
-          {appName.short}
+      <header className={styles.header}>
+        <Link to={routes.root} className={styles.header__logo}>
+          {appShortName}
         </Link>
-        <ul className={classes.header__group}>
+        <ul className={styles.header__group}>
           <li>
-            <Link to={routes.board.list} className={classes.header__btn}>
+            <Link to={routes.board.list} className={styles.header__btn}>
               <TiHomeOutline />
-              <Text className={classes.header__text} show="md">
+              <Text className={styles.header__text} show="md">
                 Boards
               </Text>
             </Link>
           </li>
         </ul>
-        <ul className={classes.header__group}>
+        <ul className={styles.header__group}>
           <li>
-            <button className={classes.header__btn} onClick={onOpenAddBoard}>
+            <button className={styles.header__btn} onClick={onOpenAddBoard}>
               <TiPlus />
             </button>
           </li>
           <li>
-            <button className={classes.header__btn} onClick={() => true}>
+            <button className={styles.header__btn}>
               <IoNotificationsOutline />
             </button>
           </li>
           {isAuthenticated && <UserMenu />}
         </ul>
       </header>
-
       <Outlet />
     </>
-  )
-}
+  );
+};

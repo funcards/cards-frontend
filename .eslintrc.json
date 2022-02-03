@@ -13,9 +13,10 @@
     "plugin:import/typescript",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:redux-saga/recommended"
   ],
-  "plugins": ["import"],
+  "plugins": ["import", "react", "react-hooks", "@typescript-eslint", "redux-saga"],
   "rules": {
     // Separate import groups with newline by section
     "import/order": [
@@ -26,21 +27,20 @@
       }
     ],
     "import/no-unresolved": "error",
+    "import/no-named-as-default-member": 0,
     "no-console": 1, // Warning to reduce console logs used throughout app
     "react/prop-types": 0, // Not using prop-types because we have TypeScript
     "newline-before-return": 1,
     "no-useless-return": 1,
     "prefer-const": 1,
-    "no-unused-vars": 0
+    "no-unused-vars": 0,
+    "redux-saga/no-unhandled-errors": 0
   },
   "settings": {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
-      "parcel": {
-        "extensions": [".ts", ".tsx", ".js", ".jsx", ".json"]
-      },
       "typescript": {
         "alwaysTryTypes": true
       }

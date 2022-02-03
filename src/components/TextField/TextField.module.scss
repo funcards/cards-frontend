@@ -1,0 +1,12 @@
+@use "../../styles/mixins/input";
+@use "../../styles/mixins/breakpoints";
+
+.input {
+  @include input.input;
+
+  &__error {
+    @include input.error;
+  }
+}
+
+@include breakpoints.all('.input', var(--input-display, block));

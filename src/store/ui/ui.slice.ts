@@ -1,35 +1,40 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
-import { UiState } from './ui.types'
+export type UiState = {
+  addBoardDialogIsOpened: boolean;
+  boardMenuIsOpened: boolean;
+  tagsLabelIsOpened: boolean;
+};
 
 const initialState: UiState = {
   addBoardDialogIsOpened: false,
   boardMenuIsOpened: false,
   tagsLabelIsOpened: false,
-}
+};
 
-const uiSlice = createSlice({
+const slice = createSlice({
   name: 'ui',
-  initialState,
+  initialState: initialState,
   reducers: {
     openAddBoard: (state: UiState) => {
-      state.addBoardDialogIsOpened = true
+      state.addBoardDialogIsOpened = true;
     },
     closeAddBoard: (state: UiState) => {
-      state.addBoardDialogIsOpened = false
+      state.addBoardDialogIsOpened = false;
     },
     openBoardMenu: (state: UiState) => {
-      state.boardMenuIsOpened = true
+      state.boardMenuIsOpened = true;
     },
     closeBoardMenu: (state: UiState) => {
-      state.boardMenuIsOpened = false
+      state.boardMenuIsOpened = false;
     },
     toggleTagsLabel: (state: UiState) => {
-      state.tagsLabelIsOpened = !state.tagsLabelIsOpened
+      state.tagsLabelIsOpened = !state.tagsLabelIsOpened;
     },
     clearUi: () => initialState,
   },
-})
+});
 
-export const { openAddBoard, closeAddBoard, openBoardMenu, closeBoardMenu, toggleTagsLabel, clearUi } = uiSlice.actions
-export default uiSlice.reducer
+export default slice.reducer;
+
+export const { openAddBoard, closeAddBoard, openBoardMenu, closeBoardMenu, toggleTagsLabel, clearUi } = slice.actions;

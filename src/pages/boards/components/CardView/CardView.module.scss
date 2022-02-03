@@ -1,0 +1,57 @@
+@use "../../../../styles/mixins/breakpoints";
+
+.viewCard {
+  position: relative;
+  width: 100%;
+  max-width: 768px;
+  margin: var(--space-sm) auto;
+  padding: 0 var(--space-sm);
+  background-color: var(--color-transparent);
+
+  @include breakpoints.breakpoint(sm) {
+    margin: var(--space-xl) auto;
+  }
+
+  &__wrapper {
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xl);
+    padding: var(--space-sm);
+    background-color: var(--color-modal-body-bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__cover {}
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    font-weight: 600;
+    font-size: var(--text-lg);
+  }
+
+  &__category {
+    padding-top: var(--space-xs);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoints.breakpoint(sm) {
+      flex-direction: row;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+}

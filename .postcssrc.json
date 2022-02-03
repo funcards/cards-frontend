@@ -1,9 +1,5 @@
 {
-  "modules": true,
   "plugins": {
-    "postcss-modules": {
-      "globalModulePaths": ["./src/styles"]
-    },
     "autoprefixer": {
       "flexbox": "no-2009",
       "grid": true

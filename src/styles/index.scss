@@ -1,17 +1,13 @@
-@use "fonts";
+@use "sanitize.css/sanitize";
+@use "sanitize.css/assets";
+@use "sanitize.css/forms";
+@use "sanitize.css/reduce-motion";
+@use "sanitize.css/system-ui";
+@use "sanitize.css/ui-monospace";
+@use "sanitize.css/typography";
+
 @use "root";
 @use "reset";
-
-@keyframes slide-down {
-  0% {
-    opacity: 0;
-    transform: translateY(-1rem);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 [data-reach-dialog-overlay] {
   background: var(--color-modal-overlay-bg);
@@ -28,50 +24,8 @@
   outline: none;
 }
 
-[data-reach-menu] {
-  position: relative;
-}
-
-[data-reach-menu-popover] {
-  display: block;
-  position: absolute;
-  z-index: var(--zindex-menu);
-}
-
-[data-reach-menu-popover][hidden] {
-  display: none;
-}
-
-[data-reach-menu-list],
-[data-reach-menu-items] {
-  display: block;
-  white-space: nowrap;
-  outline: none;
-  animation: slide-down 0.2s ease;
-}
-
-[data-reach-menu-item] {
-  cursor: pointer;
-
-  /* a */
-  display: block;
-  color: inherit;
-  font: inherit;
-  text-decoration: initial;
-  user-select: none;
-}
-
-/* pseudo pseudo selector */
-[data-reach-menu-item][data-selected] {
-  outline: none;
-}
-
-[data-reach-menu-item][aria-disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 [data-reach-tooltip] {
+  z-index: 45;
   pointer-events: none;
   position: absolute;
   white-space: nowrap;

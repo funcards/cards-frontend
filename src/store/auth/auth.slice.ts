@@ -1,76 +1,67 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAction, PayloadAction } from '@reduxjs/toolkit';
+import { RequestStatusFlags } from '@reduxjs/toolkit/src/query/core/apiState';
 
-import { Cookies, LocalStorage } from '~src/services'
+import { CookiesStorage, LocalStorage } from '@/services';
+import { SignIn, SignUp, Tokens, User } from '@/types';
+import { createGenericSlice, flagsInitialState } from '@/store/createGeneric.slice';
 
-import { ErrorResponse } from '../types'
+export type AuthState = RequestStatusFlags & {
+  isAuthenticated: boolean;
+  tokens: Tokens | null;
+  currentUser: User | null;
+};
 
-import { AuthState, CurrentUser, SignIn, SignUp, Tokens } from './auth.types'
-
-const keyTokens = 'tokens'
-const keyCurrentUser = 'current.user'
-const tokens = Cookies.get<Tokens | undefined>(keyTokens, undefined)
-const currentUser = LocalStorage.get<CurrentUser | undefined>(keyCurrentUser, undefined)
-const isAuthenticated = tokens !== undefined && currentUser !== undefined
+const keyTokens = 'tokens';
+const keyCurrentUser = 'current.user';
+const tokens = CookiesStorage.get<Tokens | null>(keyTokens, null);
+const currentUser = LocalStorage.get<User | null>(keyCurrentUser, null);
+const isAuthenticated = tokens !== null && currentUser !== null;
 
 const initialState: AuthState = {
   isAuthenticated,
-  isLoading: false,
-  isError: false,
   tokens,
   currentUser,
-}
+  ...flagsInitialState,
+};
 
-const init = (state: AuthState, {}: PayloadAction<SignIn | SignUp>) => {
-  state.isAuthenticated = false
-  state.isLoading = true
-  state.isError = false
-  state.error = undefined
-  state.tokens = undefined
-  state.currentUser = undefined
-}
-
-const authSlice = createSlice({
+const slice = createGenericSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signIn: init,
-    signUp: init,
-    signOut: (state: AuthState) => {
-      state.isAuthenticated = false
-      state.isLoading = false
-      state.isError = false
-      state.error = undefined
-      state.tokens = undefined
-      state.currentUser = undefined
-      Cookies.remove(keyTokens)
-      LocalStorage.remove(keyCurrentUser)
-    },
-    successAuth: (state: AuthState) => {
-      state.isAuthenticated = true
-      state.isLoading = false
-      state.isError = false
-      state.error = undefined
-    },
-    failedAuth: (state: AuthState, { payload }: PayloadAction<ErrorResponse>) => {
-      state.isAuthenticated = false
-      state.isLoading = false
-      state.isError = true
-      state.error = payload
-      state.tokens = undefined
-      state.currentUser = undefined
-      Cookies.remove(keyTokens)
-      LocalStorage.remove(keyCurrentUser)
-    },
     setTokens: (state: AuthState, { payload }: PayloadAction<Tokens>) => {
-      state.tokens = payload
-      Cookies.set(keyTokens, payload)
+      state.tokens = payload;
+      CookiesStorage.set(keyTokens, payload);
     },
-    setCurrentUser: (state: AuthState, { payload }: PayloadAction<CurrentUser>) => {
-      state.currentUser = payload
-      LocalStorage.set(keyCurrentUser, payload)
+    setCurrentUser: (state: AuthState, { payload }: PayloadAction<User>) => {
+      state.currentUser = payload;
+      LocalStorage.set(keyCurrentUser, payload);
+    },
+    clear: () => {
+      CookiesStorage.remove(keyTokens);
+      LocalStorage.remove(keyCurrentUser);
+
+      return { isAuthenticated: false, tokens: null, currentUser, ...flagsInitialState };
     },
   },
-})
+  fulfilled: (state) => ({ ...state, isAuthenticated: true }),
+  rejected: (state) => ({ ...state, isAuthenticated: false }),
+});
 
-export const { signIn, signUp, signOut, successAuth, failedAuth, setTokens, setCurrentUser } = authSlice.actions
-export default authSlice.reducer
+export default slice.reducer;
+
+export const {
+  pending: pendingAuth,
+  fulfilled: fulfilledAuth,
+  rejected: rejectedAuth,
+  clear: clearAuth,
+  setTokens,
+  setCurrentUser,
+} = slice.actions;
+
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_OUT = 'SIGN_OUT';
+
+export const signIn = createAction<SignIn>(SIGN_IN);
+export const signUp = createAction<SignUp>(SIGN_UP);
+export const signOut = createAction(SIGN_OUT);

@@ -1,22 +1,23 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Portal } from '@reach/portal'
+import React from 'react';
+import { Portal } from '@reach/portal';
 
-import { NotificationItem } from '~src/components'
-import { selectNotification } from '~src/store/notification/notification.selectors'
+import { useAppSelector } from '@/hooks';
+import { selectNotifications } from '@/store';
 
-import * as classes from './NotificationList.module.scss'
+import { NotificationItem } from '..';
+
+import styles from './NotificationList.module.scss';
 
 export const NotificationList: React.FC = () => {
-  const { notifications } = useSelector(selectNotification)
+  const { notifications } = useAppSelector(selectNotifications);
 
   return (
     <Portal>
-      <div className={classes.notifications}>
+      <div className={styles.notifications}>
         {notifications.map((notification) => (
           <NotificationItem key={notification.id} notification={notification} />
         ))}
       </div>
     </Portal>
-  )
-}
+  );
+};
