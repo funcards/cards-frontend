@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action, createSelector } from '@reduxjs/to
 import createSagaMiddleware from 'redux-saga';
 
 import { isProduction } from '@/config';
+import { Card, Category, Tag } from '@/types';
 
 import uiReducer from './ui/ui.slice';
 import notificationsReducer from './notifications/notifications.slice';
@@ -11,7 +12,6 @@ import categoriesReducer from './categories/categories.slice';
 import tagsReducer from './tags/tags.slice';
 import cardsReducer from './cards/cards.slice';
 import { rootWatcher } from './root.saga';
-import { Card, Category, Tag } from '@/types';
 
 export * from './ui/ui.slice';
 export * from './notifications/notifications.slice';

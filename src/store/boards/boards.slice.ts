@@ -9,7 +9,7 @@ const sort = (a: Board, b: Board) => dayjs(a.created_at).diff(b.created_at);
 
 export type BoardsState = RequestStatusFlags & {
   boards: Board[];
-  loadedAll: boolean
+  loadedAll: boolean;
   loading: QueryStatus;
 };
 
