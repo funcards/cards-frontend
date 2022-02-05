@@ -1,14 +1,14 @@
 import React, { forwardRef, useMemo } from 'react';
 
-import { BreakpointProps } from '../types';
+import { BreakpointProps, ChildrenProps } from '../types';
 import { Spinner, SpinnerProps } from '..';
 import { breakpointsClassName, buildClassName } from '../helpers';
 
 import styles from './Button.module.scss';
 
 export type ButtonProps = BreakpointProps &
+  ChildrenProps &
   React.ComponentPropsWithRef<'button'> & {
-    children?: React.ReactNode | undefined;
     light?: boolean | undefined;
     primary?: boolean | undefined;
     avatar?: boolean | undefined;

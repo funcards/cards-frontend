@@ -2,18 +2,14 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useSwitchElement } from '.';
 
-const margin = 8;
+const margin = 4;
 const style = { top: '-1000px', left: '-1000px', height: '0px' };
 
 const calcLeftTop = (btn: DOMRect, menu: DOMRect) => {
-  const top = btn.y + btn.height;
-  let left = btn.x;
-  if (left + menu.width + margin > window.innerWidth) {
-    left = btn.x + btn.width - menu.width;
-  }
-  if (left < 0) {
-    left = margin;
-  }
+  const tt = btn.y - menu.height - margin;
+  const bt = btn.y + btn.height + margin;
+  const left = Math.max(margin, btn.x + menu.width > window.innerWidth ? btn.x + btn.width - menu.width : btn.x);
+  const top = bt + menu.height > window.innerHeight && tt >= 0 ? tt : bt;
 
   return { left: `${left}px`, top: `${top}px` };
 };
@@ -22,16 +18,18 @@ export type DropdownMenuOptions = {
   initialStyle?: { left: string; top: string; height: string } | undefined;
   initialState?: boolean | undefined;
   closeFn?: () => void;
+  openFn?: () => void;
 };
 
 export const useDropdownMenu = <B extends HTMLElement = HTMLButtonElement, M extends HTMLElement = HTMLDivElement>({
   initialStyle = style,
   initialState,
   closeFn,
+  openFn,
 }: DropdownMenuOptions = {}) => {
   const [menuStyle, setMenuStyle] = useState(initialStyle);
   const buttonRef: React.MutableRefObject<B | null> = useRef(null);
-  const { ref: menuRef, isOpened, ...rest } = useSwitchElement<M>(initialState, closeFn);
+  const { ref: menuRef, isOpened, ...rest } = useSwitchElement<M>(initialState, closeFn, openFn);
 
   const calc = useCallback(() => {
     if (!buttonRef.current || !menuRef.current || !isOpened) {

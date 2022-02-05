@@ -1,6 +1,7 @@
 @use "../../../../styles/mixins/animation";
 
 .switchFormFooter {
+  position: relative;
   width: 100%;
   height: 0;
   overflow: hidden;

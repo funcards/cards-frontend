@@ -39,22 +39,64 @@
     height: 1.15rem;
   }
 
-  &__input {
-    --input-font-size: var(--text-sm);
-    --input-border-width: 0;
-    --color-input-border: var(--color-add-card-input-border);
-    --color-input-border-focus: var(--color-add-card-input-border-focus);
-    @include input.input;
-    border-radius: var(--radius-md);
+  &__container {
+    @include animation.transition;
+    @include animation.ease-in;
+
+    width: 100%;
+    background-color: var(--color-input-default-bg);
     box-shadow: var(--shadow-xs);
-    display: none;
-    min-height: 3.5rem;
+    border-radius: var(--radius-md);
+    border-color: var(--color-add-card-input-border);
     border-bottom-width: 1px;
+    display: none;
 
     &_open {
       @include animation.transition-all;
       @include animation.duration-100;
-      display: block;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__tags {
+    padding: var(--space-xs) var(--space-xs) 0;
+    display: flex;
+    gap: var(--space-xxxs);
+    flex-wrap: wrap;
+  }
+
+  &__tag {
+    --btn-padding-vertical: var(--space-xxxxs);
+    --btn-padding-horizontal: var(--space-xxs);
+    --btn-font-size: var(--text-xs);
+    min-width: 2.27rem;
+    min-height: 0.5rem;
+  }
+
+  &__input {
+    --input-border-width: 0;
+    --input-box-shadow: none;
+    --input-font-size: var(--text-sm);
+    min-height: 3.5rem;
+  }
+
+  &__menuBtn {
+    position: absolute;
+    right: 0;
+    padding: var(--space-xxs);
+    color: var(--color-category-menu-btn);
+    background-color: var(--color-category-menu-btn-bg);
+    border-radius: var(--radius-md);
+
+    &:hover {
+      color: var(--color-category-menu-btn-hover);
+      background-color: var(--color-category-menu-btn-bg-hover);
+    }
+
+    & > svg {
+      width: 1.333rem;
+      height: 1.333rem;
     }
   }
 }

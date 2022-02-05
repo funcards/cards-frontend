@@ -1,13 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { TiTimes, TiChevronLeft } from 'react-icons/ti';
+import { TiTimes } from 'react-icons/ti';
 import { IoEllipsisHorizontalOutline } from 'react-icons/io5';
-import { Portal } from '@reach/portal';
 
 import { Category, DndType } from '@/types';
 import { useAppSelector, useDropdownMenu } from '@/hooks';
 import { selectCategoryCards } from '@/store';
-import { Button } from '@/components';
+import { DdMenu, DdMenuItems, DdMenuHeader, DdMenuHeaderButton, DdMenuItem } from '@/components';
 
 import { AddCard, BoardCard, CategoryName } from '..';
 
@@ -25,7 +24,6 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
   );
 
   const [prependAddCard, setPrependAddCard] = useState(false);
-  const [showMoveList, setShowMoveList] = useState(false);
 
   const labelAddCard = useMemo(() => (cards.length > 0 ? 'Add another card' : 'Add a card'), [cards.length]);
   const position = useMemo(() => {
@@ -33,21 +31,8 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
 
     return p.length === 0 ? 0 : prependAddCard ? Math.min(...p) - 1 : Math.max(...p) + 1;
   }, [prependAddCard, cards]);
-  const labelMenu = useMemo(() => (showMoveList ? 'Move list' : 'List actions'), [showMoveList]);
 
-  const onToggleMoveList = useCallback(
-    (e) => {
-      e.preventDefault();
-      setShowMoveList(!showMoveList);
-    },
-    [showMoveList]
-  );
-
-  const closeFn = useCallback(() => {
-    setShowMoveList(false);
-  }, []);
-
-  const { buttonRef, menuRef, menuStyle, onOpen, onClose } = useDropdownMenu({ closeFn });
+  const { buttonRef, menuRef, menuStyle, onOpen, onClose } = useDropdownMenu();
 
   const onPrependAddCard = useCallback(() => {
     onClose();
@@ -86,36 +71,20 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
           <div className={styles.category__container}>
             <div className={styles.category__header}>
               <CategoryName boardId={category.board_id} categoryId={category.category_id} name={category.name} />
-              <button ref={buttonRef} className={styles.menu__btn} onClick={onOpen}>
-                <IoEllipsisHorizontalOutline className={styles.menu__icon} />
+              <button ref={buttonRef} className={styles.category__menuBtn} onClick={onOpen}>
+                <IoEllipsisHorizontalOutline />
               </button>
-              <Portal>
-                <div ref={menuRef} style={menuStyle} className={styles.menu__list}>
-                  <div className={styles.menu__header}>
-                    {showMoveList && (
-                      <Button className={styles.menu__prev} close={true} onClick={onToggleMoveList}>
-                        <TiChevronLeft />
-                      </Button>
-                    )}
-                    {labelMenu}
-                    <Button className={styles.menu__close} close={true} onClick={onClose}>
-                      <TiTimes />
-                    </Button>
-                  </div>
-                  {showMoveList ? (
-                    <div>TODO: Move list</div>
-                  ) : (
-                    <div className={styles.menu__group}>
-                      <div className={styles.menu__item} onClick={onPrependAddCard}>
-                        Add card...
-                      </div>
-                      <div className={styles.menu__item} onClick={onToggleMoveList}>
-                        Move list...
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </Portal>
+              <DdMenu ref={menuRef} style={menuStyle}>
+                <DdMenuHeader>
+                  List actions
+                  <DdMenuHeaderButton onClick={onClose}>
+                    <TiTimes />
+                  </DdMenuHeaderButton>
+                </DdMenuHeader>
+                <DdMenuItems>
+                  <DdMenuItem onClick={onPrependAddCard}>Add card...</DdMenuItem>
+                </DdMenuItems>
+              </DdMenu>
             </div>
             {prependAddCard && addCard}
             <Droppable droppableId={category.category_id} type={DndType.Card}>

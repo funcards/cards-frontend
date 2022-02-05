@@ -5,6 +5,7 @@ export * from './Button/Button';
 export * from './TextField/TextField';
 export * from './Avatar/Avatar';
 export * from './AvatarGroup/AvatarGroup';
+export * from './DdMenu/DdMenu';
 export * from './Form/Form';
 export * from './FormRow/FormRow';
 export * from './FormError/FormError';

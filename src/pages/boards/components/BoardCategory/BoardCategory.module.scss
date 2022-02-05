@@ -51,21 +51,8 @@
     flex: 0 0 auto;
     padding: 0 var(--space-xs);
   }
-}
 
-@keyframes slide-down {
-  0% {
-    opacity: 0;
-    transform: translateY(-1rem);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.menu {
-  &__btn {
+  &__menuBtn {
     padding: var(--space-xxs);
     color: var(--color-category-menu-btn);
     background-color: var(--color-category-menu-btn-bg);
@@ -75,94 +62,10 @@
       color: var(--color-category-menu-btn-hover);
       background-color: var(--color-category-menu-btn-bg-hover);
     }
-  }
-
-  &__icon {
-    width: 1rem;
-    height: 1rem;
-  }
-
-  &__list {
-    animation: slide-down 0.2s ease;
-    position: absolute;
-    z-index: var(--zindex-category-menu);
-    width: var(--width-menu);
-    margin-top: var(--space-xxxxs);
-    display: grid;
-    grid-auto-flow: row;
-    background-color: var(--color-menu-bg);
-    border-color: var(--color-divide);
-    border-width: 1px;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-xl);
-    overflow: hidden;
-  }
-
-  &__header {
-    --btn-close-size: 1.1rem;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-menu-title);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    margin: 0 var(--space-sm);
-    padding: var(--space-sm) 0;
-    border-bottom-width: 1px;
-    border-color: var(--color-divide);
-  }
-
-  &__close {
-    position: absolute;
-    right: 0;
-  }
-
-  &__prev {
-    position: absolute;
-    left: 0;
-  }
-
-  &__group {
-    white-space: nowrap;
-    outline: none;
-    padding: var(--space-xs) 0;
-    margin: 0 var(--space-sm);
-    display: grid;
-    grid-auto-flow: row;
-    border-bottom-width: 1px;
-    border-color: var(--color-divide);
-
-    &:last-child {
-      border-width: 0;
-    }
-  }
-
-  &__item {
-    cursor: pointer;
-    font: inherit;
-    text-decoration: initial;
-    user-select: none;
-    margin: 0 calc(var(--space-sm) * -1);
-    padding: var(--space-xs) var(--space-sm);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    border-radius: 0;
-    color: var(--color-menu-item);
-    background-color: var(--color-transparent);
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    gap: var(--space-sm);
-    align-items: center;
-
-    &:hover {
-      background-color: var(--color-menu-item-bg-hover);
-    }
 
     & > svg {
-      width: 1.1rem;
-      height: 1.1rem;
+      width: 1rem;
+      height: 1rem;
     }
   }
 }

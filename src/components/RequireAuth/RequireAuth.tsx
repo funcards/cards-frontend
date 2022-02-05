@@ -4,10 +4,9 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAppSelector } from '@/hooks';
 import { selectAuth } from '@/store';
 import { routes } from '@/config';
+import { ChildrenProps } from '@/components/types';
 
-export type RequireAuthProps = {
-  children?: React.ReactNode | undefined;
-};
+export type RequireAuthProps = ChildrenProps;
 
 export const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
   const { isAuthenticated } = useAppSelector(selectAuth);

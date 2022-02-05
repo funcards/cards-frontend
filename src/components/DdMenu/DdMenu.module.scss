@@ -1,0 +1,25 @@
+@use "../../styles/mixins/ddmenu";
+
+.ddMenu {
+  @include ddmenu.container;
+
+  &__header {
+    @include ddmenu.header;
+  }
+
+  &__right {
+    @include ddmenu.headerBtn;
+  }
+
+  &__left {
+    @include ddmenu.headerBtn(false);
+  }
+
+  &__items {
+    @include ddmenu.items;
+  }
+
+  &__item {
+    @include ddmenu.item;
+  }
+}

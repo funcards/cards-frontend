@@ -1,14 +1,11 @@
 import React, { forwardRef, useMemo, Children } from 'react';
 
-import { BreakpointProps } from '../types';
+import { BreakpointProps, ChildrenProps } from '../types';
 import { breakpointsClassName, buildClassName } from '../helpers';
 
 import styles from './AvatarGroup.module.scss';
 
-export type AvatarGroupProps = BreakpointProps &
-  React.ComponentPropsWithRef<'ul'> & {
-    children?: React.ReactNode | undefined;
-  };
+export type AvatarGroupProps = BreakpointProps & ChildrenProps & React.ComponentPropsWithRef<'ul'>;
 
 const AvatarGroupRender = ({ children, ...props }: AvatarGroupProps, ref?: React.Ref<HTMLUListElement>) => {
   const { className: cn, ...rest } = useMemo(() => breakpointsClassName(props, styles, 'avatarGroup'), [props]);

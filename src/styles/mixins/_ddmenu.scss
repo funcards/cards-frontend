@@ -1,0 +1,104 @@
+@use "buttons";
+
+@mixin slideDown {
+  @keyframes slide-down {
+    0% {
+      opacity: 0;
+      transform: translateY(-1rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@mixin container() {
+  @include slideDown;
+  animation: slide-down 0.2s ease;
+  position: absolute;
+  z-index: var(--zindex-menu);
+  width: var(--width-menu);
+  display: grid;
+  grid-auto-flow: row;
+  background-color: var(--color-menu-bg);
+  border-color: var(--color-divide);
+  border-width: 1px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-menu-title);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin: 0 var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom-width: 1px;
+  border-color: var(--color-divide);
+}
+
+@mixin headerBtn($right: true) {
+  --btn-close-size: 1.1rem;
+  @include buttons.btn;
+  @include buttons.close;
+  position: absolute;
+
+  @if $right {
+    right: 0;
+  } @else {
+    left: 0;
+  }
+}
+
+@mixin items {
+  white-space: nowrap;
+  outline: none;
+  margin: 0 var(--space-sm);
+  padding: var(--space-xs) 0;
+  display: grid;
+  grid-auto-flow: var(--ddmenu-items-grid-flow, row);
+  border-bottom-width: 1px;
+  border-color: var(--color-divide);
+
+  &:last-child {
+    border-width: 0;
+  }
+}
+
+@mixin item {
+  cursor: pointer;
+  font: inherit;
+  text-decoration: initial;
+  user-select: none;
+  margin: 0 calc(var(--space-sm) * -1);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: 0;
+  color: var(--color-menu-item);
+  background-color: var(--color-transparent);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: var(--space-xxs);
+  align-items: center;
+
+  &:hover {
+    background-color: var(--color-menu-item-bg-hover);
+  }
+
+  & > svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}

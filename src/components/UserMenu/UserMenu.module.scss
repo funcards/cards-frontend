@@ -1,6 +1,6 @@
 @use "../../styles/mixins/buttons";
 
-.userMenu {
+.btn {
   --btn-border-radius: var(--radius-circle);
   @include buttons.btn;
   @include buttons.avatar;
@@ -8,51 +8,12 @@
   height: 1.825em;
 }
 
-.userMenuItems {
-  animation: slide-down 0.2s ease;
-  position: absolute;
-  z-index: var(--zindex-menu);
-  width: var(--width-menu);
-  margin-top: var(--space-xs);
-  padding: var(--space-xxxs) 0;
-  display: grid;
-  grid-auto-flow: row;
-  background-color: var(--color-menu-bg);
-  border-radius: var(--radius-md);
-  border-color: var(--color-divide);
-  border-width: 1px;
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-
-  &:focus {
-    outline: none;
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-menu-title);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    margin: 0 var(--space-sm);
-    padding: var(--space-sm) 0;
-    border-bottom-width: 1px;
-    border-color: var(--color-divide);
-  }
-
-  &__info {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    column-gap: var(--space-xs);
-    align-items: center;
-    margin: 0 var(--space-sm);
-    padding: var(--space-sm) 0;
-    border-bottom-width: 1px;
-    border-color: var(--color-divide);
-  }
+.user {
+  --ddmenu-items-grid-flow: column;
+  grid-auto-columns: max-content;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-xs);
+  align-items: center;
 
   &__avatar {
     height: 2.5rem;
@@ -70,44 +31,5 @@
     font-family: sans-serif;
     font-size: var(--text-xs);
     color: var(--color-user-menu-email);
-  }
-
-  &__group {
-    padding: var(--space-xs) 0;
-    margin: 0 var(--space-sm);
-    display: grid;
-    grid-auto-flow: row;
-    border-bottom-width: 1px;
-    border-color: var(--color-divide);
-
-    &:last-child {
-      border-width: 0;
-      padding-bottom: var(--space-xxs);
-    }
-  }
-
-  &__item {
-    margin: 0 calc(var(--space-sm) * -1);
-    padding: var(--space-xxs) var(--space-sm);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    border-radius: 0;
-    color: var(--color-menu-item);
-    background-color: var(--color-transparent);
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    gap: var(--space-xs);
-    align-items: center;
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(--color-menu-item-bg-hover);
-    }
-  }
-
-  &__icon {
-    width: 1.1rem;
-    height: 1.1rem;
   }
 }

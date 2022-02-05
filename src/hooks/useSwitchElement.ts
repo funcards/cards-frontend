@@ -3,7 +3,8 @@ import { useOnClickOutside } from 'usehooks-ts';
 
 export const useSwitchElement = <E extends HTMLElement = HTMLElement>(
   initialState?: boolean | undefined,
-  closeFn?: () => void
+  closeFn?: () => void,
+  openFn?: () => void
 ) => {
   const [isOpened, setIsOpened] = useState(!!initialState);
   const [isOn, setIsOn] = useState(true);
@@ -12,15 +13,16 @@ export const useSwitchElement = <E extends HTMLElement = HTMLElement>(
   const onOpen = useCallback(() => {
     if (isOn) {
       setIsOpened(true);
+      openFn && openFn();
     }
-  }, [isOn]);
+  }, [isOn, openFn]);
 
   const onClose = useCallback(() => {
     if (isOn) {
       setIsOpened(false);
       closeFn && closeFn();
     }
-  }, [closeFn, isOn]);
+  }, [isOn, closeFn]);
 
   const onToggle = useCallback(() => {
     if (isOpened) {
