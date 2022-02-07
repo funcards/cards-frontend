@@ -1,0 +1,41 @@
+.tags {
+  --input-font-size: var(--text-sm);
+  --btn-padding-vertical: calc(var(--space-xs) * 0.9);
+  --btn-padding-horizontal: var(--space-sm);
+  --btn-font-size: calc(var(--text-sm) * 1.05);
+  --btn-display: inline-block;
+  --btn-text-align: left;
+  display: grid;
+  gap: var(--space-sm);
+  overflow: hidden;
+
+  &__container {
+    display: grid;
+    gap: var(--space-xxs);
+    overflow: hidden;
+  }
+
+  &__list {
+    display: grid;
+    gap: var(--space-xxxs);
+    font-weight: 600;
+    overflow-y: auto;
+  }
+
+  &__btnAddTag {
+    --color-btn: var(--color-add-tag-btn);
+    --color-btn-bg: var(--color-add-tag-btn-bg);
+    --color-btn-bg-hover: var(--color-add-tag-btn-bg-hover);
+    --color-btn-disabled: var(--color-add-tag-btn-disabled);
+    --color-btn-bg-disabled: var(--color-add-tag-btn-bg-disabled);
+    --btn-text-align: center;
+    font-weight: 500;
+  }
+
+  &__selected {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1);
+  }
+}

@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import { Card, Theme } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { selectBoardTags, selectUi, toggleTagsLabel } from '@/store';
+import { selectBoardTagsByIds, selectUi, toggleTagsLabel } from '@/store';
 import { Button, Text } from '@/components';
 
 import { CardView } from '../CardView/CardView';
@@ -17,7 +17,9 @@ export interface BoardCardProps {
 
 export const BoardCard: React.FC<BoardCardProps> = ({ card, index }) => {
   const dispatch = useAppDispatch();
-  const allTags = useAppSelector((state) => selectBoardTags(state, { board_id: card.board_id, tags_id: card.tags }));
+  const allTags = useAppSelector((state) =>
+    selectBoardTagsByIds(state, { board_id: card.board_id, tags_id: card.tags })
+  );
   const { tagsLabelIsOpened } = useAppSelector(selectUi);
   const [showCardView, setShowCardView] = useState(false);
 

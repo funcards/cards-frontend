@@ -1,18 +1,30 @@
 import React, { ElementType, forwardRef, memo, useMemo } from 'react';
-import { Portal } from '@reach/portal';
+import { Popover, PopoverProps } from '@reach/popover';
 
 import { buildClassName } from '@/components/helpers';
 import { ChildrenProps } from '@/components/types';
 
 import styles from './DdMenu.module.scss';
 
-export type DdMenuProps<T extends ElementType = 'div'> = ChildrenProps & React.ComponentPropsWithRef<T>;
-export type DdMenuHeaderButtonProps = DdMenuProps<'button'> & {
-  left?: boolean | undefined;
+export type DdMenuProps<T extends ElementType = 'div'> = PopoverProps & React.ComponentPropsWithRef<T>;
+export type DdMenuHeaderProps<T extends ElementType = 'div'> = ChildrenProps & React.ComponentPropsWithRef<T>;
+export type DdMenuHeaderButtonProps = ChildrenProps &
+  React.ComponentPropsWithRef<'button'> & { left?: boolean | undefined };
+export type DdMenuItemsProps<T extends ElementType = 'div'> = ChildrenProps & React.ComponentPropsWithRef<T>;
+export type DdMenuItemProps<T extends ElementType = 'div'> = ChildrenProps & React.ComponentPropsWithRef<T>;
+
+const MenuRender = ({ className: cn, children, hidden, ...rest }: DdMenuProps, ref?: React.Ref<HTMLDivElement>) => {
+  const className = useMemo(() => buildClassName(styles.ddMenu, hidden ? '' : styles.ddMenu_open, cn), [cn, hidden]);
+
+  return (
+    <Popover ref={ref} className={className} hidden={hidden} {...rest}>
+      <div className={styles.ddMenu__container}>{children}</div>
+    </Popover>
+  );
 };
 
-const Render = (style: string, { children, className: cn, ...rest }: DdMenuProps, ref?: React.Ref<HTMLDivElement>) => {
-  const className = buildClassName(style, cn);
+const MenuHeaderRender = ({ children, className: cn, ...rest }: DdMenuHeaderProps, ref?: React.Ref<HTMLDivElement>) => {
+  const className = useMemo(() => buildClassName(styles.ddMenu__header, cn), [cn]);
 
   return (
     <div ref={ref} className={className} {...rest}>
@@ -21,19 +33,25 @@ const Render = (style: string, { children, className: cn, ...rest }: DdMenuProps
   );
 };
 
-const MenuRender = (props: DdMenuProps, ref?: React.Ref<HTMLDivElement>) => {
-  const children = useMemo(() => Render(styles.ddMenu, props, ref), [props, ref]);
+const MenuItemsRender = ({ children, className: cn, ...rest }: DdMenuItemsProps, ref?: React.Ref<HTMLDivElement>) => {
+  const className = useMemo(() => buildClassName(styles.ddMenu__items, cn), [cn]);
 
-  return <Portal>{children}</Portal>;
+  return (
+    <div ref={ref} className={className} {...rest}>
+      {children}
+    </div>
+  );
 };
 
-const MenuHeaderRender = (props: DdMenuProps, ref?: React.Ref<HTMLDivElement>) =>
-  Render(styles.ddMenu__header, props, ref);
+const MenuItemRender = ({ children, className: cn, ...rest }: DdMenuItemProps, ref?: React.Ref<HTMLDivElement>) => {
+  const className = useMemo(() => buildClassName(styles.ddMenu__item, cn), [cn]);
 
-const MenuItemsRender = (props: DdMenuProps, ref?: React.Ref<HTMLDivElement>) =>
-  Render(styles.ddMenu__items, props, ref);
-
-const MenuItemRender = (props: DdMenuProps, ref?: React.Ref<HTMLDivElement>) => Render(styles.ddMenu__item, props, ref);
+  return (
+    <div ref={ref} className={className} {...rest}>
+      {children}
+    </div>
+  );
+};
 
 const MenuHeaderButtonRender = (
   { children, left, className: cn, ...rest }: DdMenuHeaderButtonProps,

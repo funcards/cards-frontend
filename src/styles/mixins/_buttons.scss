@@ -9,15 +9,20 @@
   display: var(--btn-display, grid);
   grid-auto-flow: column;
   grid-auto-columns: max-content;
-  align-items: center;
+  align-items: var(--btn-align-items, center);
   justify-content: var(--btn-justify-content, center);
   gap: var(--btn-gap, var(--space-xs));
   padding: var(--btn-padding-vertical, var(--space-xs)) var(--btn-padding-horizontal, var(--space-md));
   color: var(--color-btn, var(--color-transparent));
+  text-align: var(--btn-text-align, center);
   background-color: var(--color-btn-bg, var(--color-transparent));
   font-size: var(--btn-font-size, var(--text-lg));
   border-radius: var(--btn-border-radius, var(--radius-md));
   box-shadow: var(--btn-box-shadow, var(--shadow-none));
+  overflow-wrap: break-word;
+  white-space: normal;
+  word-wrap: break-word;
+  position: relative;
 
   &:focus {
     outline: none;

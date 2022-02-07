@@ -69,6 +69,10 @@ export const selectBoardCategories = createSelector(
   (state, board_id) => state.categories[board_id] || defaultCategories
 );
 export const selectBoardTags = createSelector(
+  [selectTags, selectBoardId],
+  (state, board_id) => state.tags[board_id] || defaultTags
+);
+export const selectBoardTagsByIds = createSelector(
   [selectTags, selectBoardIdAndTagsId],
   (state, { board_id, tags_id }) => state.tags[board_id]?.filter((t) => tags_id.indexOf(t.tag_id) > -1) || defaultTags
 );

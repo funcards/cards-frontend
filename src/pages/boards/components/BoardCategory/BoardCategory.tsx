@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { TiTimes } from 'react-icons/ti';
 import { IoEllipsisHorizontalOutline } from 'react-icons/io5';
 
 import { Category, DndType } from '@/types';
-import { useAppSelector, useDropdownMenu } from '@/hooks';
+import { useAppSelector, useSwitchElement } from '@/hooks';
 import { selectCategoryCards } from '@/store';
 import { DdMenu, DdMenuItems, DdMenuHeader, DdMenuHeaderButton, DdMenuItem } from '@/components';
 
@@ -32,7 +32,8 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
     return p.length === 0 ? 0 : prependAddCard ? Math.min(...p) - 1 : Math.max(...p) + 1;
   }, [prependAddCard, cards]);
 
-  const { buttonRef, menuRef, menuStyle, onOpen, onClose } = useDropdownMenu();
+  const buttonRef: React.MutableRefObject<HTMLButtonElement | null> = useRef(null);
+  const { ref: menuRef, isOpened, onOpen, onClose } = useSwitchElement<HTMLDivElement>();
 
   const onPrependAddCard = useCallback(() => {
     onClose();
@@ -74,7 +75,7 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
               <button ref={buttonRef} className={styles.category__menuBtn} onClick={onOpen}>
                 <IoEllipsisHorizontalOutline />
               </button>
-              <DdMenu ref={menuRef} style={menuStyle}>
+              <DdMenu ref={menuRef} targetRef={buttonRef} hidden={!isOpened}>
                 <DdMenuHeader>
                   List actions
                   <DdMenuHeaderButton onClick={onClose}>

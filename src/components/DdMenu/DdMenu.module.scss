@@ -1,7 +1,15 @@
 @use "../../styles/mixins/ddmenu";
 
 .ddMenu {
-  @include ddmenu.container;
+  @include ddmenu.root;
+
+  &_open {
+    display: grid;
+  }
+
+  &__container {
+    @include ddmenu.container;
+  }
 
   &__header {
     @include ddmenu.header;

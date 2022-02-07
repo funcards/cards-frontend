@@ -1,4 +1,5 @@
 @use "../../../../styles/mixins/animation";
+@use "../../../../styles/mixins/buttons";
 
 .boardMenu {
   @include animation.transition-all;
@@ -35,30 +36,24 @@
     color: var(--color-board-menu-title);
   }
 
-  &__closeBtn {
-    display: none;
+  &__headerBtn {
+    --btn-display: none;
+    --btn-close-size: 1.25rem;
+    @include buttons.btn;
+    @include buttons.close;
     position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    color: var(--color-btn-close);
-    padding-bottom: var(--space-sm);
-    background-color: var(--color-transparent);
-    box-shadow: none;
 
-    &:hover {
-      color: var(--color-btn-close-hover);
-      background-color: var(--color-transparent);
+    &_right {
+      right: 0;
+    }
+
+    &_left {
+      left: 0;
     }
 
     &_open {
-      display: grid;
+      --btn-display: grid;
     }
-  }
-
-  &__icon {
-    width: 1.25rem;
-    height: 1.25rem;
   }
 
   &__body {
@@ -76,7 +71,7 @@
   &__group {
     display: flex;
     flex-direction: column;
-    padding: var(--space-xs) 0;
+    padding: var(--space-sm) 0;
 
     & > :not([hidden]) ~ :not([hidden]) {
       margin-top: var(--space-xxxs);
@@ -86,9 +81,10 @@
   &__item {
     padding: var(--space-xxs) var(--space-sm);
     color: var(--color-board-menu-item);
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--text-sm);
     background-color: var(--color-board-menu-item-bg);
+    border-radius: var(--radius-md);
     box-shadow: none;
     display: grid;
     grid-auto-flow: column;
@@ -99,6 +95,11 @@
 
     &:hover {
       background-color: var(--color-board-menu-item-bg-hover);
+    }
+
+    & > svg {
+      width: 1.25rem;
+      height: 1.25rem;
     }
   }
 
@@ -122,15 +123,10 @@
     & > :not([hidden]) ~ :not([hidden]) {
       margin-left: var(--space-xs);
     }
-  }
 
-  &__icon {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
-  &__title {
-    font-weight: 700;
-    font-size: var(--text-sm);
+    & > svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
   }
 }

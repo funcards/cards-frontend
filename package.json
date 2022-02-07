@@ -23,6 +23,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
     "@reach/dialog": "^0.16.2",
+    "@reach/popover": "^0.16.2",
     "@reach/portal": "^0.16.2",
     "@reach/tooltip": "^0.16.2",
     "@reduxjs/toolkit": "^1.7.1",

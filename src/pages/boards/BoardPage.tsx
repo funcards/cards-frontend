@@ -164,7 +164,7 @@ const BoardPage: React.FC = () => {
                       </DragDropContext>
                     </div>
                   </div>
-                  <BoardMenu boardColor={board.color} menuIsOpened={boardMenuIsOpened} onCloseMenu={onCloseMenu} />
+                  <BoardMenu board={board} menuIsOpened={boardMenuIsOpened} onCloseMenu={onCloseMenu} />
                 </main>
               )}
             </>

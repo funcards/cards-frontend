@@ -1,25 +1,26 @@
 @use "buttons";
 
-@mixin slideDown {
-  @keyframes slide-down {
-    0% {
-      opacity: 0;
-      transform: translateY(-1rem);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@mixin container() {
-  @include slideDown;
+@mixin root() {
   animation: slide-down 0.2s ease;
-  position: absolute;
   z-index: var(--zindex-menu);
+  position: absolute;
+  display: none;
   width: var(--width-menu);
-  display: grid;
+  padding: var(--space-xxxs) 0;
+}
+
+@mixin container() {
   grid-auto-flow: row;
   background-color: var(--color-menu-bg);
   border-color: var(--color-divide);
@@ -84,7 +85,6 @@
   padding: var(--space-xs) var(--space-sm);
   font-size: var(--text-sm);
   font-weight: 500;
-  border-radius: 0;
   color: var(--color-menu-item);
   background-color: var(--color-transparent);
   display: grid;
