@@ -11,6 +11,7 @@ export * from './BoardMenu/BoardMenu';
 export * from './BoardCategory/BoardCategory';
 export * from './BoardCard/BoardCard';
 export * from './BoardName/BoardName';
+export * from './BoardColor/BoardColor';
 export * from './CategoryName/CategoryName';
 export * from './CardView/CardView';
 export * from './SwitchFormFooter/SwitchFormFooter';

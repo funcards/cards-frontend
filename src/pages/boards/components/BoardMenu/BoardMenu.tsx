@@ -4,14 +4,14 @@ import { TiChevronLeft, TiTimes, TiBook, TiBookmark, TiCogOutline, TiTags } from
 import { buildClassName } from '@/components/helpers';
 import { Board, Tag } from '@/types';
 
-import { AddTag, EditTag, TagList } from '..';
+import { AddTag, BoardColor, EditTag, TagList } from '..';
 
 import styles from './BoardMenu.module.scss';
 
 enum MenuStatus {
   Root = 'Menu',
   AboutBoard = 'About this board',
-  ChangeBackground = 'Change background',
+  ChangeBackground = 'Colors',
   Settings = 'Settings',
   Labels = 'Labels',
   NewLabel = 'Create label',
@@ -227,15 +227,18 @@ export const BoardMenu: React.FC<BoardMenuProps> = ({ board, menuIsOpened, onClo
           {menuState.isLabels && (
             <TagList boardId={board.board_id} onNewTag={onNewTag} onSelect={onEditTag} onEditTag={onEditTag} />
           )}
+          {menuState.isChangeBackground && <BoardColor boardId={board.board_id} color={board.color} />}
           {menuState.isNewLabel && <AddTag boardId={board.board_id} name={menuState.name} callback={onPrev} />}
           {menuState.isEditLabel && <EditTag tag={menuState.tag!} callback={onPrev} />}
         </div>
-        <div className={`${styles.activity} ${styles.boardMenu__group}`}>
-          <div className={styles.activity__header}>
-            <TiBookmark />
-            <h5>Activity</h5>
+        {menuState.isRoot && (
+          <div className={`${styles.activity} ${styles.boardMenu__group}`}>
+            <div className={styles.activity__header}>
+              <TiBookmark />
+              <h5>Activity</h5>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

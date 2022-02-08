@@ -1,0 +1,39 @@
+@use "../../../../styles/mixins/animation";
+
+.boardColor {
+  @include animation.transition;
+  @include animation.ease-in;
+
+  display: grid;
+  gap: var(--space-xxs);
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 4rem;
+
+  &__item {
+    cursor: pointer;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-btn-primary-default-bg);
+    border-radius: var(--radius-md);
+    color: var(--color-btn-primary-default);
+    font-size: var(--text-xxl);
+
+    & > svg {
+      width: 1em;
+      height: 1em;
+    }
+
+    &:hover {
+      background-color: var(--color-btn-primary-default-bg-hover);
+    }
+
+    &_selected {
+      cursor: default;
+
+      &:hover {
+        background-color: var(--color-btn-primary-default-bg);
+      }
+    }
+  }
+}
