@@ -2,9 +2,9 @@ import React, { useCallback, useMemo, useReducer } from 'react';
 import { TiChevronLeft, TiTimes, TiBook, TiBookmark, TiCogOutline, TiTags } from 'react-icons/ti';
 
 import { buildClassName } from '@/components/helpers';
-import { Board } from '@/types';
+import { Board, Tag } from '@/types';
 
-import { TagList } from '..';
+import { AddTag, EditTag, TagList } from '..';
 
 import styles from './BoardMenu.module.scss';
 
@@ -15,9 +15,10 @@ enum MenuStatus {
   Settings = 'Settings',
   Labels = 'Labels',
   NewLabel = 'Create label',
+  EditLabel = 'Change label',
 }
 
-type MenuState =
+type MenuState = { name?: string | undefined; tag?: Tag | undefined } & (
   | {
       status: MenuStatus.Root;
       isPrev: false;
@@ -27,6 +28,7 @@ type MenuState =
       isSettings: false;
       isLabels: false;
       isNewLabel: false;
+      isEditLabel: false;
     }
   | {
       status: MenuStatus.AboutBoard;
@@ -37,6 +39,7 @@ type MenuState =
       isSettings: false;
       isLabels: false;
       isNewLabel: false;
+      isEditLabel: false;
     }
   | {
       status: MenuStatus.ChangeBackground;
@@ -47,6 +50,7 @@ type MenuState =
       isSettings: false;
       isLabels: false;
       isNewLabel: false;
+      isEditLabel: false;
     }
   | {
       status: MenuStatus.Settings;
@@ -57,6 +61,7 @@ type MenuState =
       isSettings: true;
       isLabels: false;
       isNewLabel: false;
+      isEditLabel: false;
     }
   | {
       status: MenuStatus.Labels;
@@ -67,6 +72,7 @@ type MenuState =
       isSettings: false;
       isLabels: true;
       isNewLabel: false;
+      isEditLabel: false;
     }
   | {
       status: MenuStatus.NewLabel;
@@ -77,7 +83,20 @@ type MenuState =
       isSettings: false;
       isLabels: false;
       isNewLabel: true;
-    };
+      isEditLabel: false;
+    }
+  | {
+      status: MenuStatus.EditLabel;
+      isPrev: true;
+      isRoot: false;
+      isAboutBoard: false;
+      isChangeBackground: false;
+      isSettings: false;
+      isLabels: false;
+      isNewLabel: false;
+      isEditLabel: true;
+    }
+);
 
 const MENU_PREV = 'PREV';
 
@@ -88,7 +107,8 @@ type MenuAction =
   | { type: MenuStatus.ChangeBackground }
   | { type: MenuStatus.Settings }
   | { type: MenuStatus.Labels }
-  | { type: MenuStatus.NewLabel };
+  | { type: MenuStatus.NewLabel; name: string }
+  | { type: MenuStatus.EditLabel; tag: Tag };
 
 const getMenuState = (status: MenuStatus): MenuState => {
   return {
@@ -100,6 +120,7 @@ const getMenuState = (status: MenuStatus): MenuState => {
     isSettings: status === MenuStatus.Settings,
     isLabels: status === MenuStatus.Labels,
     isNewLabel: status === MenuStatus.NewLabel,
+    isEditLabel: status === MenuStatus.EditLabel,
   } as MenuState;
 };
 
@@ -108,11 +129,15 @@ const initialMenuState = getMenuState(MenuStatus.Root);
 const reducer = (state: MenuState, action: MenuAction): MenuState => {
   switch (action.type) {
     case MENU_PREV:
-      if (state.status === MenuStatus.NewLabel) {
+      if (state.status === MenuStatus.NewLabel || state.status === MenuStatus.EditLabel) {
         return getMenuState(MenuStatus.Labels);
       }
 
       return getMenuState(MenuStatus.Root);
+    case MenuStatus.NewLabel:
+      return { ...getMenuState(action.type), name: action.name };
+    case MenuStatus.EditLabel:
+      return { ...getMenuState(action.type), tag: action.tag };
     default:
       return getMenuState(action.type);
   }
@@ -161,7 +186,21 @@ export const BoardMenu: React.FC<BoardMenuProps> = ({ board, menuIsOpened, onClo
 
   const onPrev = useCallback(() => menuDispatch({ type: 'PREV' }), [menuDispatch]);
 
-  const onSelect = useCallback((status: MenuStatus) => menuDispatch({ type: status }), [menuDispatch]);
+  const onSelect = useCallback((status: MenuStatus) => menuDispatch({ type: status } as MenuAction), [menuDispatch]);
+
+  const onNewTag = useCallback(
+    (name) => {
+      menuDispatch({ type: MenuStatus.NewLabel, name });
+    },
+    [menuDispatch]
+  );
+
+  const onEditTag = useCallback(
+    (tag) => {
+      menuDispatch({ type: MenuStatus.EditLabel, tag });
+    },
+    [menuDispatch]
+  );
 
   return (
     <div className={menuIsOpened ? `${styles.boardMenu} ${styles.boardMenu_open}` : styles.boardMenu}>
@@ -185,7 +224,11 @@ export const BoardMenu: React.FC<BoardMenuProps> = ({ board, menuIsOpened, onClo
                 {name}
               </button>
             ))}
-          {menuState.isLabels && <TagList boardId={board.board_id} />}
+          {menuState.isLabels && (
+            <TagList boardId={board.board_id} onNewTag={onNewTag} onSelect={onEditTag} onEditTag={onEditTag} />
+          )}
+          {menuState.isNewLabel && <AddTag boardId={board.board_id} name={menuState.name} callback={onPrev} />}
+          {menuState.isEditLabel && <EditTag tag={menuState.tag!} callback={onPrev} />}
         </div>
         <div className={`${styles.activity} ${styles.boardMenu__group}`}>
           <div className={styles.activity__header}>

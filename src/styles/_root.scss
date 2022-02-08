@@ -85,6 +85,7 @@
   --color-black-010: rgba(34, 34, 34, 0.1);
   --color-black-015: rgba(34, 34, 34, 0.15);
   --color-black-020: rgba(34, 34, 34, 0.2);
+  --color-black-060: rgba(34, 34, 34, 0.6);
   --color-black-080: rgba(34, 34, 34, 0.8);
 
   --color-gray-c100: #f4f4f5;
@@ -222,8 +223,8 @@
 
   --color-add-tag-btn: var(--color-blue-gray-c600);
   --color-add-tag-btn-disabled: var(--color-gray-c700);
-  --color-add-tag-btn-bg: var(--color-gray-c300);
-  --color-add-tag-btn-bg-hover: var(--color-black-015);
+  --color-add-tag-btn-bg: var(--color-black-015);
+  --color-add-tag-btn-bg-hover: var(--color-black-020);
   --color-add-tag-btn-bg-disabled: var(--color-gray-c100);
 
   --color-board-menu-bg: var(--color-gray-c200);
@@ -316,4 +317,6 @@
 }
 
 [data-theme="no-color"] {
+  --color-btn-primary-default-bg: var(--color-black-060);
+  --color-btn-primary-default-bg-hover: var(--color-black-080);
 }

@@ -1,7 +1,17 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { EDIT_TAG, fulfilledTags, NEW_TAG, pendingTags, rejectedTags, selectBoardTag, setTag, setTags } from '@/store';
+import {
+  DELETE_TAG,
+  EDIT_TAG,
+  fulfilledTags,
+  NEW_TAG,
+  pendingTags,
+  rejectedTags, removeTag,
+  selectBoardTag,
+  setTag,
+  setTags
+} from '@/store';
 import { DraftTag, Tag } from '@/types';
 import { TagsApi } from '@/services';
 import { caughtWorker, successWorker } from '@/store/notifications/notifications.saga';
@@ -9,14 +19,7 @@ import { noUndefined } from '@/helpers';
 import { createPayload } from '@/store/helpers';
 
 export function* loadTagsWorker({ payload }: PayloadAction<string>) {
-  // const { data } = yield call(TagsApi.list, payload);
-  // TODO: remove
-  const data = [
-    { tag_id: '1', board_id: payload, name: 'SF', color: 'sky' },
-    { tag_id: '2', board_id: payload, name: 'Fantasy', color: 'orange' },
-    { tag_id: '3', board_id: payload, name: 'Psihologie', color: 'red' },
-    { tag_id: '4', board_id: payload, name: 'Pupkin', color: 'no-color' },
-  ];
+  const { data } = yield call(TagsApi.list, payload);
   yield put(setTags(data));
 }
 
@@ -64,7 +67,20 @@ function* editTagWorker({ payload }: PayloadAction<Partial<Tag> & Pick<Tag, 'boa
   }
 }
 
+function* deleteTagWorker({ payload }: PayloadAction<Pick<Tag, 'board_id' | 'tag_id'>>) {
+  try {
+    yield put(pendingTags());
+    yield call(TagsApi.delete, payload.board_id, payload.tag_id);
+    yield put(removeTag(payload));
+    yield put(fulfilledTags());
+  } catch (e) {
+    yield call(caughtWorker, e);
+    yield put(rejectedTags());
+  }
+}
+
 export function* tagsWatcher() {
   yield takeLatest(NEW_TAG, newTagWorker);
   yield takeLatest(EDIT_TAG, editTagWorker);
+  yield takeLatest(DELETE_TAG, deleteTagWorker);
 }

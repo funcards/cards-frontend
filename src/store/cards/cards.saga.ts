@@ -30,16 +30,12 @@ export function* loadCardsWorker({ payload }: PayloadAction<string>) {
     cards.push(...response.data);
   } while (cards.length < count);
 
-  // TODO: remove
-  yield put(setCards(cards.map((c) => ({ ...c, tags: ['1', '2', '3', '4'] }))));
-  // yield put(setCards(cards));
+  yield put(setCards(cards));
 }
 
 function* loadCardWorker({ payload: { board_id, card_id } }: PayloadAction<Pick<Card, 'board_id' | 'card_id'>>) {
   const card: Card = yield call(CardsApi.one, board_id, card_id);
-  // yield put(setCard(card));
-  // TODO: remove
-  yield put(setCard({ ...card, tags: ['1', '2', '3', '4'] }));
+  yield put(setCard(card));
 }
 
 function* newCardWorker({ payload }: PayloadAction<DraftCard>) {

@@ -1,0 +1,46 @@
+.addTag {
+  --form-gap: var(--space-sm);
+  --input-font-size: var(--text-xs);
+  --color-input: var(--color-blue-gray-c600);
+  --btn-font-size: var(--text-sm);
+  --btn-gap: var(--space-sm);
+  --btn-padding-vertical: var(--space-xs);
+  --btn-padding-horizontal: var(--space-sm);
+  --btn-box-shadow: var(--shadow-xs);
+  --spinner-size: calc(var(--text-sm) * 0.85);
+
+  &__label {
+    color: var(--color-blue-gray-c500);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  &__colorList {
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--space-xxxs);
+    align-items: center;
+  }
+
+  &__color {
+    cursor: pointer;
+    width: 1.97rem;
+    height: 1.97rem;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-gray-c100);
+    background-color: var(--color-btn-primary-default-bg);
+    box-shadow: var(--shadow-xl);
+    border-radius: var(--radius-md);
+
+    &:hover {
+      background-color: var(--color-btn-primary-default-bg-hover);
+    }
+  }
+
+  &__noColor {
+    color: var(--color-blue-gray-c600);
+    font-size: var(--text-sm);
+  }
+}

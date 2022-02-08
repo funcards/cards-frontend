@@ -22,7 +22,12 @@ const slice = createGenericSlice({
       state.tags = { ...state.tags, ...groupBy(payload, 'board_id') };
     },
     setTag: (state: TagsState, { payload }: PayloadAction<Tag>) => {
-      (state.tags[payload.board_id] = state.tags[payload.board_id] || []).push(payload);
+      (state.tags[payload.board_id] = (state.tags[payload.board_id] || []).filter(
+        (t) => t.tag_id !== payload.tag_id
+      )).push(payload);
+    },
+    removeTag: (state: TagsState, { payload }: PayloadAction<Pick<Tag, 'board_id' | 'tag_id'>>) => {
+      state.tags[payload.board_id] = (state.tags[payload.board_id] || []).filter((t) => t.tag_id !== payload.tag_id);
     },
   },
 });
@@ -36,10 +41,13 @@ export const {
   clear: clearTags,
   setTags,
   setTag,
+  removeTag,
 } = slice.actions;
 
 export const NEW_TAG = 'NEW_TAG';
 export const EDIT_TAG = 'EDIT_TAG';
+export const DELETE_TAG = 'DELETE_TAG';
 
 export const newTag = createAction<DraftTag>(NEW_TAG);
 export const editTag = createAction<Partial<Tag> & Pick<Tag, 'board_id' | 'tag_id'>>(EDIT_TAG);
+export const deleteTag = createAction<Pick<Tag, 'board_id' | 'tag_id'>>(DELETE_TAG);

@@ -4,6 +4,7 @@
   width: 100%;
   display: var(--form-display, flex);
   flex-direction: column;
+  gap: var(--form-gap, var(--space-md));
 }
 
 @include breakpoints.all('.form', var(--form-display, flex));

@@ -12,14 +12,47 @@
   &__container {
     display: grid;
     gap: var(--space-xxs);
-    overflow: hidden;
+    overflow-y: auto;
+    max-height: 15rem;
+  }
+
+  &__listTitle {
+    color: var(--color-blue-gray-c500);
+    font-size: var(--text-sm);
+    font-weight: 600;
   }
 
   &__list {
     display: grid;
     gap: var(--space-xxxs);
+  }
+
+  &__listItem {
+    display: flex;
+    gap: var(--space-xxxs);
+    align-items: center;
     font-weight: 600;
-    overflow-y: auto;
+  }
+
+  &__tag {
+    flex-grow: 1;
+  }
+
+  &__btnEditTag {
+    padding: var(--space-xxs);
+    color: var(--color-category-menu-btn);
+    background-color: var(--color-category-menu-btn-bg);
+    border-radius: var(--radius-md);
+
+    &:hover {
+      color: var(--color-category-menu-btn-hover);
+      background-color: var(--color-category-menu-btn-bg-hover);
+    }
+
+    & > svg {
+      width: 1.287rem;
+      height: 1.287rem;
+    }
   }
 
   &__btnAddTag {

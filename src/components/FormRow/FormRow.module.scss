@@ -2,11 +2,8 @@
 
 .formRow {
   display: var(--form-row-display, flex);
-  flex-direction: column;
-
-  & ~ :not([hidden]) {
-    padding-top: var(--space-md);
-  }
+  flex-direction: var(--form-row-direction, column);
+  gap: var(--space-xxxxs);
 }
 
 @include breakpoints.all('.formRow', var(--form-row-display, flex));

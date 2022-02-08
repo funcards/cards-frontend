@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Dialog } from '@reach/dialog';
 import { TiTimes } from 'react-icons/ti';
+import { RiCheckLine } from 'react-icons/ri';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -80,21 +81,12 @@ export const AddBoard: React.FC = () => {
               name="color"
               control={control}
               render={({ field }) => (
-                <div className={styles.addBoard__themes}>
+                <div className={styles.addBoard__colorList}>
                   {Object.values(Theme)
                     .filter((t) => t !== Theme.NoColor)
                     .map((t) => (
-                      <div
-                        key={t}
-                        data-theme={t}
-                        className={
-                          t === field.value
-                            ? `${styles.addBoard__theme} ${styles.addBoard__theme_active}`
-                            : styles.addBoard__theme
-                        }
-                        onClick={() => field.onChange(t)}
-                      >
-                        &nbsp;
+                      <div key={t} data-theme={t} className={styles.addBoard__color} onClick={() => field.onChange(t)}>
+                        {t === field.value && <RiCheckLine />}
                       </div>
                     ))}
                 </div>
