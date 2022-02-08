@@ -72,7 +72,6 @@
   grid-auto-flow: var(--ddmenu-items-grid-flow, row);
   border-bottom-width: 1px;
   border-color: var(--color-divide);
-  overflow: hidden;
 
   &:last-child {
     border-width: 0;
@@ -84,8 +83,7 @@
   font: inherit;
   text-decoration: initial;
   user-select: none;
-  margin: 0 calc(var(--space-sm) * -1);
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-xs) 0;
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--color-menu-item);
@@ -95,9 +93,28 @@
   grid-auto-columns: max-content;
   gap: var(--space-xxs);
   align-items: center;
+  position: relative;
 
   &:hover {
     background-color: var(--color-menu-item-bg-hover);
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background-color: var(--color-menu-item-bg-hover);
+      width: var(--space-sm);
+    }
+
+    &:before {
+      left: calc(-1 * var(--space-sm));
+    }
+
+    &:after {
+      right: calc(-1 * var(--space-sm));
+    }
   }
 
   & > svg {
