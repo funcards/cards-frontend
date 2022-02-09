@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Dialog } from '@reach/dialog';
-import { TiTimes } from 'react-icons/ti';
 import { RiCheckLine } from 'react-icons/ri';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +9,7 @@ import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { closeAddBoard, newBoard, selectAuth, selectBoards, selectUi } from '@/store';
 import { routes } from '@/config';
-import { Button, Form, FormError, FormRow, TextField } from '@/components';
+import { Button, ButtonClose, Form, FormError, FormRow, TextField } from '@/components';
 import { DraftBoard, Theme } from '@/types';
 import { boardDescription, boardName, theme } from '@/validators';
 
@@ -71,9 +70,7 @@ export const AddBoard: React.FC = () => {
       <div className={styles.addBoard__wrapper}>
         <h2 className={styles.addBoard__title}>
           Add new board
-          <Button close={true} onClick={onDismiss}>
-            <TiTimes />
-          </Button>
+          <ButtonClose onClick={onDismiss} />
         </h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FormRow>

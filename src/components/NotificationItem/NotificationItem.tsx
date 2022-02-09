@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { TiTimes } from 'react-icons/ti';
+import { RiCloseLine } from 'react-icons/ri';
 
 import { removeNotification } from '@/store';
 import { NotifyType, Notification } from '@/types';
@@ -64,7 +64,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ notification
         {notification.title && (
           <div className={styles.notification__header}>
             <div className={styles.notification__title}>{notification.title}</div>
-            <TiTimes className={styles.notification__close} />
+            <RiCloseLine />
           </div>
         )}
         <div className={styles.notification__message}>{notification.message}</div>

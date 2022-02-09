@@ -1,7 +1,6 @@
 import React from 'react';
-import { TiTimes } from 'react-icons/ti';
 
-import { Button } from '@/components';
+import { Button, ButtonClose } from '@/components';
 import { ChildrenProps } from '@/components/types';
 
 import styles from './SwitchFormFooter.module.scss';
@@ -35,9 +34,7 @@ export const SwitchFormFooter: React.FC<SwitchFormFooterProps> = ({
     >
       {label}
     </Button>
-    <Button close={true} onClick={onClose}>
-      <TiTimes />
-    </Button>
+    <ButtonClose onClick={onClose} />
     {children}
   </div>
 );

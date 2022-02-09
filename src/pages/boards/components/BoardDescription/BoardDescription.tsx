@@ -3,9 +3,8 @@ import { BsJustifyLeft } from 'react-icons/bs';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
-import { TiTimes } from 'react-icons/ti';
 
-import { Button, Form, FormError, FormRow, TextField } from '@/components';
+import { Button, ButtonClose, Form, FormError, FormRow, TextField } from '@/components';
 import { boardDescription } from '@/validators';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { editBoard, selectBoards } from '@/store';
@@ -120,9 +119,7 @@ export const BoardDescription: React.FC<BoardDescriptionProps> = ({ boardId, des
           >
             Save
           </Button>
-          <Button close={true} onClick={onClose}>
-            <TiTimes />
-          </Button>
+          <ButtonClose onClick={onClose} />
         </FormRow>
       </Form>
     </div>

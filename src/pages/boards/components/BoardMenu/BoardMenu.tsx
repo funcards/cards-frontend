@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useReducer } from 'react';
-import { TiChevronLeft, TiTimes, TiBook, TiBookmark, TiCogOutline, TiTags } from 'react-icons/ti';
+import { TiBook, TiBookmark, TiTags } from 'react-icons/ti';
+import { RiArrowLeftSLine, RiCloseLine } from 'react-icons/ri';
 
 import { buildClassName } from '@/components/helpers';
 import { Board, Tag } from '@/types';
@@ -12,7 +13,6 @@ enum MenuStatus {
   Root = 'Menu',
   AboutBoard = 'About this board',
   ChangeBackground = 'Colors',
-  Settings = 'Settings',
   Labels = 'Labels',
   NewLabel = 'Create label',
   EditLabel = 'Change label',
@@ -25,7 +25,6 @@ type MenuState = { name?: string | undefined; tag?: Tag | undefined } & (
       isRoot: true;
       isAboutBoard: false;
       isChangeBackground: false;
-      isSettings: false;
       isLabels: false;
       isNewLabel: false;
       isEditLabel: false;
@@ -36,7 +35,6 @@ type MenuState = { name?: string | undefined; tag?: Tag | undefined } & (
       isRoot: false;
       isAboutBoard: true;
       isChangeBackground: false;
-      isSettings: false;
       isLabels: false;
       isNewLabel: false;
       isEditLabel: false;
@@ -47,18 +45,6 @@ type MenuState = { name?: string | undefined; tag?: Tag | undefined } & (
       isRoot: false;
       isAboutBoard: false;
       isChangeBackground: true;
-      isSettings: false;
-      isLabels: false;
-      isNewLabel: false;
-      isEditLabel: false;
-    }
-  | {
-      status: MenuStatus.Settings;
-      isPrev: true;
-      isRoot: false;
-      isAboutBoard: false;
-      isChangeBackground: false;
-      isSettings: true;
       isLabels: false;
       isNewLabel: false;
       isEditLabel: false;
@@ -69,7 +55,6 @@ type MenuState = { name?: string | undefined; tag?: Tag | undefined } & (
       isRoot: false;
       isAboutBoard: false;
       isChangeBackground: false;
-      isSettings: false;
       isLabels: true;
       isNewLabel: false;
       isEditLabel: false;
@@ -80,7 +65,6 @@ type MenuState = { name?: string | undefined; tag?: Tag | undefined } & (
       isRoot: false;
       isAboutBoard: false;
       isChangeBackground: false;
-      isSettings: false;
       isLabels: false;
       isNewLabel: true;
       isEditLabel: false;
@@ -91,7 +75,6 @@ type MenuState = { name?: string | undefined; tag?: Tag | undefined } & (
       isRoot: false;
       isAboutBoard: false;
       isChangeBackground: false;
-      isSettings: false;
       isLabels: false;
       isNewLabel: false;
       isEditLabel: true;
@@ -105,7 +88,6 @@ type MenuAction =
   | { type: MenuStatus.Root }
   | { type: MenuStatus.AboutBoard }
   | { type: MenuStatus.ChangeBackground }
-  | { type: MenuStatus.Settings }
   | { type: MenuStatus.Labels }
   | { type: MenuStatus.NewLabel; name: string }
   | { type: MenuStatus.EditLabel; tag: Tag };
@@ -117,7 +99,6 @@ const getMenuState = (status: MenuStatus): MenuState => {
     isRoot: status === MenuStatus.Root,
     isAboutBoard: status === MenuStatus.AboutBoard,
     isChangeBackground: status === MenuStatus.ChangeBackground,
-    isSettings: status === MenuStatus.Settings,
     isLabels: status === MenuStatus.Labels,
     isNewLabel: status === MenuStatus.NewLabel,
     isEditLabel: status === MenuStatus.EditLabel,
@@ -146,7 +127,6 @@ const reducer = (state: MenuState, action: MenuAction): MenuState => {
 const data = [
   { name: MenuStatus.AboutBoard, icon: <TiBook /> },
   { name: MenuStatus.ChangeBackground, icon: <span className={styles.boardMenu__bg} /> },
-  { name: MenuStatus.Settings, icon: <TiCogOutline /> },
   { name: MenuStatus.Labels, icon: <TiTags /> },
 ];
 
@@ -207,12 +187,12 @@ export const BoardMenu: React.FC<BoardMenuProps> = ({ board, menuIsOpened, onClo
       <div className={styles.boardMenu__header}>
         {menuState.isPrev && (
           <button onClick={onPrev} className={prevClassName}>
-            <TiChevronLeft />
+            <RiArrowLeftSLine />
           </button>
         )}
         {menuState.status}
         <button onClick={onCLose} className={closeClassName}>
-          <TiTimes />
+          <RiCloseLine />
         </button>
       </div>
       <div className={styles.boardMenu__body}>
@@ -226,7 +206,6 @@ export const BoardMenu: React.FC<BoardMenuProps> = ({ board, menuIsOpened, onClo
             ))}
           {menuState.isAboutBoard && <BoardDescription boardId={board.board_id} description={board.description} />}
           {menuState.isChangeBackground && <BoardColor boardId={board.board_id} color={board.color} />}
-          {menuState.isSettings && <p>TODO: Settings</p>}
           {menuState.isLabels && (
             <TagList boardId={board.board_id} onNewTag={onNewTag} onSelect={onEditTag} onEditTag={onEditTag} />
           )}

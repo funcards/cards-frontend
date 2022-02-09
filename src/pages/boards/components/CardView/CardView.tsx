@@ -1,9 +1,8 @@
 import React from 'react';
 import { Dialog } from '@reach/dialog';
-import { TiTimes } from 'react-icons/ti';
 
 import { Card } from '@/types';
-import { Button } from '@/components';
+import { ButtonClose } from '@/components';
 
 import styles from './CardView.module.scss';
 
@@ -20,9 +19,7 @@ export const CardView: React.FC<CardViewProps> = ({ showCard, card, onClose }) =
         <div className={styles.viewCard__cover} />
         <div className={styles.viewCard__header}>
           {card.name}
-          <Button close={true} onClick={onClose}>
-            <TiTimes />
-          </Button>
+          <ButtonClose onClick={onClose} />
         </div>
         <div className={styles.viewCard__body}>
           <div className={styles.viewCard__main} />

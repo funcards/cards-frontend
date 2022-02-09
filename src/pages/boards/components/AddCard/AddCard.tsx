@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import * as yup from 'yup';
-import { TiChevronLeft, TiPlus, TiTimes } from 'react-icons/ti';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { IoEllipsisHorizontalOutline } from 'react-icons/io5';
+import { RiAddLine, RiMoreFill, RiArrowLeftSLine, RiCloseLine } from 'react-icons/ri';
 
 import { useAppDispatch, useAppSelector, useSwitchElement } from '@/hooks';
 import { Button, DdMenu, DdMenuHeader, DdMenuHeaderButton, DdMenuItems, TextField } from '@/components';
@@ -221,7 +220,7 @@ export const AddCard: React.FC<AddCardProps> = ({
         onClick={onOpen}
         className={isOpened ? `${styles.addCard__openBtn} ${styles.addCard__openBtn_open}` : styles.addCard__openBtn}
       >
-        <TiPlus className={styles.addCard__plusIcon} />
+        <RiAddLine className={styles.addCard__plusIcon} />
         {label}
       </button>
       <div
@@ -261,18 +260,18 @@ export const AddCard: React.FC<AddCardProps> = ({
       >
         <>
           <button type="button" ref={buttonRef} className={styles.addCard__menuBtn} onClick={onOpenMenu}>
-            <IoEllipsisHorizontalOutline />
+            <RiMoreFill />
           </button>
           <DdMenu ref={menuRef} targetRef={buttonRef} hidden={!isOpenedMenu}>
             <DdMenuHeader>
               {menuState.isPrev && (
                 <DdMenuHeaderButton left={true} onClick={() => onPrev()}>
-                  <TiChevronLeft />
+                  <RiArrowLeftSLine />
                 </DdMenuHeaderButton>
               )}
               {menuState.status}
               <DdMenuHeaderButton onClick={onCloseMenu}>
-                <TiTimes />
+                <RiCloseLine />
               </DdMenuHeaderButton>
             </DdMenuHeader>
             {menuState.isLabels && (

@@ -70,18 +70,13 @@
   }
 }
 
-@mixin close {
-  --color-btn: var(--color-btn-close);
+@mixin icon {
+  --color-btn: var(--color-btn-icon);
   --color-btn-bg-hover: var(--color-transparent);
   --btn-padding-vertical: 0;
   --btn-padding-horizontal: 0;
 
   &:hover {
-    color: var(--color-btn-close-hover);
-  }
-
-  & > svg {
-    width: var(--btn-close-size, 1.5rem);
-    height: var(--btn-close-size, 1.5rem);
+    color: var(--color-btn-icon-hover);
   }
 }

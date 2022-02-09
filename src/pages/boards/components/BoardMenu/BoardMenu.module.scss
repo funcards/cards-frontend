@@ -40,7 +40,7 @@
     --btn-display: none;
     --btn-close-size: 1.25rem;
     @include buttons.btn;
-    @include buttons.close;
+    @include buttons.icon;
     position: absolute;
 
     &_right {

@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { TiTimes } from 'react-icons/ti';
-import { IoEllipsisHorizontalOutline } from 'react-icons/io5';
+import { RiMoreFill, RiCloseLine } from 'react-icons/ri';
 
 import { Category, DndType } from '@/types';
 import { useAppSelector, useSwitchElement } from '@/hooks';
@@ -73,13 +72,13 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
             <div className={styles.category__header}>
               <CategoryName boardId={category.board_id} categoryId={category.category_id} name={category.name} />
               <button ref={buttonRef} className={styles.category__menuBtn} onClick={onOpen}>
-                <IoEllipsisHorizontalOutline />
+                <RiMoreFill />
               </button>
               <DdMenu ref={menuRef} targetRef={buttonRef} hidden={!isOpened}>
                 <DdMenuHeader>
                   List actions
                   <DdMenuHeaderButton onClick={onClose}>
-                    <TiTimes />
+                    <RiCloseLine />
                   </DdMenuHeaderButton>
                 </DdMenuHeader>
                 <DdMenuItems>

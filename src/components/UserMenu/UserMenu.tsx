@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { TiUserOutline, TiCogOutline, TiPowerOutline } from 'react-icons/ti';
+import { RiUser6Line, RiSettingsLine, RiLogoutCircleLine } from 'react-icons/ri';
 
 import { useAppDispatch, useAppSelector, useSwitchElement } from '@/hooks';
 import { selectAuth, signOut } from '@/store';
@@ -36,17 +36,17 @@ export const UserMenu: React.FC = () => {
         </DdMenuItems>
         <DdMenuItems>
           <DdMenuItem>
-            <TiUserOutline />
+            <RiUser6Line />
             Profile
           </DdMenuItem>
           <DdMenuItem>
-            <TiCogOutline />
+            <RiSettingsLine />
             Settings
           </DdMenuItem>
         </DdMenuItems>
         <DdMenuItems>
           <DdMenuItem onClick={onSignOut}>
-            <TiPowerOutline />
+            <RiLogoutCircleLine />
             Log out
           </DdMenuItem>
         </DdMenuItems>

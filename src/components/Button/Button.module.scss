@@ -17,8 +17,8 @@
     @include buttons.avatar;
   }
 
-  &_close {
-    @include buttons.close;
+  &_icon {
+    @include buttons.icon;
   }
 
   &_left {

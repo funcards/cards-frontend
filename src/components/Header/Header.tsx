@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { TiHomeOutline, TiPlus } from 'react-icons/ti';
+import { RiHome2Line, RiAddLine } from 'react-icons/ri';
 import { IoNotificationsOutline } from 'react-icons/io5';
 
 import { appShortName, routes } from '@/config';
@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
         <ul className={styles.header__group}>
           <li>
             <Link to={routes.board.list} className={styles.header__btn}>
-              <TiHomeOutline />
+              <RiHome2Line />
               <Text className={styles.header__text} show="md">
                 Boards
               </Text>
@@ -35,7 +35,7 @@ export const Header: React.FC = () => {
         <ul className={styles.header__group}>
           <li>
             <button className={styles.header__btn} onClick={onOpenAddBoard}>
-              <TiPlus />
+              <RiAddLine />
             </button>
           </li>
           <li>
