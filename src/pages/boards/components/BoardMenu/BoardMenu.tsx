@@ -4,7 +4,7 @@ import { TiChevronLeft, TiTimes, TiBook, TiBookmark, TiCogOutline, TiTags } from
 import { buildClassName } from '@/components/helpers';
 import { Board, Tag } from '@/types';
 
-import { AddTag, BoardColor, EditTag, TagList } from '..';
+import { AddTag, BoardColor, BoardDescription, EditTag, TagList } from '..';
 
 import styles from './BoardMenu.module.scss';
 
@@ -224,10 +224,12 @@ export const BoardMenu: React.FC<BoardMenuProps> = ({ board, menuIsOpened, onClo
                 {name}
               </button>
             ))}
+          {menuState.isAboutBoard && <BoardDescription boardId={board.board_id} description={board.description} />}
+          {menuState.isChangeBackground && <BoardColor boardId={board.board_id} color={board.color} />}
+          {menuState.isSettings && <p>TODO: Settings</p>}
           {menuState.isLabels && (
             <TagList boardId={board.board_id} onNewTag={onNewTag} onSelect={onEditTag} onEditTag={onEditTag} />
           )}
-          {menuState.isChangeBackground && <BoardColor boardId={board.board_id} color={board.color} />}
           {menuState.isNewLabel && <AddTag boardId={board.board_id} name={menuState.name} callback={onPrev} />}
           {menuState.isEditLabel && <EditTag tag={menuState.tag!} callback={onPrev} />}
         </div>

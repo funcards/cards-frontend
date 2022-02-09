@@ -1,0 +1,61 @@
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+
+  &__title {
+    display: flex;
+    gap: var(--space-xs);
+
+    & > svg {
+      stroke-width: 1;
+    }
+  }
+
+  &__text {
+    cursor: pointer;
+    padding: var(--space-xs);
+    background-color: var(--color-black-005);
+    border-radius: var(--radius-md);
+    color: var(--color-gray-c700);
+    font-size: var(--text-md);
+    line-height: 1.4;
+    min-height: 5rem;
+
+    &:hover {
+      background-color: var(--color-black-010);
+    }
+
+    &_open {
+      display: none;
+    }
+  }
+
+  &__form {
+    --form-display: none;
+    --form-gap: var(--space-sm);
+
+    &_open {
+      --form-display: flex;
+    }
+  }
+
+  &__input {
+    --input-font-size: var(--text-md);
+    --input-padding-horizontal: var(--space-xxs);
+    min-height: 5rem;
+  }
+
+  &__footer {
+    --form-row-direction: row;
+    --form-row-gap: var(--space-xs);
+  }
+
+  &__save {
+    --btn-font-size: var(--text-md);
+    --btn-gap: var(--space-sm);
+    --btn-padding-vertical: var(--space-xs);
+    --btn-padding-horizontal: var(--space-md);
+    --spinner-size: 1em;
+  }
+}

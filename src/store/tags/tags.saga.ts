@@ -7,10 +7,11 @@ import {
   fulfilledTags,
   NEW_TAG,
   pendingTags,
-  rejectedTags, removeTag,
+  rejectedTags,
+  removeTag,
   selectBoardTag,
   setTag,
-  setTags
+  setTags,
 } from '@/store';
 import { DraftTag, Tag } from '@/types';
 import { TagsApi } from '@/services';
@@ -53,12 +54,13 @@ function* editTagWorker({ payload }: PayloadAction<Partial<Tag> & Pick<Tag, 'boa
   }
 
   const oldTag = JSON.parse(JSON.stringify(tag));
+  const name = payload.name || tag.name;
 
   try {
     yield put(pendingTags());
     yield put(setTag({ ...tag, ...noUndefined(data) }));
     yield call(TagsApi.update, payload);
-    yield call(successWorker, `Tag "${payload.name}" updated successfully.`);
+    yield call(successWorker, `Tag "${name}" updated successfully.`);
     yield put(fulfilledTags());
   } catch (e) {
     yield put(setTag(oldTag));

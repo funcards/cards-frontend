@@ -63,12 +63,13 @@ function* editCardWorker({ payload }: PayloadAction<Partial<Card> & Pick<Card, '
   }
 
   const oldCard = JSON.parse(JSON.stringify(card));
+  const name = payload.name || card.name;
 
   try {
     yield put(pendingCards());
     yield put(setCard({ ...card, ...noUndefined(data) }));
     yield call(CardsApi.update, payload);
-    yield call(successWorker, `Card "${payload.name}" updated successfully.`);
+    yield call(successWorker, `Card "${name}" updated successfully.`);
     yield put(fulfilledCards());
   } catch (e) {
     yield put(setCard(oldCard));

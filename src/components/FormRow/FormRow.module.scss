@@ -3,7 +3,7 @@
 .formRow {
   display: var(--form-row-display, flex);
   flex-direction: var(--form-row-direction, column);
-  gap: var(--space-xxxxs);
+  gap: var(--form-row-gap, var(--space-xxxxs));
 }
 
 @include breakpoints.all('.formRow', var(--form-row-display, flex));

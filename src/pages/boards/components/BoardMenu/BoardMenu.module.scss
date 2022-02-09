@@ -113,6 +113,8 @@
 }
 
 .activity {
+  display: none; // TODO: delete
+
   &__header {
     flex-grow: 1;
     display: flex;

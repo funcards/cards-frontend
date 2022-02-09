@@ -59,12 +59,13 @@ function* editCategoryWorker({
   }
 
   const oldCategory = JSON.parse(JSON.stringify(category));
+  const name = payload.name || category.name;
 
   try {
     yield put(pendingCategories());
     yield put(setCategory({ ...category, ...noUndefined(data) }));
     yield call(CategoriesApi.update, payload);
-    yield call(successWorker, `Category "${payload.name}" updated successfully.`);
+    yield call(successWorker, `Category "${name}" updated successfully.`);
     yield put(fulfilledCategories());
   } catch (e) {
     yield put(setCategory(oldCategory));

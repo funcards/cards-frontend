@@ -99,12 +99,13 @@ function* editBoardWorker({ payload }: PayloadAction<Partial<Board> & Pick<Board
   }
 
   const oldBoard = JSON.parse(JSON.stringify(board));
+  const name = payload.name || board.name;
 
   try {
     yield put(pendingBoards());
     yield put(setBoard({ ...board, ...noUndefined(data) }));
     yield call(BoardsApi.update, payload);
-    yield call(successWorker, `Board "${payload.name}" updated successfully.`);
+    yield call(successWorker, `Board "${name}" updated successfully.`);
     yield put(fulfilledBoards());
   } catch (e) {
     yield put(setBoard(oldBoard));
