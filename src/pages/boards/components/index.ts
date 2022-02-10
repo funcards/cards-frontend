@@ -17,3 +17,4 @@ export * from './CategoryName/CategoryName';
 export * from './CardView/CardView';
 export * from './SwitchFormFooter/SwitchFormFooter';
 export * from './TagList/TagList';
+export * from './TagListMenu/TagListMenu';

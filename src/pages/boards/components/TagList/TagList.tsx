@@ -39,7 +39,7 @@ export const TagList: React.FC<TagListProps> = ({ boardId, onSelect, selected, o
 
   return (
     <div className={styles.tags}>
-      <TextField placeholder="Search labels..." value={query} onChange={onChange} />
+      <TextField placeholder="Search labels…" value={query} onChange={onChange} />
       <div className={styles.tags__container}>
         <h5 className={styles.tags__listTitle}>Labels</h5>
         {data.length > 0 && (

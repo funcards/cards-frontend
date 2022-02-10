@@ -1,84 +1,17 @@
-import React, { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { RiAddLine, RiMoreFill, RiArrowLeftSLine, RiCloseLine } from 'react-icons/ri';
+import { RiAddLine, RiMoreFill } from 'react-icons/ri';
 
 import { useAppDispatch, useAppSelector, useSwitchElement } from '@/hooks';
-import { Button, DdMenu, DdMenuHeader, DdMenuHeaderButton, DdMenuItems, TextField } from '@/components';
-import { AddTag, EditTag, SwitchFormFooter, TagList } from '@/pages/boards/components';
+import { Button, TextField } from '@/components';
+import { SwitchFormFooter, TagListMenu } from '@/pages/boards/components';
 import { newCard, selectBoardTagsByIds, selectCards } from '@/store';
 import { cardName } from '@/validators';
 import { DraftCard, Tag, Theme } from '@/types';
 
 import styles from './AddCard.module.scss';
-
-enum MenuStatus {
-  Labels = 'Labels',
-  NewLabel = 'Create label',
-  EditLabel = 'Change label',
-}
-
-type MenuState = { name?: string | undefined; tag?: Tag | undefined } & (
-  | {
-      status: MenuStatus.Labels;
-      isPrev: false;
-      isLabels: true;
-      isNewLabel: false;
-      isEditLabel: false;
-    }
-  | {
-      status: MenuStatus.NewLabel;
-      isPrev: true;
-      isLabels: false;
-      isNewLabel: true;
-      isEditLabel: false;
-    }
-  | {
-      status: MenuStatus.EditLabel;
-      isPrev: true;
-      isLabels: false;
-      isNewLabel: false;
-      isEditLabel: true;
-    }
-);
-
-const MENU_PREV = 'PREV';
-const MENU_LABELS = 'LABELS';
-const MENU_NEW_LABEL = 'NEW_LABEL';
-const MENU_EDIT_LABEL = 'EDIT_LABEL';
-
-type MenuAction =
-  | { type: 'PREV' }
-  | { type: 'LABELS' }
-  | { type: 'NEW_LABEL'; name: string }
-  | { type: 'EDIT_LABEL'; tag: Tag };
-
-const getMenuState = (status: MenuStatus): MenuState => {
-  return {
-    status,
-    isPrev: status !== MenuStatus.Labels,
-    isLabels: status === MenuStatus.Labels,
-    isNewLabel: status === MenuStatus.NewLabel,
-    isEditLabel: status === MenuStatus.EditLabel,
-  } as MenuState;
-};
-
-const initialMenuState = getMenuState(MenuStatus.Labels);
-
-const reducer = (state: MenuState, action: MenuAction): MenuState => {
-  switch (action.type) {
-    case MENU_PREV:
-    case MENU_LABELS:
-      return getMenuState(MenuStatus.Labels);
-    case MENU_NEW_LABEL:
-      return { ...getMenuState(MenuStatus.NewLabel), name: action.name };
-    case MENU_EDIT_LABEL:
-      return { ...getMenuState(MenuStatus.EditLabel), tag: action.tag };
-    default:
-      throw new Error();
-  }
-};
 
 export interface AddCardProps {
   label: string;
@@ -152,42 +85,15 @@ export const AddCard: React.FC<AddCardProps> = ({
     selectBoardTagsByIds(state, { board_id: boardId, tags_id: getValues('tags') })
   );
 
-  const [menuState, menuDispatch] = useReducer(reducer, initialMenuState);
+  const onDelete = useCallback(() => {
+    setValue(
+      'tags',
+      getValues('tags').filter((id) => !!tags.find((t) => t.tag_id === id)),
+      { shouldValidate: true }
+    );
+  }, [getValues, setValue, tags]);
 
-  const onNewTag = useCallback(
-    (name) => {
-      menuDispatch({ type: 'NEW_LABEL', name });
-    },
-    [menuDispatch]
-  );
-
-  const onEditTag = useCallback(
-    (tag) => {
-      menuDispatch({ type: 'EDIT_LABEL', tag });
-    },
-    [menuDispatch]
-  );
-
-  const onPrev = useCallback(
-    (type?: 'add' | 'edit' | 'delete' | undefined) => {
-      if (type === 'delete') {
-        setValue(
-          'tags',
-          getValues('tags').filter((id) => !!tags.find((t) => t.tag_id === id)),
-          { shouldValidate: true }
-        );
-      }
-
-      menuDispatch({ type: 'PREV' });
-    },
-    [getValues, setValue, tags]
-  );
-
-  const closeFn = useCallback(() => {
-    setIsOn(true);
-    menuDispatch({ type: 'LABELS' });
-  }, [setIsOn]);
-
+  const closeFn = useCallback(() => setIsOn(true), [setIsOn]);
   const openFn = useCallback(() => setIsOn(false), [setIsOn]);
 
   const buttonRef: React.MutableRefObject<HTMLButtonElement | null> = useRef(null);
@@ -196,7 +102,7 @@ export const AddCard: React.FC<AddCardProps> = ({
     isOpened: isOpenedMenu,
     onOpen: onOpenMenu,
     onClose: onCloseMenu,
-  } = useSwitchElement<HTMLDivElement>(undefined, closeFn, openFn);
+  } = useSwitchElement<HTMLDivElement>(false, closeFn, openFn);
 
   useEffect(() => {
     setIsOn(!isLoading);
@@ -262,40 +168,16 @@ export const AddCard: React.FC<AddCardProps> = ({
           <button type="button" ref={buttonRef} className={styles.addCard__menuBtn} onClick={onOpenMenu}>
             <RiMoreFill />
           </button>
-          <DdMenu ref={menuRef} targetRef={buttonRef} hidden={!isOpenedMenu}>
-            <DdMenuHeader>
-              {menuState.isPrev && (
-                <DdMenuHeaderButton left={true} onClick={() => onPrev()}>
-                  <RiArrowLeftSLine />
-                </DdMenuHeaderButton>
-              )}
-              {menuState.status}
-              <DdMenuHeaderButton onClick={onCloseMenu}>
-                <RiCloseLine />
-              </DdMenuHeaderButton>
-            </DdMenuHeader>
-            {menuState.isLabels && (
-              <DdMenuItems>
-                <TagList
-                  boardId={boardId}
-                  onSelect={onSelect}
-                  selected={getValues('tags')}
-                  onNewTag={onNewTag}
-                  onEditTag={onEditTag}
-                />
-              </DdMenuItems>
-            )}
-            {menuState.isNewLabel && (
-              <DdMenuItems>
-                <AddTag boardId={boardId} name={menuState.name} callback={() => onPrev('add')} />
-              </DdMenuItems>
-            )}
-            {menuState.isEditLabel && (
-              <DdMenuItems>
-                <EditTag tag={menuState.tag!} callback={onPrev} />
-              </DdMenuItems>
-            )}
-          </DdMenu>
+          <TagListMenu
+            menuRef={menuRef}
+            targetRef={buttonRef}
+            isOpened={isOpenedMenu}
+            boardId={boardId}
+            selected={getValues('tags')}
+            onSelect={onSelect}
+            onClose={onCloseMenu}
+            onDelete={onDelete}
+          />
         </>
       </SwitchFormFooter>
     </form>
