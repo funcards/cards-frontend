@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
+    "@reach/alert-dialog": "^0.16.2",
     "@reach/dialog": "^0.16.2",
     "@reach/popover": "^0.16.2",
     "@reach/portal": "^0.16.2",

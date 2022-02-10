@@ -322,3 +322,8 @@
   --color-btn-primary-default-bg: var(--color-black-060);
   --color-btn-primary-default-bg-hover: var(--color-black-080);
 }
+
+[data-theme="danger"] {
+  --color-btn-primary-default-bg: var(--color-red-c700);
+  --color-btn-primary-default-bg-hover: var(--color-red-c800);
+}

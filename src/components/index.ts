@@ -19,3 +19,4 @@ export * from './Loading/Loading';
 export * from './Header/Header';
 export * from './UserMenu/UserMenu';
 export * from './ErrorWrapper/ErrorWrapper';
+export * from './ConfirmDelete/ConfirmDelete';

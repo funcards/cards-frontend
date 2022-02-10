@@ -9,7 +9,8 @@
 @use "root";
 @use "reset";
 
-[data-reach-dialog-overlay] {
+[data-reach-dialog-overlay],
+[data-reach-alert-dialog-overlay] {
   background: var(--color-modal-overlay-bg);
   position: fixed;
   top: 0;
@@ -20,7 +21,8 @@
   z-index: var(--zindex-modal);
 }
 
-[data-reach-dialog-content] {
+[data-reach-dialog-content],
+[data-reach-alert-dialog-content] {
   outline: none;
 }
 

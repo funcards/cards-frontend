@@ -70,10 +70,17 @@ function* editTagWorker({ payload }: PayloadAction<Partial<Tag> & Pick<Tag, 'boa
 }
 
 function* deleteTagWorker({ payload }: PayloadAction<Pick<Tag, 'board_id' | 'tag_id'>>) {
+  const { board_id, tag_id } = payload;
+  const tag: Tag | undefined = yield select(selectBoardTag, { board_id, tag_id });
+  if (!tag) {
+    return;
+  }
+
   try {
     yield put(pendingTags());
-    yield call(TagsApi.delete, payload.board_id, payload.tag_id);
+    yield call(TagsApi.delete, board_id, tag_id);
     yield put(removeTag(payload));
+    yield call(successWorker, `Tag "${tag.name}" deleted successfully.`);
     yield put(fulfilledTags());
   } catch (e) {
     yield call(caughtWorker, e);

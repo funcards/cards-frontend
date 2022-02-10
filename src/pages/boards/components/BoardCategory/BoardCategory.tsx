@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { RiMoreFill, RiCloseLine } from 'react-icons/ri';
 
 import { Category, DndType } from '@/types';
-import { useAppSelector, useSwitchElement } from '@/hooks';
-import { selectCategoryCards } from '@/store';
-import { DdMenu, DdMenuItems, DdMenuHeader, DdMenuHeaderButton, DdMenuItem } from '@/components';
+import { useAppDispatch, useAppSelector, useSwitchElement } from '@/hooks';
+import { deleteCategory, selectCategories, selectCategoryCards } from '@/store';
+import { DdMenu, DdMenuItems, DdMenuHeader, DdMenuHeaderButton, DdMenuItem, ConfirmDelete } from '@/components';
 
 import { AddCard, BoardCard, CategoryName } from '..';
 
@@ -18,11 +18,20 @@ export interface BoardCategoryProps {
 }
 
 export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardColor, index }) => {
+  const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector(selectCategories);
   const cards = useAppSelector((state) =>
     selectCategoryCards(state, { board_id: category.board_id, category_id: category.category_id })
   );
 
   const [prependAddCard, setPrependAddCard] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+  const [remove, setRemove] = useState(false);
+
+  const deleteMessage = useMemo(
+    () => `Are you sure you want to delete "${category.name} list"? This action is permanent.`,
+    [category.name]
+  );
 
   const labelAddCard = useMemo(() => (cards.length > 0 ? 'Add another card' : 'Add a card'), [cards.length]);
   const position = useMemo(() => {
@@ -40,6 +49,13 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
   }, [onClose]);
 
   const onAppendAddCard = useCallback(() => setPrependAddCard(false), []);
+  const onShowDialog = useCallback(() => setShowDialog(true), []);
+  const onHideDialog = useCallback(() => setShowDialog(false), []);
+
+  const onDelete = useCallback(() => {
+    dispatch(deleteCategory({ board_id: category.board_id, category_id: category.category_id }));
+    setRemove(true);
+  }, [category.board_id, category.category_id, dispatch]);
 
   const addCard = useMemo(
     () => (
@@ -57,6 +73,13 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
     ),
     [boardColor, category.board_id, category.category_id, labelAddCard, onAppendAddCard, position, prependAddCard]
   );
+
+  useEffect(() => {
+    if (!isLoading && remove) {
+      setRemove(false);
+      onHideDialog();
+    }
+  }, [isLoading, onHideDialog, remove]);
 
   return (
     <Draggable draggableId={category.category_id} index={index}>
@@ -83,6 +106,8 @@ export const BoardCategory: React.FC<BoardCategoryProps> = ({ category, boardCol
                 </DdMenuHeader>
                 <DdMenuItems>
                   <DdMenuItem onClick={onPrependAddCard}>Add card...</DdMenuItem>
+                  <DdMenuItem onClick={onShowDialog}>Delete list...</DdMenuItem>
+                  {showDialog && <ConfirmDelete message={deleteMessage} onClose={onHideDialog} onDelete={onDelete} />}
                 </DdMenuItems>
               </DdMenu>
             </div>

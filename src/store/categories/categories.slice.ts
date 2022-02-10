@@ -30,6 +30,11 @@ const slice = createGenericSlice({
       categories.push(payload);
       state.categories[payload.board_id] = categories.sort(sort);
     },
+    removeCategory: (state: CategoriesState, { payload }: PayloadAction<Pick<Category, 'board_id' | 'category_id'>>) => {
+      state.categories[payload.board_id] = (state.categories[payload.board_id] || []).filter(
+        (c) => c.category_id !== payload.category_id
+      );
+    },
     setCategoriesPosition: (
       state: CategoriesState,
       { payload: { board_id, source, destination } }: PayloadAction<ChangeCategoriesPosition>
@@ -51,13 +56,16 @@ export const {
   clear: clearCategories,
   setCategories,
   setCategory,
+  removeCategory,
   setCategoriesPosition,
 } = slice.actions;
 
 export const NEW_CATEGORY = 'NEW_CATEGORY';
 export const EDIT_CATEGORY = 'EDIT_CATEGORY';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const CHANGE_CATEGORIES_POSITION = 'CHANGE_CATEGORIES_POSITION';
 
 export const newCategory = createAction<DraftCategory>(NEW_CATEGORY);
 export const editCategory = createAction<Partial<Category> & Pick<Category, 'board_id' | 'category_id'>>(EDIT_CATEGORY);
+export const deleteCategory = createAction<Pick<Category, 'board_id' | 'category_id'>>(DELETE_CATEGORY);
 export const changeCategoriesPosition = createAction<ChangeCategoriesPosition>(CHANGE_CATEGORIES_POSITION);
