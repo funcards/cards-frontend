@@ -41,7 +41,7 @@ const ButtonRender = (
         start ? styles.button_start : '',
         end ? styles.button_end : ''
       ),
-    [avatar, close, cn, end, left, light, primary, right, start]
+    [avatar, icon, cn, end, left, light, primary, right, start]
   );
 
   const spinnerElement = useMemo(

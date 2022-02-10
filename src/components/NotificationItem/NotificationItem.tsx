@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { RiCloseLine } from 'react-icons/ri';
+import { useTimeout } from 'usehooks-ts';
 
 import { removeNotification } from '@/store';
 import { NotifyType, Notification } from '@/types';
@@ -39,6 +40,8 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ notification
     });
   }, [dispatch, notification]);
 
+  useTimeout(onClose, notification.dismiss);
+
   useEffect(() => {
     const { scrollHeight } = rootElementRef.current;
     setParentStyle({
@@ -47,16 +50,6 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ notification
       transition: 'height 300ms linear 0ms',
     });
   }, [rootElementRef, setParentStyle]);
-
-  useEffect(() => {
-    if (notification.dismiss! > 0) {
-      const timeout = setTimeout(() => onClose(), notification.dismiss);
-
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [notification.dismiss, onClose]);
 
   return (
     <div ref={rootElementRef} className={styles.notification} style={parentStyle}>

@@ -132,5 +132,5 @@ export type Notification = {
   type: NotifyType;
   title: string;
   message: string;
-  dismiss: number;
+  dismiss: null | number;
 };
