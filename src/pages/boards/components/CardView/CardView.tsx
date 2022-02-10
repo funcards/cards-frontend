@@ -1,16 +1,33 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Dialog } from '@reach/dialog';
-import { RiLayoutTop2Line, RiAddLine } from 'react-icons/ri';
+import { RiLayoutTop2Line, RiAddLine, RiCloseLine } from 'react-icons/ri';
 import { TiTags } from 'react-icons/ti';
 import { BsJustifyLeft } from 'react-icons/bs';
 
-import { Card, Tag } from '@/types';
-import { Button, ButtonClose, Form, FormRow, TextField } from '@/components';
+import { Card, Category, Tag } from '@/types';
+import {
+  Button,
+  ButtonClose,
+  DdMenu,
+  DdMenuHeader,
+  DdMenuHeaderButton,
+  DdMenuItems,
+  Form,
+  TextField,
+} from '@/components';
 import { useAppDispatch, useAppSelector, useSwitchElement } from '@/hooks';
-import { editCard, selectBoardCategory, selectBoardTagsByIds, selectCards } from '@/store';
+import {
+  changeCardsPosition,
+  editCard,
+  selectBoardCards,
+  selectBoardCategories,
+  selectBoardTagsByIds,
+  selectCards,
+} from '@/store';
 import { ChildrenProps } from '@/components/types';
 import { cardName } from '@/validators';
 import { TagListMenu } from '@/pages/boards/components';
+import { normalizePosition } from '@/helpers';
 
 import styles from './CardView.module.scss';
 
@@ -33,14 +50,158 @@ const Row: React.FC<RowProps> = ({ children, left, right }) => (
   </div>
 );
 
+type CardCategoryProps = {
+  card: Card;
+};
+
+const CardCategory: React.FC<CardCategoryProps> = ({ card }) => {
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector((state) => selectBoardCategories(state, card.board_id));
+  const allCards = useAppSelector((state) => selectBoardCards(state, card.board_id));
+
+  const category = useMemo(
+    () => categories.find((c) => c.category_id === card.category_id),
+    [card.category_id, categories]
+  );
+  const position = useMemo(
+    () => allCards.filter((c) => c.category_id === card.category_id).findIndex((c) => c.card_id === card.card_id),
+    [allCards, card.category_id, card.card_id]
+  );
+
+  const spanRef: React.MutableRefObject<HTMLSpanElement | null> = useRef(null);
+  const catSelectRef: React.MutableRefObject<HTMLSelectElement | null> = useRef(null);
+  const posSelectRef: React.MutableRefObject<HTMLSelectElement | null> = useRef(null);
+
+  const { ref: menuRef, isOpened, onOpen, onClose } = useSwitchElement<HTMLDivElement>();
+
+  const [cat, setCat] = useState<undefined | Category>();
+  const [pos, setPos] = useState<undefined | number>();
+
+  const cards = useMemo(() => allCards.filter((c) => c.category_id === cat?.category_id), [allCards, cat?.category_id]);
+
+  const posLabel = useMemo(() => (undefined === pos ? '-' : pos + 1), [pos]);
+
+  const catOptions = useMemo(
+    () =>
+      categories.map((c) => {
+        const current = c.category_id === category?.category_id ? ' (current)' : '';
+
+        return (
+          <option key={c.category_id} value={c.category_id}>
+            {c.name}
+            {current}
+          </option>
+        );
+      }),
+    [categories, category]
+  );
+
+  const posOptions = useMemo(() => {
+    const max = cat?.category_id === card.category_id ? cards.length : cards.length + 1;
+
+    return [...Array(max).keys()].map((i) => {
+      const current = i === position && cat?.category_id === card.category_id ? ' (current)' : '';
+      const n = i + 1;
+
+      return (
+        <option key={i} value={i}>
+          {n}
+          {current}
+        </option>
+      );
+    });
+  }, [cat?.category_id, card.category_id, cards.length, position]);
+
+  const onChangeCat = useCallback(
+    (e) => setCat(categories.find((c) => c.category_id === e.target.value)),
+    [categories]
+  );
+
+  const onChangePos = useCallback((e) => setPos(+e.target.value), []);
+
+  const onMove = useCallback(() => {
+    if (cat?.category_id && undefined !== pos) {
+      const [source, destination] = normalizePosition(
+        allCards,
+        { droppableId: card.category_id, index: position },
+        { droppableId: cat.category_id, index: pos }
+      );
+
+      if (source && destination) {
+        dispatch(changeCardsPosition({ board_id: card.board_id, source, destination }));
+      }
+    }
+    onClose();
+  }, [allCards, card.board_id, card.category_id, cat?.category_id, dispatch, onClose, pos, position]);
+
+  useEffect(() => {
+    setCat(category);
+  }, [category]);
+
+  useEffect(() => {
+    setPos(position);
+  }, [position]);
+
+  useEffect(() => {
+    setPos(cat?.category_id === card.category_id ? position : cards.length);
+  }, [card.category_id, cards.length, cat?.category_id, position]);
+
+  if (!category || !cat) {
+    return <></>;
+  }
+
+  return (
+    <div className={styles.category}>
+      in list
+      <span ref={spanRef} onClick={onOpen}>
+        {cat?.name}
+      </span>
+      <DdMenu className={styles.category__menu} ref={menuRef} targetRef={spanRef} hidden={!isOpened}>
+        <DdMenuHeader>
+          Move card
+          <DdMenuHeaderButton onClick={onClose}>
+            <RiCloseLine />
+          </DdMenuHeaderButton>
+        </DdMenuHeader>
+        <DdMenuItems>
+          <div className={`${styles.category__row} ${styles.category__row_title}`}>Select destination</div>
+          <div className={styles.category__row}>
+            <div className={styles.category__col}>
+              <span className={styles.category__label}>List</span>
+              <span className={styles.category__selected}>{cat.name}</span>
+              <select
+                ref={catSelectRef}
+                className={styles.category__select}
+                value={cat.category_id}
+                onChange={onChangeCat}
+              >
+                {catOptions}
+              </select>
+            </div>
+            <div className={styles.category__col}>
+              <span className={styles.category__label}>Position</span>
+              <span className={styles.category__selected}>{posLabel}</span>
+              <select ref={posSelectRef} className={styles.category__select} value={pos} onChange={onChangePos}>
+                {posOptions}
+              </select>
+            </div>
+          </div>
+          <div className={`${styles.category__row} ${styles.category__row_footer}`}>
+            <Button type="button" className={styles.category__btn} primary={true} onClick={onMove}>
+              Move
+            </Button>
+          </div>
+        </DdMenuItems>
+      </DdMenu>
+    </div>
+  );
+};
+
 type CardHeaderProps = BaseProps & {
   onCloseModal?: () => void;
 };
 
 const CardHeader: React.FC<CardHeaderProps> = ({ card, lock, onSave, onCloseModal }) => {
-  const category = useAppSelector((state) =>
-    selectBoardCategory(state, { board_id: card.board_id, category_id: card.category_id })
-  );
   const [name, setName] = useState(card.name);
 
   const closeFn = useCallback(() => {
@@ -66,15 +227,11 @@ const CardHeader: React.FC<CardHeaderProps> = ({ card, lock, onSave, onCloseModa
   );
 
   useEffect(() => {
-    if (isOpened && inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.select();
+    if (isOpened) {
+      inputRef.current?.focus();
+      inputRef.current?.select();
     }
   }, [isOpened]);
-
-  if (!category) {
-    return <></>;
-  }
 
   return (
     <Row
@@ -97,10 +254,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({ card, lock, onSave, onCloseModa
           onKeyDown={onKeyDown}
         />
       </div>
-      <div className={styles.header__category}>
-        in list
-        <span>{category.name}</span>
-      </div>
+      <CardCategory card={card} />
     </Row>
   );
 };

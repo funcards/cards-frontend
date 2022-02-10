@@ -19,6 +19,7 @@ import {
 } from '@/store';
 import { ErrorWrapper, Loading, PageTitle } from '@/components';
 import { DndType } from '@/types';
+import { normalizePosition } from '@/helpers';
 
 import styles from './BoardPage.module.scss';
 import { AddCategory, BoardCategory, BoardHeader, BoardMenu } from './components';
@@ -65,51 +66,17 @@ const BoardPage: React.FC = () => {
         return;
       }
 
-      let d = 0;
-      let from = -1;
-      let to = -1;
+      const [s, d] = normalizePosition(cards, source, destination);
 
-      for (let i = 0, s = 0; i < cards.length; i++) {
-        if (from === -1 && cards[i].category_id === source.droppableId) {
-          if (s === source.index) {
-            from = i;
-          }
-          s++;
-        }
-
-        if (to === -1 && cards[i].category_id === destination.droppableId) {
-          if (d === destination.index) {
-            to = i;
-          }
-          d++;
-        }
-
-        if (from > -1 && to > -1) {
-          break;
-        }
+      if (s && d) {
+        dispatch(
+          changeCardsPosition({
+            board_id: boardId!,
+            source: s,
+            destination: d,
+          })
+        );
       }
-
-      if (-1 === from) {
-        return;
-      }
-
-      if (-1 === to) {
-        to = d;
-      }
-
-      dispatch(
-        changeCardsPosition({
-          board_id: boardId!,
-          source: {
-            category_id: source.droppableId,
-            index: from,
-          },
-          destination: {
-            category_id: destination.droppableId,
-            index: to,
-          },
-        })
-      );
     },
     [boardId, cards, dispatch]
   );
